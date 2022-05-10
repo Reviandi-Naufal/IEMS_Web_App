@@ -38,7 +38,7 @@
                         {{ form.hidden_tag() }}
                         <fieldset class="form-group">
                             <legend class="mb-4">Hello New User</legend>
-                            <div class="form-group">
+                            <div class="form-box">
                                 {% if form.username.errors %}
                                     {{ form.username(class="form-control form-control-lg", type="text", placeholder="Username") }}
                                     <div class="invalid-feedback">
@@ -50,7 +50,7 @@
                                     {{ form.username(class="form-control form-control-lg", type="text", placeholder="Username") }}
                                 {% endif %}
                             </div>
-                            <div class="form-group">
+                            <div class="form-box">
                                 {% if form.email.errors %}
                                     {{ form.email(class="form-control form-control-lg", type="email", placeholder="Email") }}
                                     <div class="invalid-feedback">
@@ -62,7 +62,7 @@
                                     {{ form.email(class="form-control form-control-lg", type="email", placeholder="Email") }}
                                 {% endif %}
                             </div>
-                            <div class="form-group">
+                            <div class="form-box">
                                 {% if form.password.errors %}
                                     {{ form.password(class="form-control form-control-lg", type="password", placeholder="Password") }}
                                     <div class="invalid-feedback">
@@ -74,7 +74,7 @@
                                     {{ form.password(class="form-control form-control-lg", type="password", placeholder="Password") }}
                                 {% endif %}
                             </div>
-                            <div class="form-group">
+                            <div class="form-box">
                                 {% if form.confirm_password.errors %}
                                     {{ form.confirm_password(class="form-control form-control-lg", type="password", placeholder="Confirm Password") }}
                                     <div class="invalid-feedback">
@@ -86,16 +86,16 @@
                                     {{ form.confirm_password(class="form-control form-control-lg", type="password", placeholder="Confirm Password") }}
                                 {% endif %}
                             </div>
+                            <div class="form-button">
+                                {{ form.submit(class="btn btn-outline-info") }}
+                            </div>
                         </fieldset>
-                        <div class="form-group">
-                            {{ form.submit(class="btn btn-outline-info") }}
-                        </div>
-                        <div class="pt-3">
-                            <small class="text-muted">
-                                Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
-                            </small>
-                        </div>
                     </form>
+                    <div class="pt-3">
+                        <small class="text-muted">
+                            Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
+                        </small>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,14 +1,16 @@
-
-
 *{
     margin: 0px;
     padding: 0px;
 }
 
 body{
-    background-size: cover;
     background-attachment: fixed;
-    background: rgba(19, 33, 70, 0.8) url("{{ url_for('static', filename='img/' + 'log_reg_background.svg') }}");
+    background: rgba(19, 33, 70, 0.8) url("/static/img/log_reg_background.svg");
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: contain;
+    height: 70vh;
+    display: flex;
 }
 
 h1{
@@ -28,7 +30,9 @@ p{
 
 .content-section {
     background: rgba(248, 249, 250, 0.65);
+    padding: 0px 0px 10px;
     margin-top: 200px;
+    margin-bottom: 20px;
     border-radius: 34px;
 }
 
@@ -43,9 +47,10 @@ p{
     width: 99%;
 }
 
-.mb-4{
+.col-md-3 .mb-4{
     padding: 30px;
     background: #2B8069;
+    background-size: cover;
     margin: 0px 0px 0px 0px;
     border-radius: 30px 0px 38px 38px;
     height: 127px;
@@ -56,12 +61,10 @@ p{
     font-size: 40px;
     line-height: 56px;
     color: #FFFFFF;
-
 }
 
-.form-group{
-    padding-bottom: 20px;
-    color: #B07272;
+.form-box{
+    padding: 40px 10px 0px;
 }
 
 .form-control{
@@ -69,20 +72,20 @@ p{
     border: none;
     border-radius: 7px;
     box-shadow: none;
-    padding: 0 20px 0 20px;
-    width: 300px;
+    padding: 10px 10px;
     height: 40px;
     text-align: center; 
-    margin: 10px 0px 5px 85px;
-}
-
-.spacer{
-    margin: 200px 0px 0px 0px;
-    color: rgba(0, 0, 0, 0);
+    align-content: center;
 }
 
 .form-check{
-    margin: 0px 0px 0px 20px;
+    padding-left: 40px;
+    padding-top: 20px;
+}
+
+.form-button{
+    padding-right: 20px;
+    padding-top: 20px;
 }
 
 .btn{
@@ -91,18 +94,14 @@ p{
     color: #fff;
     background: #2B8069;
     border-radius: 22px;
-    padding: 16px 56px;
+    padding: 16px 30px;
     border: none;
-    margin: 0px 30px 20px 0px;
+}
+
+.pt-3{
+    padding-top: 30px;
 }
 
 .text-muted{
     margin: 0px 0px 0px 30px;
-}
-
-.footer{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
 }
