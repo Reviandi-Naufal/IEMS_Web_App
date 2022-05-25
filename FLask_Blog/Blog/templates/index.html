@@ -1,0 +1,309 @@
+
+{% extends 'base.html' %}
+{% include 'header.html' %}
+ 
+ 
+{% block title %}Flask CRUD Application {% endblock %}
+ 
+ 
+{% block body %}
+ 
+<div class="container">
+
+  <!-- MAnage Billing -->
+  <div class="row">
+    <div class="col md-12">
+      <div class="jumbotron p-3">
+        <h2>
+          Manage <b>Billing </b>
+          <button class="btn btn-success float-right" data-target="#modalAddbill"
+                  data-toggle="modal" type="button">Add New Billing
+          </button>
+        </h2>
+
+        {% with Billmessages = get_flashed_messages() %}
+ 
+        {% if Billmessages %}
+
+        {% for messages in Billmessages %}
+        <div class="alert alert-success alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">x</span>
+            </button>
+        {{messages}}
+        </div>
+        {% endfor %}
+
+        {% endif %}
+
+        {% endwith %}
+
+        <table class="table table-hover table-dark">
+ 
+          <tr>
+            <th>User ID</th>
+            <th>Tarif Listrik</th>
+            <th>Tagihan Listrik</th>
+            <th>Action</th>
+          </tr>
+ 
+          {% for Billrow in Billing %}
+          <tr>
+            <td>{{Billrow.user_id_bill}}</td>
+            <td>{{Billrow.tarif_listrik}}</td>
+            <td>{{Billrow.tagihan_listrik}}</td>
+ 
+            <td>
+              <a href="/updateBilling/{{Billrow.user_id_bill}}" class="btn btn-warning btn-xs" data-target="#modalEditbill{{Billrow.user_id_bill}}" data-toggle="modal">
+                Edit</a>
+              <a href="/deleteBilling/{{Billrow.user_id_bill}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">
+                Delete
+              </a>
+ 
+            </td>
+          </tr>
+ 
+          <!-- Modal Edit Employee-->
+          <div class="modal fade" id="modalEditbill{{Billrow.user_id_bill}}" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">
+                    Update Information
+                  </h4>
+                </div>
+                <div class="modal-body">
+                  <form action="{{url_for('updateBilling')}}" method="POST">
+                    <div class="form-group">
+                      <label>Tarif Listrik (VA):</label>
+                      <input name="billing" type="hidden" value="{{Billrow.user_id_bill}}">
+                      <input class="form-control" list="TarifOptions" type="text" name="tarif_listrik" placeholder="{{Billrow.tarif_listrik}}" required>
+                      <datalist id="TarifOptions">
+                        <option value="900">
+                        <option value="Lebih dari 900">
+                      </datalist>
+                    </div>
+                    <div class="form-group">
+                      <label>Tagihan Listrik Bulanan (dalam rupiah tanpa titik):</label>
+                      <input class="form-control" name="tagihan_listrik" type="number" value="{{Billrow.tagihan_listrik}}">
+                    </div>
+                    <div class="form-group">
+                      <button class="btn btn-primary" type="submit">Update</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </table>
+      </div>
+ 
+ 
+      <!-- Modal Add Employee-->
+      <div class="modal fade" id="modalAddbill" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">
+                Add Electrical Billing
+              </h4>
+            </div>
+            <div class="modal-body">
+              <form action="{{url_for('insertBilling')}}" method="POST">
+                <div class="form-group">
+                  <label>User ID:</label>
+                  <input class="form-control" name="user_id_bill" required="1" type="number">
+                </div>
+                <div class="form-group">
+                  <label>Tarif Listrik (VA):</label>
+                  <input class="form-control" list="TarifOptions"  type="text" name="tarif_listrik" placeholder="Click to chose..." required>
+                  <datalist id="TarifOptions">
+                    <option value="900">
+                    <option value="Lebih dari 900">
+                  </datalist>
+                </div>
+                <div class="form-group">
+                  <label>Tagihan Listrik Bulanan (dalam rupiah tanpa titik):</label>
+                  <input class="form-control" name="tagihan_listrik" required="1" type="number">
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-primary" type="submit">Add Billing</button>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manage Appliance -->
+  <div class="row">
+    <div class="col md-12">
+      <div class="jumbotron p-3">
+        <h2>
+          Manage <b>Appliance</b>
+          <button class="btn btn-success float-right" data-target="#mymodal"
+                  data-toggle="modal" type="button">Add New Device
+          </button>
+        </h2>
+        
+        {% with messages = get_flashed_messages() %}
+ 
+        {% if messages %}
+
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">x</span>
+            </button>
+        {{message}}
+        </div>
+        {% endfor %}
+
+        {% endif %}
+
+        {% endwith %}
+
+        <table class="table table-hover table-dark">
+ 
+          <tr>
+            <th>User ID</th>
+            <th>Device ID</th>
+            <th>Device Name</th>
+            <th>Daya Device</th>
+            <th>Tingkat Prioritas</th>
+            <th>Action</th>
+          </tr>
+          
+          {% for row in Devices %}
+          <tr>
+            <td>{{row.user_id}}</td>
+            <td>{{row.device_id}}</td>
+            <td>{{row.device_name}}</td>
+            <td>{{row.daya_device}}</td>
+            <td>{{row.tingkat_prioritas}}</td>
+ 
+            <td>
+              <a href="/update/{{row.device_id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.device_id}}">
+                Edit
+              </a>
+              <a href="/delete/{{row.device_id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">
+                Delete
+              </a>
+            </td>
+          </tr>
+ 
+          <!-- Modal Edit Employee-->
+          <div class="modal fade" id="modaledit{{row.device_id}}" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Update Information</h4>
+                </div>
+                <div class="modal-body">
+                  <form action="{{url_for('update')}}" method="POST">
+                    <div class="form-group">
+                      <label>Device ID:</label>
+                      <input name="id" type="hidden" value="{{row.device_id}}">
+                      <input class="form-control" name="device_id" type="number" value="{{row.device_id}}">
+                    </div>
+                    <div class="form-group">
+                      <label>Device Name:</label>
+                      <input class="form-control" name="device_name" type="text" value="{{row.device_name}}">
+                    </div>
+                    <div class="form-group">
+                      <label>Daya Device (dalam satuan kWh):</label>
+                      <input class="form-control" name="daya_device" type="number" value="{{row.daya_device}}">
+                    </div>
+                    <div class="form-group">
+                      <label>Tingkat Prioritas:</label>
+                      <input class="form-control" list="datalistEdit"  type="text" name="prioritas" placeholder="{{row.tingkat_prioritas}}" required>
+                      <datalist id="datalistEdit">
+                        <option value="Very High">
+                        <option value="High">
+                        <option value="Medium">
+                        <option value="Low">
+                        <option value="Very Low">
+                      </datalist>
+                    </div>
+                    
+                    <div class="form-group">
+                      <button class="btn btn-primary" type="submit">Update</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </table>
+      </div>
+ 
+ 
+      <!-- Modal Add Employee-->
+      <div class="modal fade" id="mymodal" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+ 
+              <h4 class="modal-title">Add Device</h4>
+            </div>
+            <div class="modal-body">
+              <form action="{{url_for('insert')}}" method="POST">
+                <div class="form-group">
+                  <label>User ID:</label>
+                  <input class="form-control" name="user_id" required="1" type="number">
+                </div>
+                <div class="form-group">
+                  <label>Device ID:</label>
+                  <input class="form-control" name="device_id" required="1" type="number">
+ 
+                </div>
+                <div class="form-group">
+                  <label>Device Name:</label>
+                  <input class="form-control" name="device_name" required="1" type="text">
+                </div>
+                <div class="form-group">
+                  <label>Daya Device (dalam satuan kWh):</label>
+                  <input class="form-control" name="daya_device" required="1" type="number" step="any">
+                </div>
+                <div class="form-group">
+                  <label>Tingkat Prioritas:</label>
+                  <input class="form-control" type="text" list="datalistOptions" name="prioritas" placeholder="Click to chose..." required>
+                  <datalist id="datalistOptions">
+                    <option value="Very High">
+                    <option value="High">
+                    <option value="Medium">
+                    <option value="Low">
+                    <option value="Very Low">
+                  </datalist>
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-primary" type="submit">Add Device</button>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+ 
+ 
+{% endblock %}
