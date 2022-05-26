@@ -4,7 +4,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from Blog import app, db, bcrypt
 from Blog.forms import RegistrationForm, LoginForm, UpdateAccountForm
-from Blog.database import User
+from Blog.database import User, billinginput, webinput
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -41,7 +41,7 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('home'))
+            return redirect(next_page) if next_page else redirect(url_for('dashboard'))
         else:
             flash('Login unsuccessful. Please check username and password', 'danger')
     return render_template('login.html', title='Login', form=form)
@@ -82,3 +82,105 @@ def account():
         form.email.data = current_user.email
     image_file = url_for('static', filename='img/' + current_user.image_file)
     return render_template('account.html', image_file=image_file, form=form)
+
+@app.route("/schedule_appliance")
+@login_required
+def schedule_appliance():
+    all_data = webinput.query.all()
+    all_billing = billinginput.query.all()
+    return render_template("index.html", Devices=all_data, Billing=all_billing)
+
+# this route is for inserting billing data
+# to mysql database via html forms
+@app.route('/insertBilling', methods=['POST'])
+@login_required
+def insertBilling():
+    if request.method == 'POST':
+        user_id_bill = request.form['user_id_bill']
+        tarif_listrik = request.form['tarif_listrik']
+        tagihan_listrik = request.form['tagihan_listrik']
+ 
+        my_billing = billinginput(user_id_bill, tarif_listrik, tagihan_listrik)
+        db.session.add(my_billing)
+        db.session.commit()
+ 
+        flash("Billing Inserted Successfully", 'success')
+ 
+        return redirect(url_for('schedule_appliance'))
+
+#this is our update route where we are going to update our billing
+@app.route('/updateBilling', methods = ['GET', 'POST'])
+@login_required
+def updateBilling():
+ 
+    if request.method == 'POST':
+        my_billing = billinginput.query.get(request.form.get('billing'))
+ 
+        my_billing.tarif_listrik = request.form['tarif_listrik']
+        my_billing.tagihan_listrik = request.form['tagihan_listrik']
+ 
+        db.session.commit()
+        flash("Billing Updated Successfully", 'success')
+ 
+        return redirect(url_for('schedule_appliance'))
+
+# This route is for deleting our employee
+@app.route('/deleteBilling/<billing>/', methods=['GET', 'POST'])
+@login_required
+def deleteBilling(billing):
+    my_billing = billinginput.query.get(billing)
+    db.session.delete(my_billing)
+    db.session.commit()
+    flash("Billing Deleted Successfully", 'success')
+ 
+    return redirect(url_for('schedule_appliance'))
+ 
+# this route is for inserting device data
+# to mysql database via html forms
+@app.route('/insertDevice', methods=['POST'])
+@login_required
+def insertDevice():
+    if request.method == 'POST':
+        user_id = request.form['user_id']
+        device_id = request.form['device_id']
+        device_name = request.form['device_name']
+        daya_device = request.form['daya_device']
+        tingkat_prioritas = request.form['prioritas']
+ 
+        my_data = webinput(user_id, device_id, device_name, daya_device, tingkat_prioritas)
+        db.session.add(my_data)
+        db.session.commit()
+ 
+        flash("Device Inserted Successfully", 'success')
+ 
+        return redirect(url_for('schedule_appliance'))
+
+
+#this is our update route where we are going to update our employee
+@app.route('/updateDevice', methods = ['GET', 'POST'])
+@login_required
+def updateDevice():
+ 
+    if request.method == 'POST':
+        my_data = webinput.query.get(request.form.get('id'))
+ 
+        my_data.device_id = request.form['device_id']
+        my_data.device_name = request.form['device_name']
+        my_data.daya_device = request.form['daya_device']
+        my_data.tingkat_prioritas = request.form['prioritas']
+ 
+        db.session.commit()
+        flash("Device Updated Successfully", 'success')
+ 
+        return redirect(url_for('schedule_appliance'))
+
+# This route is for deleting our employee
+@app.route('/deleteDevice/<id>/', methods=['GET', 'POST'])
+@login_required
+def deleteDevice(id):
+    my_data = webinput.query.get(id)
+    db.session.delete(my_data)
+    db.session.commit()
+    flash("Device Deleted Successfully", 'success')
+ 
+    return redirect(url_for('schedule_appliance'))

@@ -8,5 +8,20 @@
 </head>
 <body>
     <h1>IEMS Dashboard</h1>
+    <p align="center">
+        <button type="button" class="buttonSign" onclick="window.location.href='{{ url_for('account') }}';">
+            Account
+        </button>
+    </p>
+    <p align="center">
+        <button type="button" class="buttonSign" onclick="window.location.href='{{ url_for('logout') }}';">
+            Sign Out
+        </button>
+    </p>
+    <p align="center">
+        <button type="button" class="buttonSign" onclick="window.location.href='{{ url_for('schedule_appliance') }}';">
+            Schedule Appliances
+        </button>
+    </p>
 </body>
 </html>

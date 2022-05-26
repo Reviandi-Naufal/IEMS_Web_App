@@ -16,3 +16,28 @@ class User(db.Model, UserMixin):
     #setting __repr__ method, it's to define how the object is printed out whenever it get printed out
     def __repr__(self):
         return f"User('{self.username}', '{self.email}','{self.image_file}')"
+
+class billinginput(db.Model):
+    user_id_bill = db.Column(db.Integer, primary_key=True)
+    tarif_listrik = db.Column(db.String(50))
+    tagihan_listrik = db.Column(db.Integer)
+ 
+    def __init__(self, userID, tarifListrik, tagihanListrik):
+        self.user_id_bill = userID
+        self.tarif_listrik = tarifListrik
+        self.tagihan_listrik = tagihanListrik
+ 
+# Creating model table for our CRUD database
+class webinput(db.Model):
+    user_id = db.Column(db.Integer)
+    device_id = db.Column(db.Integer, primary_key=True)
+    device_name = db.Column(db.String(100))
+    daya_device = db.Column(db.Float)
+    tingkat_prioritas = db.Column(db.String(100))
+ 
+    def __init__(self, userID, deviceID, deviceName, daya, prioritas):
+        self.user_id = userID
+        self.device_id = deviceID
+        self.device_name = deviceName
+        self.daya_device = daya
+        self.tingkat_prioritas = prioritas

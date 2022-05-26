@@ -10,7 +10,24 @@
  
 <div class="container">
 
-  <!-- MAnage Billing -->
+  {% with Billmessages = get_flashed_messages() %}
+ 
+  {% if Billmessages %}
+
+  {% for messages in Billmessages %}
+  <div class="alert alert-success alert-dismissable" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="close">
+          <span aria-hidden="true">x</span>
+      </button>
+  {{messages}}
+  </div>
+  {% endfor %}
+
+  {% endif %}
+
+  {% endwith %}
+
+  <!-- Manage Billing -->
   <div class="row">
     <div class="col md-12">
       <div class="jumbotron p-3">
@@ -20,23 +37,6 @@
                   data-toggle="modal" type="button">Add New Billing
           </button>
         </h2>
-
-        {% with Billmessages = get_flashed_messages() %}
- 
-        {% if Billmessages %}
-
-        {% for messages in Billmessages %}
-        <div class="alert alert-success alert-dismissable" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                <span aria-hidden="true">x</span>
-            </button>
-        {{messages}}
-        </div>
-        {% endfor %}
-
-        {% endif %}
-
-        {% endwith %}
 
         <table class="table table-hover table-dark">
  
@@ -63,7 +63,7 @@
             </td>
           </tr>
  
-          <!-- Modal Edit Employee-->
+          <!-- Modal Edit Billing-->
           <div class="modal fade" id="modalEditbill{{Billrow.user_id_bill}}" role="dialog">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -76,12 +76,11 @@
                   <form action="{{url_for('updateBilling')}}" method="POST">
                     <div class="form-group">
                       <label>Tarif Listrik (VA):</label>
-                      <input name="billing" type="hidden" value="{{Billrow.user_id_bill}}">
-                      <input class="form-control" list="TarifOptions" type="text" name="tarif_listrik" placeholder="{{Billrow.tarif_listrik}}" required>
-                      <datalist id="TarifOptions">
-                        <option value="900">
-                        <option value="Lebih dari 900">
-                      </datalist>
+                      <select class="form-select" aria-label="Default select example" name="tarif_listrik" id="tarif_listrik">
+                        <option selected>Open this select menu</option>
+                        <option value="900">900</option>
+                        <option value="Lebih dari 900">Lebih dari 900</option>
+                      </select>
                     </div>
                     <div class="form-group">
                       <label>Tagihan Listrik Bulanan (dalam rupiah tanpa titik):</label>
@@ -103,7 +102,7 @@
       </div>
  
  
-      <!-- Modal Add Employee-->
+      <!-- Modal Add Billing-->
       <div class="modal fade" id="modalAddbill" role="dialog">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -120,11 +119,11 @@
                 </div>
                 <div class="form-group">
                   <label>Tarif Listrik (VA):</label>
-                  <input class="form-control" list="TarifOptions"  type="text" name="tarif_listrik" placeholder="Click to chose..." required>
-                  <datalist id="TarifOptions">
-                    <option value="900">
-                    <option value="Lebih dari 900">
-                  </datalist>
+                  <select class="form-select" aria-label="Default select example" name="tarif_listrik" id="tarif_listrik" required>
+                    <option selected>Open this select menu</option>
+                    <option value="900">900</option>
+                    <option value="Lebih dari 900">Lebih dari 900</option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label>Tagihan Listrik Bulanan (dalam rupiah tanpa titik):</label>
@@ -154,23 +153,6 @@
                   data-toggle="modal" type="button">Add New Device
           </button>
         </h2>
-        
-        {% with messages = get_flashed_messages() %}
- 
-        {% if messages %}
-
-        {% for message in messages %}
-        <div class="alert alert-success alert-dismissable" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                <span aria-hidden="true">x</span>
-            </button>
-        {{message}}
-        </div>
-        {% endfor %}
-
-        {% endif %}
-
-        {% endwith %}
 
         <table class="table table-hover table-dark">
  
@@ -192,16 +174,16 @@
             <td>{{row.tingkat_prioritas}}</td>
  
             <td>
-              <a href="/update/{{row.device_id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.device_id}}">
+              <a href="/updateDevice/{{row.device_id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.device_id}}">
                 Edit
               </a>
-              <a href="/delete/{{row.device_id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">
+              <a href="/deleteDevice/{{row.device_id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">
                 Delete
               </a>
             </td>
           </tr>
  
-          <!-- Modal Edit Employee-->
+          <!-- Modal Edit Device-->
           <div class="modal fade" id="modaledit{{row.device_id}}" role="dialog">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -209,7 +191,7 @@
                   <h4 class="modal-title">Update Information</h4>
                 </div>
                 <div class="modal-body">
-                  <form action="{{url_for('update')}}" method="POST">
+                  <form action="{{url_for('updateDevice')}}" method="POST">
                     <div class="form-group">
                       <label>Device ID:</label>
                       <input name="id" type="hidden" value="{{row.device_id}}">
@@ -224,14 +206,15 @@
                       <input class="form-control" name="daya_device" type="number" value="{{row.daya_device}}">
                     </div>
                     <div class="form-group">
-                      <label>Tingkat Prioritas:</label>
-                      <input class="form-control" list="datalistEdit"  type="text" name="prioritas" placeholder="{{row.tingkat_prioritas}}" required>
-                      <datalist id="datalistEdit">
-                        <option value="Very High">
-                        <option value="High">
-                        <option value="Medium">
-                        <option value="Low">
-                        <option value="Very Low">
+                      <label for="prioritas">Tingkat Prioritas:</label>
+                      <select class="form-select" aria-label="Default select example" name="prioritas" id="priority">
+                        <option selected>Open this select menu</option>
+                        <option value="Very High">Very High</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                        <option value="Very Low">Very Low</option>
+                      </select>
                       </datalist>
                     </div>
                     
@@ -251,7 +234,7 @@
       </div>
  
  
-      <!-- Modal Add Employee-->
+      <!-- Modal Add Device-->
       <div class="modal fade" id="mymodal" role="dialog">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -260,35 +243,36 @@
               <h4 class="modal-title">Add Device</h4>
             </div>
             <div class="modal-body">
-              <form action="{{url_for('insert')}}" method="POST">
+              <form action="{{url_for('insertDevice')}}" method="POST">
                 <div class="form-group">
                   <label>User ID:</label>
-                  <input class="form-control" name="user_id" required="1" type="number">
+                  <input class="form-control" name="user_id" type="number" required>
                 </div>
                 <div class="form-group">
                   <label>Device ID:</label>
-                  <input class="form-control" name="device_id" required="1" type="number">
+                  <input class="form-control" name="device_id" type="number" required>
  
                 </div>
                 <div class="form-group">
                   <label>Device Name:</label>
-                  <input class="form-control" name="device_name" required="1" type="text">
+                  <input class="form-control" name="device_name" type="text" required>
                 </div>
                 <div class="form-group">
                   <label>Daya Device (dalam satuan kWh):</label>
-                  <input class="form-control" name="daya_device" required="1" type="number" step="any">
+                  <input class="form-control" name="daya_device" type="number" step="any" required>
                 </div>
                 <div class="form-group">
-                  <label>Tingkat Prioritas:</label>
-                  <input class="form-control" type="text" list="datalistOptions" name="prioritas" placeholder="Click to chose..." required>
-                  <datalist id="datalistOptions">
-                    <option value="Very High">
-                    <option value="High">
-                    <option value="Medium">
-                    <option value="Low">
-                    <option value="Very Low">
-                  </datalist>
+                  <label for="prioritas">Tingkat Prioritas:</label>
+                  <select class="form-select" aria-label="Default select example" name="prioritas" id="priority" required>
+                    <option selected>Open this select menu</option>
+                    <option value="Very High">Very High</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                    <option value="Very Low">Very Low</option>
+                  </select>
                 </div>
+
                 <div class="form-group">
                   <button class="btn btn-primary" type="submit">Add Device</button>
                 </div>
@@ -304,6 +288,11 @@
     </div>
   </div>
 </div>
+<p align="center">
+  <button type="button" class="buttonSign" onclick="window.location.href='{{ url_for('dashboard') }}';">
+      Dashboard
+  </button>
+</p>
  
  
 {% endblock %}

@@ -28,18 +28,6 @@
                     <img src="{{ url_for('static', filename='img/' + 'telkom_logo.svg') }}" class="img-fluid" alt="" />
                 </div>
                 <!-- logout and account button is temporary. after the dashboard page is created, please erase the following if condition and that 2 button. -->
-                {% if current_user.is_authenticated %}
-                <p align="center">
-                    <button type="button" class="buttonSign" onclick="window.location.href='{{ url_for('account') }}';">
-                        Account
-                    </button>
-                </p>
-                <p align="center">
-                    <button type="button" class="buttonSign" onclick="window.location.href='{{ url_for('logout') }}';">
-                        Sign Out
-                    </button>
-                </p>
-                {% else %}
                 <p align="center">
                     <button type="button" class="buttonSign" onclick="window.location.href='{{ url_for('register') }}';">
                         Sign Up
@@ -50,7 +38,6 @@
                         Sign in
                     </button>
                 </p>
-                {% endif %}
             </div>
         </div>
     </div>
