@@ -13,10 +13,6 @@ from flask_login import login_user, current_user, logout_user, login_required
 def home():
     return render_template('home.html')
 
-@app.route("/dashboard")
-def dashboard():
-    return render_template('dashboard.html')
-
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -61,6 +57,11 @@ def save_picture(form_picture):
     i.save(picture_path)
 
     return picture_fn
+
+@app.route("/dashboard")
+@login_required
+def dashboard():
+    return render_template('dashboard.html')
 
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
@@ -143,9 +144,11 @@ def insertDevice():
         device_id = request.form['device_id']
         device_name = request.form['device_name']
         daya_device = request.form['daya_device']
+        jumlah_device = request.form['jumlah_device']
         tingkat_prioritas = request.form['prioritas']
+        total_daya = float(daya_device)*int(jumlah_device)
  
-        my_data = webinput(user_id, device_id, device_name, daya_device, tingkat_prioritas)
+        my_data = webinput(user_id, device_id, device_name, total_daya, tingkat_prioritas)
         db.session.add(my_data)
         db.session.commit()
  
