@@ -28,16 +28,20 @@ class billinginput(db.Model):
         self.tagihan_listrik = tagihanListrik
  
 # Creating model table for our CRUD database
-class webinput(db.Model):
+class deviceinput(db.Model):
     user_id = db.Column(db.Integer)
     device_id = db.Column(db.Integer, primary_key=True)
     device_name = db.Column(db.String(100))
     daya_device = db.Column(db.Float)
+    jumlah_device = db.Column(db.Integer)
+    total_daya = db.Column(db.Float)
     tingkat_prioritas = db.Column(db.String(100))
  
-    def __init__(self, userID, deviceID, deviceName, daya, prioritas):
+    def __init__(self, userID, deviceID, deviceName, daya, jumlah_device, total_daya, prioritas):
         self.user_id = userID
         self.device_id = deviceID
         self.device_name = deviceName
         self.daya_device = daya
+        self.jumlah_device = jumlah_device
+        self.total_daya = total_daya
         self.tingkat_prioritas = prioritas

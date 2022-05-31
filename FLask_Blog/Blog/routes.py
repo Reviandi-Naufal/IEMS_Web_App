@@ -4,7 +4,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from Blog import app, db, bcrypt
 from Blog.forms import RegistrationForm, LoginForm, UpdateAccountForm
-from Blog.database import User, billinginput, webinput
+from Blog.database import User, billinginput, deviceinput
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -85,9 +85,9 @@ def account():
 @app.route("/schedule_appliance")
 @login_required
 def schedule_appliance():
-    all_data = webinput.query.all()
+    all_data = deviceinput.query.all()
     all_billing = billinginput.query.all()
-    return render_template("index.html", Devices=all_data, Billing=all_billing)
+    return render_template("scheduling.html", Devices=all_data, Billing=all_billing)
 
 # this route is for inserting billing data
 # to mysql database via html forms
@@ -145,10 +145,10 @@ def insertDevice():
         device_name = request.form['device_name']
         daya_device = request.form['daya_device']
         jumlah_device = request.form['jumlah_device']
-        tingkat_prioritas = request.form['prioritas']
         total_daya = float(daya_device)*int(jumlah_device)
+        tingkat_prioritas = request.form['prioritas']
  
-        my_data = webinput(user_id, device_id, device_name, total_daya, tingkat_prioritas)
+        my_data = deviceinput(user_id, device_id, device_name, daya_device, jumlah_device, total_daya, tingkat_prioritas)
         db.session.add(my_data)
         db.session.commit()
  
@@ -163,7 +163,7 @@ def insertDevice():
 def updateDevice():
  
     if request.method == 'POST':
-        my_data = webinput.query.get(request.form.get('id'))
+        my_data = deviceinput.query.get(request.form.get('id'))
  
         my_data.device_id = request.form['device_id']
         my_data.device_name = request.form['device_name']
@@ -179,7 +179,7 @@ def updateDevice():
 @app.route('/deleteDevice/<id>/', methods=['GET', 'POST'])
 @login_required
 def deleteDevice(id):
-    my_data = webinput.query.get(id)
+    my_data = deviceinput.query.get(id)
     db.session.delete(my_data)
     db.session.commit()
     flash("Device Deleted Successfully", 'success')
