@@ -185,3 +185,55 @@ def deleteDevice(id):
     flash("Device Deleted Successfully", 'success')
  
     return redirect(url_for('schedule_appliance'))
+
+#admin page
+@app.route("/admin")
+@login_required
+def admin():
+    user_type = current_user.user_type
+    if user_type == 'admin':
+        all_data = User.query.all()
+        return render_template('admin.html', userData=all_data)
+    else:
+        flash("Sorry you don't have permission to access this page", 'error')
+
+@app.route('/insertUser', methods=['GET', 'POST'])
+@login_required
+def insertUser():
+    if request.method == 'POST':
+        hashed_password = bcrypt.generate_password_hash(request.form['password']).decode('utf8')
+        username = request.form['username']
+        email = request.form['email']
+        user_type = request.form['user_type']
+        user = User(username=username, email=email, password=hashed_password, user_type=user_type)
+        db.session.add(user)
+        db.session.commit()
+        flash(f'Account created for {username}!', 'success')
+        return redirect(url_for('admin'))
+
+@app.route('/updateUser', methods = ['GET', 'POST'])
+@login_required
+def updateUser():
+ 
+    if request.method == 'POST':
+        my_data = User.query.get(request.form.get('userEdit'))
+ 
+        my_data.username = request.form['username']
+        my_data.email = request.form['email']
+        my_data.user_type = request.form['user_type']
+ 
+        db.session.commit()
+        flash("User Info Updated Successfully", 'success')
+ 
+        return redirect(url_for('admin'))
+
+# This route is for deleting our employee
+@app.route('/deleteUser/<id>/', methods=['GET', 'POST'])
+@login_required
+def deleteUser(id):
+    my_data = User.query.get(id)
+    db.session.delete(my_data)
+    db.session.commit()
+    flash("User Deleted Successfully", 'success')
+ 
+    return redirect(url_for('admin'))

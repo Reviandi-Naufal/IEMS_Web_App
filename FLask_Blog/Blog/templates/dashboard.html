@@ -13,14 +13,21 @@
             Account
         </button>
     </p>
+    {% if current_user.user_type == 'admin' %}
     <p align="center">
-        <button type="button" class="buttonSign" onclick="window.location.href='/logout';">
-            Sign Out
+        <button type="button" class="buttonSign" onclick="window.location.href='/admin';">
+            Admin Panel
         </button>
     </p>
+    {% endif %}
     <p align="center">
         <button type="button" class="buttonSign" onclick="window.location.href='/schedule_appliance';">
             Schedule Appliances
+        </button>
+    </p>
+    <p align="center">
+        <button type="button" class="buttonSign" onclick="window.location.href='/logout';">
+            Sign Out
         </button>
     </p>
 </body>
