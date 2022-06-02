@@ -85,8 +85,12 @@ def account():
 @app.route("/schedule_appliance")
 @login_required
 def schedule_appliance():
-    all_data = deviceinput.query.all()
-    all_billing = billinginput.query.all()
+    if current_user.user_type == 'user':
+        all_data = deviceinput.query.filter_by(user_id=current_user.id).all()
+        all_billing = billinginput.query.filter_by(user_id_bill=current_user.id).all()
+    else:
+        all_data = deviceinput.query.all()
+        all_billing = billinginput.query.all()
     return render_template("scheduling.html", Devices=all_data, Billing=all_billing)
 
 # this route is for inserting billing data
@@ -95,7 +99,7 @@ def schedule_appliance():
 @login_required
 def insertBilling():
     if request.method == 'POST':
-        user_id_bill = request.form['user_id_bill']
+        user_id_bill = current_user.id
         tarif_listrik = request.form['tarif_listrik']
         tagihan_listrik = request.form['tagihan_listrik']
  
@@ -140,7 +144,7 @@ def deleteBilling(billing):
 @login_required
 def insertDevice():
     if request.method == 'POST':
-        user_id = request.form['user_id']
+        user_id = current_user.id
         device_id = request.form['device_id']
         device_name = request.form['device_name']
         daya_device = request.form['daya_device']

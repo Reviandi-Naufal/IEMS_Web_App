@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}','{self.image_file}')"
 
 class billinginput(db.Model):
-    user_id_bill = db.Column(db.Integer, primary_key=True)
+    user_id_bill = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     tarif_listrik = db.Column(db.String(50))
     tagihan_listrik = db.Column(db.Integer)
  
@@ -46,3 +46,13 @@ class deviceinput(db.Model):
         self.jumlah_device = jumlah_device
         self.total_daya = total_daya
         self.tingkat_prioritas = prioritas
+
+class device_status(db.Model):
+    device_id = db.Column(db.Integer, nullable=False, primary_key=True)
+    slca_name = db.Column(db.String(50))
+    device_status = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, device_id, slca_name, device_status):
+        self.user_id_bill = userID
+        self.tarif_listrik = tarifListrik
+        self.tagihan_listrik = tagihanListrik
