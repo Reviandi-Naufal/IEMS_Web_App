@@ -3,7 +3,7 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from Blog import app, db, bcrypt
-from Blog.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from Blog.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
 from Blog.database import User, billinginput, deviceinput
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -100,10 +100,11 @@ def schedule_appliance():
 def insertBilling():
     if request.method == 'POST':
         user_id_bill = current_user.id
+        username = current_user.username
         tarif_listrik = request.form['tarif_listrik']
         tagihan_listrik = request.form['tagihan_listrik']
  
-        my_billing = billinginput(user_id_bill, tarif_listrik, tagihan_listrik)
+        my_billing = billinginput(user_id_bill, username, tarif_listrik, tagihan_listrik)
         db.session.add(my_billing)
         db.session.commit()
  
@@ -145,6 +146,7 @@ def deleteBilling(billing):
 def insertDevice():
     if request.method == 'POST':
         user_id = current_user.id
+        username = current_user.username
         device_id = request.form['device_id']
         device_name = request.form['device_name']
         daya_device = request.form['daya_device']
@@ -152,7 +154,7 @@ def insertDevice():
         total_daya = float(daya_device)*int(jumlah_device)
         tingkat_prioritas = request.form['prioritas']
  
-        my_data = deviceinput(user_id, device_id, device_name, daya_device, jumlah_device, total_daya, tingkat_prioritas)
+        my_data = deviceinput(user_id, username, device_id, device_name, daya_device, jumlah_device, total_daya, tingkat_prioritas)
         db.session.add(my_data)
         db.session.commit()
  

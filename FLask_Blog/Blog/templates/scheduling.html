@@ -42,7 +42,8 @@
  
           <tr>
             <th>User ID</th>
-            <th>Tarif Listrik (VA)</th>
+            <th>Username</th>
+            <th>Daya Listrik</th>
             <th>Tagihan Listrik (Rp)</th>
             <th>Action</th>
           </tr>
@@ -50,7 +51,8 @@
           {% for Billrow in Billing %}
           <tr>
             <td>{{Billrow.user_id_bill}}</td>
-            <td>{{Billrow.tarif_listrik}}</td>
+            <td>{{current_user.username}}</td>
+            <td>{{Billrow.tarif_listrik}} VA</td>
             <td>{{Billrow.tagihan_listrik}}</td>
  
             <td>
@@ -165,6 +167,7 @@
  
           <tr>
             <th>User ID</th>
+            <th>Username</th>
             <th>Device ID</th>
             <th>Device Name</th>
             <th>Daya Device</th>
@@ -175,6 +178,7 @@
           {% for row in Devices %}
           <tr>
             <td>{{row.user_id}}</td>
+            <td>{{current_user.username}}</td>
             <td>{{row.device_id}}</td>
             <td>{{row.device_name}}</td>
             <td>{{row.total_daya}} kWh</td>
