@@ -60,3 +60,18 @@ class device_status(db.Model):
         self.user_id_bill = userID
         self.tarif_listrik = tarifListrik
         self.tagihan_listrik = tagihanListrik
+
+class hasil_penjadwalan(db.Model):
+    user_id = db.Column(db.Integer)
+    device_id = db.Column(db.Integer, nullable=False, primary_key=True)
+    durasi = db.Column(db.Integer)
+    tanggal = db.Column(db.String(50), nullable=False)
+    waktu = db.Column(db.String(50), nullable=False)
+
+    def __init__(self, user_id, device_id, durasi, tanggal, waktu):
+        self.user_id = user_id
+        self.device_id  = device_id
+        self.device_id = device_id
+        self.durasi = durasi
+        self.tanggal = tanggal
+        self.waktu = waktu
