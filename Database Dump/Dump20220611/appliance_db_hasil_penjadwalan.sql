@@ -16,33 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `user`
+-- Table structure for table `hasil_penjadwalan`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `hasil_penjadwalan`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) NOT NULL,
-  `email` varchar(120) NOT NULL,
-  `image_file` varchar(20) NOT NULL,
-  `password` varchar(60) NOT NULL,
-  `user_type` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `hasil_penjadwalan` (
+  `user_id` bigint DEFAULT NULL,
+  `device_id` bigint DEFAULT NULL,
+  `durasi` int DEFAULT NULL,
+  `tanggal` text,
+  `waktu` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `hasil_penjadwalan`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','admin@gmail.com','default.jpg','$2b$12$viWMIofAp3IhVn7KyuBAd.Bf5Tovdi8XRTNuG0ioRfnZMAnSxn7OK','admin'),(2,'reviandi','reviandi@demo.com','default.jpg','$2b$12$STwn4OUf4Cc3ZV6rU1Kg8uS0tXYJs.mOx7TkrGxgaKAlidCN46zTS','user'),(4,'Rani','rani@demo.com','default.jpg','$2b$12$EcNurOq8lHoM6z6Z67WHB.I7dnI4OVPIcQVqDTfKasMma88CERz0C','user'),(5,'Joni','joni@demo.com','default.jpg','$2b$12$WFua.KKBXLtGWGQngO5BUeZJsGM1.ntQdjvV17qQl2sBdF3UnWzlS','user');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+LOCK TABLES `hasil_penjadwalan` WRITE;
+/*!40000 ALTER TABLE `hasil_penjadwalan` DISABLE KEYS */;
+INSERT INTO `hasil_penjadwalan` VALUES (1,12,19,'11-06-2022','16:48:03'),(1,24,9,'11-06-2022','16:48:03'),(2,1,24,'11-06-2022','16:48:04'),(2,2,24,'11-06-2022','16:48:04'),(2,3,17,'11-06-2022','16:48:04'),(2,4,19,'11-06-2022','16:48:04'),(2,5,14,'11-06-2022','16:48:04'),(2,6,14,'11-06-2022','16:48:04'),(2,7,9,'11-06-2022','16:48:04'),(2,8,6,'11-06-2022','16:48:04'),(2,9,2,'11-06-2022','16:48:04'),(2,10,4,'11-06-2022','16:48:04');
+/*!40000 ALTER TABLE `hasil_penjadwalan` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-02 19:18:03
+-- Dump completed on 2022-06-11 16:55:21

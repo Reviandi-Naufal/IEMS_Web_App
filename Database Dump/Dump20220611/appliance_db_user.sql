@@ -16,27 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `device_status`
+-- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `device_status`;
+DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `device_status` (
-  `device_id` text,
-  `device_name` text,
-  `device_status` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) NOT NULL,
+  `email` varchar(120) NOT NULL,
+  `image_file` varchar(20) NOT NULL,
+  `password` varchar(60) NOT NULL,
+  `user_type` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `device_status`
+-- Dumping data for table `user`
 --
 
-LOCK TABLES `device_status` WRITE;
-/*!40000 ALTER TABLE `device_status` DISABLE KEYS */;
-INSERT INTO `device_status` VALUES ('5','IEMS-3-001',1),('6','IEMS-3-002',1),('3','6281214382436',1),('31','IEMS-1-003',1),('7','IEMS-3-003',1);
-/*!40000 ALTER TABLE `device_status` ENABLE KEYS */;
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'admin','admin@gmail.com','default.jpg','$2b$12$viWMIofAp3IhVn7KyuBAd.Bf5Tovdi8XRTNuG0ioRfnZMAnSxn7OK','admin'),(2,'reviandi','reviandi@demo.com','default.jpg','$2b$12$STwn4OUf4Cc3ZV6rU1Kg8uS0tXYJs.mOx7TkrGxgaKAlidCN46zTS','user'),(4,'Rani','rani@demo.com','default.jpg','$2b$12$EcNurOq8lHoM6z6Z67WHB.I7dnI4OVPIcQVqDTfKasMma88CERz0C','user'),(5,'Joni','joni@demo.com','default.jpg','$2b$12$WFua.KKBXLtGWGQngO5BUeZJsGM1.ntQdjvV17qQl2sBdF3UnWzlS','user');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-02 19:18:02
+-- Dump completed on 2022-06-11 16:55:21

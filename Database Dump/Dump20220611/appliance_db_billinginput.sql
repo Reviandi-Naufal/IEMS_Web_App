@@ -16,32 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `deviceinput`
+-- Table structure for table `billinginput`
 --
 
-DROP TABLE IF EXISTS `deviceinput`;
+DROP TABLE IF EXISTS `billinginput`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `deviceinput` (
-  `user_id` int NOT NULL,
-  `device_id` int NOT NULL,
-  `device_name` varchar(50) NOT NULL,
-  `daya_device` float NOT NULL,
-  `jumlah_device` int NOT NULL,
-  `total_daya` float NOT NULL,
-  `tingkat_prioritas` varchar(50) NOT NULL,
-  PRIMARY KEY (`device_id`)
+CREATE TABLE `billinginput` (
+  `user_id_bill` int NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `tarif_listrik` varchar(50) DEFAULT NULL,
+  `tagihan_listrik` int DEFAULT NULL,
+  PRIMARY KEY (`user_id_bill`),
+  CONSTRAINT `billinginput_ibfk_1` FOREIGN KEY (`user_id_bill`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `deviceinput`
+-- Dumping data for table `billinginput`
 --
 
-LOCK TABLES `deviceinput` WRITE;
-/*!40000 ALTER TABLE `deviceinput` DISABLE KEYS */;
-INSERT INTO `deviceinput` VALUES (4,3,'Lampu',0.01,8,0.08,'Medium'),(2,5,'Kipas',0.3,5,1.5,'Medium'),(2,6,'Komputer',0.6,1,0.6,'Very High');
-/*!40000 ALTER TABLE `deviceinput` ENABLE KEYS */;
+LOCK TABLES `billinginput` WRITE;
+/*!40000 ALTER TABLE `billinginput` DISABLE KEYS */;
+INSERT INTO `billinginput` VALUES (1,'admin','900',500000),(2,'reviandi','1300',1800000);
+/*!40000 ALTER TABLE `billinginput` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-02 19:18:03
+-- Dump completed on 2022-06-11 16:55:21

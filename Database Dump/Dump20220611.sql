@@ -24,6 +24,7 @@ DROP TABLE IF EXISTS `billinginput`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `billinginput` (
   `user_id_bill` int NOT NULL,
+  `username` varchar(20) NOT NULL,
   `tarif_listrik` varchar(50) DEFAULT NULL,
   `tagihan_listrik` int DEFAULT NULL,
   PRIMARY KEY (`user_id_bill`),
@@ -37,7 +38,7 @@ CREATE TABLE `billinginput` (
 
 LOCK TABLES `billinginput` WRITE;
 /*!40000 ALTER TABLE `billinginput` DISABLE KEYS */;
-INSERT INTO `billinginput` VALUES (2,'1300',1000000),(4,'900',700000);
+INSERT INTO `billinginput` VALUES (1,'admin','900',500000),(2,'reviandi','1300',1800000);
 /*!40000 ALTER TABLE `billinginput` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -73,15 +74,16 @@ DROP TABLE IF EXISTS `deviceinput`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `deviceinput` (
-  `user_id` int NOT NULL,
-  `device_id` int NOT NULL,
-  `device_name` varchar(50) NOT NULL,
-  `daya_device` float NOT NULL,
-  `jumlah_device` int NOT NULL,
-  `total_daya` float NOT NULL,
-  `tingkat_prioritas` varchar(50) NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `username` varchar(20) NOT NULL,
+  `device_id` int NOT NULL AUTO_INCREMENT,
+  `device_name` varchar(100) DEFAULT NULL,
+  `daya_device` float DEFAULT NULL,
+  `jumlah_device` int DEFAULT NULL,
+  `total_daya` float DEFAULT NULL,
+  `tingkat_prioritas` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`device_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -90,8 +92,34 @@ CREATE TABLE `deviceinput` (
 
 LOCK TABLES `deviceinput` WRITE;
 /*!40000 ALTER TABLE `deviceinput` DISABLE KEYS */;
-INSERT INTO `deviceinput` VALUES (4,3,'Lampu',0.01,8,0.08,'Medium'),(2,5,'Kipas',0.3,5,1.5,'Medium'),(2,6,'Komputer',0.6,1,0.6,'Very High');
+INSERT INTO `deviceinput` VALUES (2,'reviandi',1,'Komputer A',0.6,1,0.6,'Very High'),(2,'reviandi',2,'Komputer B',0.3,1,0.3,'Very High'),(2,'reviandi',3,'Stopkontak 5 Lubang',0.45,1,0.45,'High'),(2,'reviandi',4,'Printer',0.011,1,0.011,'High'),(2,'reviandi',5,'3D Printer',0.27,1,0.27,'Medium'),(2,'reviandi',6,'Dispenser',0.35,1,0.35,'Medium'),(2,'reviandi',7,'Lampu TL A 10W',0.01,8,0.08,'Low'),(2,'reviandi',8,'Stopkontak 3 Lubang',0.35,1,0.35,'Low'),(2,'reviandi',9,'LCD Proyektor',0.195,1,0.195,'Very Low'),(2,'reviandi',10,'Lampu TL B 10W',0.01,4,0.04,'Very Low'),(1,'admin',12,'Kipas',0.1,3,0.3,'High'),(1,'admin',24,'Televisi',0.4,1,0.4,'Low');
 /*!40000 ALTER TABLE `deviceinput` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `hasil_penjadwalan`
+--
+
+DROP TABLE IF EXISTS `hasil_penjadwalan`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `hasil_penjadwalan` (
+  `user_id` bigint DEFAULT NULL,
+  `device_id` bigint DEFAULT NULL,
+  `durasi` int DEFAULT NULL,
+  `tanggal` text,
+  `waktu` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hasil_penjadwalan`
+--
+
+LOCK TABLES `hasil_penjadwalan` WRITE;
+/*!40000 ALTER TABLE `hasil_penjadwalan` DISABLE KEYS */;
+INSERT INTO `hasil_penjadwalan` VALUES (1,12,19,'11-06-2022','16:48:03'),(1,24,9,'11-06-2022','16:48:03'),(2,1,24,'11-06-2022','16:48:04'),(2,2,24,'11-06-2022','16:48:04'),(2,3,17,'11-06-2022','16:48:04'),(2,4,19,'11-06-2022','16:48:04'),(2,5,14,'11-06-2022','16:48:04'),(2,6,14,'11-06-2022','16:48:04'),(2,7,9,'11-06-2022','16:48:04'),(2,8,6,'11-06-2022','16:48:04'),(2,9,2,'11-06-2022','16:48:04'),(2,10,4,'11-06-2022','16:48:04');
+/*!40000 ALTER TABLE `hasil_penjadwalan` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -133,4 +161,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-06-02 19:18:18
+-- Dump completed on 2022-06-11 16:55:29
