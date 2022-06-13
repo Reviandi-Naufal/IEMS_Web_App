@@ -1,12 +1,19 @@
-# IEMS_Web_App
+# Intenlligent Energy Management Sytem (IEMS) Web App
 
-Folder webTA merupakan folder virtual environment.<br>
-Folder FLask_TA merupakan folder tempat file flask<br>
+Folder FLask_Blog merupakan folder tempat file flask dan semua kerangkanya<br>
 
-Cara run webnya secara lokal :
+Langkah Membuka IEMS Web App:
+- Install git windows atau github dekstop(preferable karena lebih mudah digunakan)
+- fork project ini ke device local kalian
+- install anaconda jika belum terinstall
 - Buka anaconda prompt
-- cd Ke folder tempat save repository ini
-- Masuk ke virtual environment dengan ketik webTA\Scripts\activate
-- Masuk ke folder FLask_Blog dengan cd FLask_Blog
-- Kalau mau run webnya keitk python run.py
+- masuk Ke folder tempat save repository ini menggunakan command ```cd```
+- setelah masuk kedalam folder IEMS_Web_App  buat virtual environment
+```conda create --name webTA python=3.9 anaconda```
+- setelah venv terbuat, masuk kedalam venv
+```conda activate webTa```
+- setelah bacaan (webTA) muncul di paling kiri, install semua package yang diperlukan
+```pip install -r requirements.txt```
+- bila sudah selesai, masuk kedalam folder FLask_Blog
+- Run webnya dengan command ```python run.py```
 
