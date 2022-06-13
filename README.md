@@ -9,7 +9,7 @@ Langkah Membuka IEMS Web App:
 - Buka anaconda prompt
 - masuk Ke folder tempat save repository ini menggunakan command ```cd```
 - setelah masuk kedalam folder IEMS_Web_App  buat virtual environment
-```conda create --name webTA python=3.9 anaconda```
+```conda create --name webTA python=3.9```
 - setelah venv terbuat, masuk kedalam venv
 ```conda activate webTa```
 - setelah bacaan (webTA) muncul di paling kiri, install semua package yang diperlukan
