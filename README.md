@@ -8,12 +8,9 @@ Langkah Membuka IEMS Web App:
 - install anaconda jika belum terinstall
 - Buka anaconda prompt
 - masuk Ke folder tempat save repository ini menggunakan command ```cd```
-- setelah masuk kedalam folder IEMS_Web_App  buat virtual environment
-```conda create --name webTA python=3.9```
+- setelah masuk kedalam folder IEMS_Web_App  buat virtual environment ```conda env create -f requirements.yaml```
 - setelah venv terbuat, masuk kedalam venv
 ```conda activate webTa```
-- setelah bacaan (webTA) muncul di paling kiri, install semua package yang diperlukan
-```pip install -r requirements.txt```
 - bila sudah selesai, masuk kedalam folder FLask_Blog
 - Run webnya dengan command ```python run.py```
 
