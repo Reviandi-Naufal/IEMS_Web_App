@@ -13,20 +13,6 @@ from flask_login import login_user, current_user, logout_user, login_required
 def home():
     return render_template('home.html')
 
-@app.route("/register", methods=['GET', 'POST'])
-def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('home'))
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        db.session.add(user)
-        db.session.commit()
-        flash(f'Account created for {form.username.data}!', 'success')
-        return redirect(url_for('login'))
-    return render_template('register.html', title='Register', form=form)
-
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
