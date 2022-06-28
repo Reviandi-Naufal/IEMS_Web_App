@@ -47,6 +47,7 @@ def save_picture(form_picture):
 @app.route("/dashboard")
 @login_required
 def dashboard():
+    
     return render_template('dashboard.html')
 
 @app.route("/account", methods=['GET', 'POST'])
