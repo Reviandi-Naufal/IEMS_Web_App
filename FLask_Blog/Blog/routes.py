@@ -2,9 +2,9 @@ import os
 import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
-from Blog import app, db, bcrypt
-from Blog.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from Blog.database import User, billinginput, deviceinput
+from apps import app, db, bcrypt
+from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
+from apps.database import User, billinginput, deviceinput, real_data
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -29,7 +29,7 @@ def login():
 @app.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('login'))
 
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
@@ -43,12 +43,6 @@ def save_picture(form_picture):
     i.save(picture_path)
 
     return picture_fn
-
-@app.route("/dashboard")
-@login_required
-def dashboard():
-    
-    return render_template('dashboard.html')
 
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
@@ -68,6 +62,73 @@ def account():
         form.email.data = current_user.email
     image_file = url_for('static', filename='img/' + current_user.image_file)
     return render_template('account.html', image_file=image_file, form=form)
+
+@app.route("/dashboard/")
+@login_required
+def dashboard():
+    page_num = request.args.get('page_num')
+    search_date = request.args.get('search_by_date')
+    print(f"search by date {search_date}")
+    page_num = int(page_num) if page_num else 1
+    if search_date :
+        realdata = real_data\
+                    .query\
+                    .filter(real_data.Date.contains(search_date))\
+                    .paginate(
+                        page=page_num,
+                        per_page=25,
+                        max_per_page=50,
+                        error_out=False
+                    )           
+    else:
+        print(f"page num -> {page_num}")
+        realdata = real_data\
+             .query\
+             .order_by(real_data.Index.desc())\
+             .paginate(
+                 page=page_num,
+                 per_page=25,
+                 max_per_page=50,
+                 error_out=False
+             )
+
+    result = {
+        "total_records": realdata.total,
+        "page": realdata.page,
+        "items": realdata.items
+    }
+    return render_template('dashboard.html',data=realdata)
+
+@app.route("/algoritma1")
+@login_required
+def algoritma1():
+    return render_template('algoritma1.html')
+
+@app.route("/algoritma2")
+@login_required
+def algoritma2():
+    return render_template('algoritma2.html')
+
+@app.route("/algoritma3")
+@login_required
+def algoritma3():
+    return render_template('algoritma3.html')
+
+@app.route("/algoritma4")
+@login_required
+def algoritma4():
+    return render_template('algoritma4.html')
+
+@app.route("/clustering")
+@login_required
+def clustering():
+    return render_template('clustering.html')
+
+@app.route("/compare")
+@login_required
+def compare():
+    return render_template('compare.html')
+
 
 @app.route("/schedule_appliance")
 @login_required

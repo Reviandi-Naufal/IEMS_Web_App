@@ -1,11 +1,13 @@
 from datetime import datetime
-from Blog import db, login_manager, app
+from apps import db, login_manager, app
 from flask_login import UserMixin
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+#####################################################################################
+# Creating Model Tabel for User
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
@@ -17,6 +19,72 @@ class User(db.Model, UserMixin):
     #setting __repr__ method, it's to define how the object is printed out whenever it get printed out
     def __repr__(self):
         return f"User('{self.username}', '{self.email}','{self.image_file}')"
+
+#####################################################################################
+# Creating Model table for Actual Data
+class real_data(db.Model):
+    Index = db.Column(db.Integer, primary_key=True)
+    Date = db.Column(db.Text)
+    Time = db.Column(db.Text)
+    Kwh = db.Column(db.Float)
+
+    def __init__(self):
+        return{
+            'Index' : self.Index,
+            'Date' : self.Date,
+            'Time' : self.Time,
+            'Kwh' : self.Kwh
+        }
+        
+
+#####################################################################################
+# Creating Model table for Prediction
+class RNN_data_predicted(db.Model):
+    DateTime = db.Column(db.DateTime, primary_key=True)
+    Kwh = db.Column(db.Float)
+    Predictions = db.Column(db.Float)
+
+class GRU_data_predicted(db.Model):
+    DateTime = db.Column(db.DateTime, primary_key=True)
+    Kwh = db.Column(db.Float)
+    Predictions = db.Column(db.Float)
+
+class LMU_data_predicted(db.Model):
+    DateTime = db.Column(db.DateTime, primary_key=True)
+    Kwh = db.Column(db.Float)
+    Predictions = db.Column(db.Float)
+
+class TCN_data_predicted(db.Model):
+    DateTime = db.Column(db.DateTime, primary_key=True)
+    Kwh = db.Column(db.Float)
+    Predictions = db.Column(db.Float)
+
+#####################################################################################
+# Creating Model Table for Clusttering
+
+#class monitor(db.Model):
+#    Id_gedung = db.Column(db.Integer)
+#    Kwh = db.Column(db.Float)
+#    Date = db.Column(db.Date)
+
+class Monitoring(db.Model):
+    Gedung = db.Column(db.Integer, primary_key=True)
+    Kwh = db.Column(db.Float)
+    Date = db.Column(db.DateTime)
+
+#class pemantauan(db.Model):
+#    Tanggal = db.Column(db.DateTime)
+#    Alat = db.Column(db.Integer)
+#    Kwh = db.Column(db.Float)
+
+class Gedung(db.Model):
+    id = db.Column(db. Integer, primary_key=True)
+    pj = db.Column(db.String(45))
+    Nama = db.Column(db.String(45))
+    Lokasi = db.Column(db.String(45))
+    Deleted = db.Column(db.String(45))
+
+#####################################################################################
 
 class billinginput(db.Model):
     user_id_bill = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
