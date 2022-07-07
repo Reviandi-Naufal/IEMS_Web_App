@@ -19,6 +19,14 @@ class User(db.Model, UserMixin):
     #setting __repr__ method, it's to define how the object is printed out whenever it get printed out
     def __repr__(self):
         return f"User('{self.username}', '{self.email}','{self.image_file}')"
+    
+    def to_dict(self):
+        return {
+            'id' : self.id,
+            'username': self.username,
+            'email': self.email,
+            'user_type': self.user_type,
+        }
 
 #####################################################################################
 # Creating Model table for Actual Data
@@ -30,6 +38,14 @@ class real_data(db.Model):
 
     def __init__(self):
         return{
+            'Index' : self.Index,
+            'Date' : self.Date,
+            'Time' : self.Time,
+            'Kwh' : self.Kwh
+        }
+    
+    def to_dict(self):
+        return {
             'Index' : self.Index,
             'Date' : self.Date,
             'Time' : self.Time,

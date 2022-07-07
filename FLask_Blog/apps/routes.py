@@ -66,38 +66,84 @@ def account():
 @app.route("/dashboard/")
 @login_required
 def dashboard():
-    page_num = request.args.get('page_num')
-    search_date = request.args.get('search_by_date')
-    print(f"search by date {search_date}")
-    page_num = int(page_num) if page_num else 1
-    if search_date :
-        realdata = real_data\
-                    .query\
-                    .filter(real_data.Date.contains(search_date))\
-                    .paginate(
-                        page=page_num,
-                        per_page=25,
-                        max_per_page=50,
-                        error_out=False
-                    )           
-    else:
-        print(f"page num -> {page_num}")
-        realdata = real_data\
-             .query\
-             .order_by(real_data.Index.desc())\
-             .paginate(
-                 page=page_num,
-                 per_page=25,
-                 max_per_page=50,
-                 error_out=False
-             )
+    # page_num = request.args.get('page_num')
+    # search_date = request.args.get('search_by_date')
+    # print(f"search by date {search_date}")
+    # page_num = int(page_num) if page_num else 1
+    # if search_date :
+    #     realdata = real_data\
+    #                 .query\
+    #                 .filter(real_data.Date.contains(search_date))\
+    #                 .paginate(
+    #                     page=page_num,
+    #                     per_page=25,
+    #                     max_per_page=50,
+    #                     error_out=False
+    #                 )           
+    # else:
+    #     print(f"page num -> {page_num}")
+    #     realdata = real_data\
+    #          .query\
+    #          .order_by(real_data.Index.desc())\
+    #          .paginate(
+    #              page=page_num,
+    #              per_page=25,
+    #              max_per_page=50,
+    #              error_out=False
+    #          )
 
-    result = {
-        "total_records": realdata.total,
-        "page": realdata.page,
-        "items": realdata.items
+    # result = {
+    #     "total_records": realdata.total,
+    #     "page": realdata.page,
+    #     "items": realdata.items
+    # }
+    # return render_template('dashboard.html',data=realdata)
+    return render_template('dashboard.html')
+
+@app.route('/api/data')
+def data():
+    query = real_data.query
+
+    # search filter
+    search = request.args.get('search[value]')
+    if search:
+        query = query.filter(db.or_(
+            real_data.Date.like(f'%{search}%'),
+            real_data.Time.like(f'%{search}%')
+        ))
+    total_filtered = query.count()
+
+    # sorting
+    order = []
+    i = 0
+    while True:
+        col_index = request.args.get(f'order[{i}][column]')
+        if col_index is None:
+            break
+        col_name = request.args.get(f'columns[{col_index}][data]')
+        if col_name not in ['Date', 'Time', 'Kwh']:
+            col_name = 'Date'
+        descending = request.args.get(f'order[{i}][dir]') == 'desc'
+        col = getattr(real_data, col_name)
+        if descending:
+            col = col.desc()
+        order.append(col)
+        i += 1
+    if order:
+        query = query.order_by(*order)
+
+    # pagination
+    start = request.args.get('start', type=int)
+    length = request.args.get('length', type=int)
+    query = query.offset(start).limit(length)
+
+    # response
+    return {
+        'data': [real_data.to_dict() for real_data in query],
+        'recordsFiltered': total_filtered,
+        'recordsTotal': real_data.query.count(),
+        'draw': request.args.get('draw', type=int),
     }
-    return render_template('dashboard.html',data=realdata)
 
 @app.route("/algoritma1")
 @login_required
