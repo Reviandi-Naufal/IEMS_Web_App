@@ -28,6 +28,8 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
   </head>
 
   <body>
@@ -345,20 +347,30 @@
     <!-- Template Main JS File -->
     <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 
-    <script>
-      $(document).ready(function () {
-        $('#realdata').DataTable({
-          pagingType:'full_numbers',
-          ajax: '/api/data',
-          serverSide: true,
-          columns: [
-            {data: 'Index'},
-            {data: 'Date'},
-            {data: 'Time'},
-            {data: 'Kwh'}
-          ],
+      <!-- Template for datatables -->
+      <script>
+        $(document).ready(function () {
+          $('#realdata').DataTable({
+            pagingType:'full_numbers',
+            ajax: '/api/data',
+            serverSide: true,
+            columns: [
+              {data: 'Index'},
+              {data: 'Date'},
+              {data: 'Time'},
+              {data: 'Kwh'}
+            ],
+          });
+          options: {
+            responsive: true
+          }
         });
-      });
-    </script>
+      </script>
+
+    <!-- Template Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='assets/js/echarts.js') }}"></script>
+    <script src="{{ url_for('static', filename='linechart.js') }}"></script>
+    
   </body>
 </html>

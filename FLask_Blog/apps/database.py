@@ -1,6 +1,7 @@
 from datetime import datetime
-from apps import db, login_manager, app
+from apps import db, ma, login_manager, app
 from flask_login import UserMixin
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -52,6 +53,11 @@ class real_data(db.Model):
             'Kwh' : self.Kwh
         }
         
+class real_dataSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = real_data
+        created_at = auto_field(dump_only=True)
+
 
 #####################################################################################
 # Creating Model table for Prediction

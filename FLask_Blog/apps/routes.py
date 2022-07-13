@@ -1,10 +1,10 @@
 import os
 import secrets
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, jsonify
 from apps import app, db, bcrypt
 from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from apps.database import User, billinginput, deviceinput, real_data
+from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -66,6 +66,10 @@ def account():
 @app.route("/dashboard/")
 @login_required
 def dashboard():
+    # realdata = real_data.query.all()
+    # labels = real_data.query.with_entities(real_data.Date).all()
+    # values = real_data.query.with_entities(real_data.Kwh).all()
+    return render_template('dashboard.html')
     # page_num = request.args.get('page_num')
     # search_date = request.args.get('search_by_date')
     # print(f"search by date {search_date}")
@@ -98,9 +102,23 @@ def dashboard():
     #     "items": realdata.items
     # }
     # return render_template('dashboard.html',data=realdata)
-    return render_template('dashboard.html')
+
+@app.route('/get_data_lineChart')
+@login_required
+def get_data_lineChart():
+    # labels = real_data.query.with_entities(real_data.Date).all()
+    # values = real_data.query.with_entities(real_data.Kwh).all()
+    
+    # labels_data = json.dumps(real_data.serialize_list(labels))
+    # values_data = json.dumps(real_data.serialize_list(values))
+
+    lineChartData = real_data.query.with_entities(real_data.Date, real_data.Kwh)
+    lineChartData_schema = real_dataSchema(many=True)
+    output = lineChartData_schema.dump(lineChartData)
+    return jsonify(output)
 
 @app.route('/api/data')
+@login_required
 def data():
     query = real_data.query
 
@@ -121,7 +139,7 @@ def data():
         if col_index is None:
             break
         col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['Date', 'Time', 'Kwh']:
+        if col_name not in ['Index', 'Date', 'Time', 'Kwh']:
             col_name = 'Date'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
         col = getattr(real_data, col_name)
