@@ -2,16 +2,16 @@ $.ajax({
     type: "GET",
     url: "http://127.0.0.1:5000/get_data_lineChart",
     success: function (response) {
-      var objectKwh = response
+      var objectData = response
       console.log(
-        objectKwh,
-        typeof(objectKwh)
+        objectData,
+        typeof(objectData)
       )
-      var select = Object.values(response)
-      var dataSumbuX = Object.keys(select)
-      var dataSumbuY = Object.values(select.Date)
-      var dataCoba = Object.values(select)
-      console.log(dataSumbuY)
+      // var select = Object.values(response)
+      var dataSumbuX = objectData.datetime
+      var dataSumbuY = objectData.Kwh
+      // var dataCoba = Object.values(select)
+      // console.log(dataSumbuY)
       buatLineChart(dataSumbuX, dataSumbuY)
       
     }

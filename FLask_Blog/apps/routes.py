@@ -113,10 +113,17 @@ def get_data_lineChart():
     # labels_data = json.dumps(real_data.serialize_list(labels))
     # values_data = json.dumps(real_data.serialize_list(values))
 
-    lineChartData = real_data.query.with_entities(real_data.Date, real_data.Kwh)
-    lineChartData_schema = real_dataSchema(many=True)
-    output = lineChartData_schema.dump(lineChartData)
-    return jsonify(output)
+    # lineChartData = real_data.query.with_entities(real_data.Date, real_data.Time, real_data.Kwh)
+    lineChartData = real_data.query.all()
+    datetime = []
+    kwh = []
+    for i in range(len(lineChartData)):
+        datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
+        kwh.append(lineChartData[i].Kwh)
+    output_line = {"datetime": datetime, "Kwh" : kwh}
+    # lineChartData_schema = real_dataSchema(many=True)
+    # output = lineChartData_schema.dump(lineChartData)
+    return jsonify(output_line)
 
 @app.route('/api/data')
 @login_required
