@@ -146,7 +146,11 @@ def data():
         'draw': request.args.get('draw', type=int),
     }
 
-
+@app.route('/linedatareal')
+def line():
+    line_labels=real_data
+    line_values=real_data
+    return render_template('dashboard.html', labels=line_labels, values=line_values)
 
 
 @app.route("/algoritma1")
