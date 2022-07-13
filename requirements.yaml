@@ -26,6 +26,7 @@ dependencies:
     - flask-login==0.6.1
     - flask-sqlalchemy==2.5.1
     - flask-wtf==1.0.0
+    - flask-restx
     - greenlet==1.1.2
     - idna==3.3
     - importlib-metadata==4.11.4

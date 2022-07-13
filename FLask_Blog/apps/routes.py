@@ -8,6 +8,7 @@ from apps.database import User, billinginput, deviceinput, real_data, real_dataS
 from flask_login import login_user, current_user, logout_user, login_required
 
 
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -162,6 +163,13 @@ def data():
         'recordsTotal': real_data.query.count(),
         'draw': request.args.get('draw', type=int),
     }
+
+@app.route('/linedatareal')
+def line():
+    line_labels=real_data
+    line_values=real_data
+    return render_template('dashboard.html', labels=line_labels, values=line_values)
+
 
 @app.route("/algoritma1")
 @login_required
@@ -355,3 +363,5 @@ def deleteUser(id):
     flash("User Deleted Successfully", 'success')
  
     return redirect(url_for('admin'))
+
+    app.register_blueprint(blueprint, url_prefix="/api")
