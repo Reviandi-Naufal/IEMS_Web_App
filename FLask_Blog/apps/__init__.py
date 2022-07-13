@@ -7,7 +7,7 @@ from flask_login import LoginManager
 app = Flask(__name__)
 app.secret_key = "geekscoderssecretkey"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:Ismilelabn209!!@172.23.142.168:3306/db_ismile' # Connect to Database Server
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://root:root@localhost:3306/i-smile' # Connect to Database Server
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://root:MilitenSire360@localhost:3306/db_ismile' # Connect to Database Server
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 bcrypt = Bcrypt(app)
