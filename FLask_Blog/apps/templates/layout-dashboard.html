@@ -350,41 +350,52 @@
     <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
 
-<<<<<<< HEAD
-      <!-- Template for datatables -->
-      <script>
-        $(document).ready(function () {
-          $('#realdata').DataTable({
-            pagingType:'full_numbers',
-            ajax: '/api/data',
-            serverSide: true,
-            columns: [
-              {data: 'Index'},
-              {data: 'Date'},
-              {data: 'Time'},
-              {data: 'Kwh'}
-            ],
-          });
-          options: {
-            responsive: true
-          }
-=======
+    <!-- Template for datatables -->
     <script>
       $(document).ready(function () {
         $('#realdata').DataTable({
           pagingType: 'full_numbers',
           ajax: '/api/data',
           serverSide: true,
-          responsive: true,
           columns: [{ data: 'Index' }, { data: 'Date' }, { data: 'Time' }, { data: 'Kwh' }],
->>>>>>> 6e9fd3ac68b230973c56cc83568f31740eb5ac40
         });
-      </script>
+        options: {
+          responsive: true;
+        }
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        $('#billing').DataTable({
+          pagingType: 'full_numbers',
+          ajax: '/api/billing',
+          serverSide: true,
+          columns: [{ data: 'user_id_bill' }, { data: 'username' }, { data: 'tarif_listrik' }, { data: 'tagihan_listrik' }],
+        });
+        options: {
+          responsive: true;
+        }
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        $('#appliance').DataTable({
+          pagingType: 'full_numbers',
+          ajax: '/api/appliance',
+          serverSide: true,
+          columns: [{ data: 'user_id' }, { data: 'device_id' }, { data: 'daya_device' }, { data: 'tingkat_prioritas' }],
+        });
+        options: {
+          responsive: true;
+        }
+      });
+    </script>
 
     <!-- Template Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ url_for('static', filename='assets/js/echarts.js') }}"></script>
     <script src="{{ url_for('static', filename='linechart.js') }}"></script>
-    
   </body>
 </html>

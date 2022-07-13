@@ -213,6 +213,52 @@ def schedule_appliance():
         all_billing = billinginput.query.all()
     return render_template("scheduling.html", Devices=all_data, Billing=all_billing)
 
+@app.route('/api/billing')
+@login_required
+def billing():
+    query = billinginput.query
+
+    # search filter
+    search = request.args.get('search[value]')
+    if search:
+        query = query.filter(db.or_(
+            billinginput.username.like(f'%{search}%'),
+            billinginput.tarif_listrik.like(f'%{search}%')
+        ))
+    total_filtered = query.count()
+
+    # sorting
+    order = []
+    i = 0
+    while True:
+        col_index = request.args.get(f'order[{i}][column]')
+        if col_index is None:
+            break
+        col_name = request.args.get(f'columns[{col_index}][data]')
+        if col_name not in ['User ID', 'Username', 'Daya Listrik', 'Tagihan Listrik(RP)']:
+            col_name = 'username'
+        descending = request.args.get(f'order[{i}][dir]') == 'desc'
+        col = getattr(billinginput, col_name)
+        if descending:
+            col = col.desc()
+        order.append(col)
+        i += 1
+    if order:
+        query = query.order_by(*order)
+
+    # pagination
+    start = request.args.get('start', type=int)
+    length = request.args.get('length', type=int)
+    query = query.offset(start).limit(length)
+
+    # response
+    return {
+        'data': [billinginput.to_dict() for billinginput in query],
+        'recordsFiltered': total_filtered,
+        'recordsTotal': billinginput.query.count(),
+        'draw': request.args.get('draw', type=int),
+    }
+
 # this route is for inserting billing data
 # to mysql database via html forms
 @app.route('/insertBilling', methods=['POST'])
@@ -282,6 +328,51 @@ def insertDevice():
  
         return redirect(url_for('schedule_appliance'))
 
+@app.route('/api/appliance')
+@login_required
+def appliance():
+    query = deviceinput.query
+
+    # search filter
+    search = request.args.get('search[value]')
+    if search:
+        query = query.filter(db.or_(
+            deviceinput.username.like(f'%{search}%'),
+            deviceinput.tarif_listrik.like(f'%{search}%')
+        ))
+    total_filtered = query.count()
+
+    # sorting
+    order = []
+    i = 0
+    while True:
+        col_index = request.args.get(f'order[{i}][column]')
+        if col_index is None:
+            break
+        col_name = request.args.get(f'columns[{col_index}][data]')
+        if col_name not in ['User ID', 'Device ID', 'Device Name', 'Tingkat Prioritas']:
+            col_name = 'username'
+        descending = request.args.get(f'order[{i}][dir]') == 'desc'
+        col = getattr(deviceinput, col_name)
+        if descending:
+            col = col.desc()
+        order.append(col)
+        i += 1
+    if order:
+        query = query.order_by(*order)
+
+    # pagination
+    start = request.args.get('start', type=int)
+    length = request.args.get('length', type=int)
+    query = query.offset(start).limit(length)
+
+    # response
+    return {
+        'data': [deviceinput.to_dict() for deviceinput in query],
+        'recordsFiltered': total_filtered,
+        'recordsTotal': deviceinput.query.count(),
+        'draw': request.args.get('draw', type=int),
+    }
 
 #this is our update route where we are going to update our employee
 @app.route('/updateDevice', methods = ['GET', 'POST'])

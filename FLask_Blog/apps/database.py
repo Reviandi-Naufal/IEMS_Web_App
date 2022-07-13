@@ -119,7 +119,22 @@ class billinginput(db.Model):
         self.username = username
         self.tarif_listrik = tarifListrik
         self.tagihan_listrik = tagihanListrik
- 
+
+        return {
+            'user_id_bill' : self.user_id_bill,
+            'username' : self.username,
+            'tarif_listrik' : self.tarif_listrik,
+            'tagihan_listrik' : self.tagihan_listrik
+        }
+
+    def to_dict(self):
+        return {
+            'user_id_bill' : self.user_id_bill,
+            'username' : self.username,
+            'tarif_listrik' : self.tarif_listrik,
+            'tagihan_listrik' : self.tagihan_listrik
+        }
+
 # Creating model table for our CRUD database
 class deviceinput(db.Model):
     user_id = db.Column(db.Integer)
@@ -140,6 +155,31 @@ class deviceinput(db.Model):
         self.jumlah_device = jumlah_device
         self.total_daya = total_daya
         self.tingkat_prioritas = prioritas
+
+        return {
+            'user_id' : self.user_id,
+            'username' : self.username,
+            'device_id' : self.device_id,
+            'device_name' : self.device_name,
+            'daya_device' : self.daya_device,
+            'jumlah_device' : self.jumlah_device,
+            'total_daya' : self.total_daya,
+            'tingkat_prioritas' : self.tingkat_prioritas,
+
+        }
+
+    def to_dict(self):
+        return {
+            'user_id' : self.user_id,
+            'username' : self.username,
+            'device_id' : self.device_id,
+            'device_name' : self.device_name,
+            'daya_device' : self.daya_device,
+            'jumlah_device' : self.jumlah_device,
+            'total_daya' : self.total_daya,
+            'tingkat_prioritas' : self.tingkat_prioritas,
+
+        }
 
 class device_status(db.Model):
     device_id = db.Column(db.Integer, nullable=False, primary_key=True)
