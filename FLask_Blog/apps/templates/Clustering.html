@@ -1,0 +1,385 @@
+{% extends 'layout-dashboard.html'%}{%block title %} Dashboard - Actual Data{% endblock %}{%block content%}
+
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/dashboard">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li>
+    <!-- End Dashboard Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Prediction</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+      <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="/algoritma1"> <i class="bi bi-circle"></i><span>Algoritma 1</span> </a>
+        </li>
+        <li>
+          <a href="/algoritma2"> <i class="bi bi-circle"></i><span>Algoritma 2</span> </a>
+        </li>
+        <li>
+          <a href="/algoritma3"> <i class="bi bi-circle"></i><span>Algoritma 3</span> </a>
+        </li>
+        <li>
+          <a href="/algoritma4"> <i class="bi bi-circle"></i><span>Algoritma 4</span> </a>
+        </li>
+        <li>
+          <a href="#"> <i class="bi bi-circle"></i><span>Algoritma 5</span> </a>
+        </li>
+        <li>
+          <a href="#"> <i class="bi bi-circle"></i><span>Algoritma 6</span> </a>
+        </li>
+      </ul>
+    </li>
+    <!-- End Prediction Nav -->
+    <li class="nav-item">
+      <a class="nav-link" href="/clustering"> <i class="bi bi-journal-text"></i><span>Clustering</span></a>
+      <!-- 
+  <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+    <li>
+      <a href="/clustering"> <i class="bi bi-circle"></i><span>#</span> </a>
+    </li>
+    <li>
+      <a href="#"> <i class="bi bi-circle"></i><span>#</span> </a>
+    </li>
+    <li>
+      <a href="#"> <i class="bi bi-circle"></i><span>#</span> </a>
+    </li>
+    <li>
+      <a href="#"> <i class="bi bi-circle"></i><span>#</span> </a>
+    </li>
+  </ul>
+  -->
+    </li>
+    <!-- End Clustering Nav -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/schedule_appliance"> <i class="bi bi-layout-text-window-reverse"></i><span>Scheduling</span> </a>
+      <!--
+  <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+    <li>
+      <a href="#"> <i class="bi bi-circle"></i><span>#</span> </a>
+    </li>
+    <li>
+      <a href="#"> <i class="bi bi-circle"></i><span>#</span> </a>
+    </li>
+  </ul>
+  -->
+    </li>
+    <!-- End Schedule Nav -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#"> <i class="bi bi-bar-chart"></i><span>Compare</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+      <ul id="charts-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="#"> <i class="bi bi-circle"></i><span>#</span> </a>
+        </li>
+        <li>
+          <a href="#"> <i class="bi bi-circle"></i><span>#</span> </a>
+        </li>
+        <li>
+          <a href="#"> <i class="bi bi-circle"></i><span>#</span> </a>
+        </li>
+      </ul>
+    </li>
+    <!-- End Compare Nav -->
+  </ul>
+</aside>
+
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Dashboard Clustering</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Clustering</li>
+      </ol>
+    </nav>
+  </div>
+  <!-- End Page Title -->
+  <section class="section dashboard">
+    <div class="">
+      <!-- Left side columns -->
+      <div class="">
+        <div class="row">
+          <!-- Sales Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">KWH <span>| Today</span></h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <!--<i class="bi bi-cart"></i>-->
+                  </div>
+                  <div class="ps-3">
+                    <h6>145</h6>
+                    <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Sales Card -->
+          <!-- Revenue Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">KWH <span>| This Month</span></h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <!--<i class="bi bi-currency-dollar"></i>-->
+                  </div>
+                  <div class="ps-3">
+                    <h6>3,264</h6>
+                    <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Revenue Card -->
+          <!-- Customers Card -->
+          <div class="col-xxl-4 col-xl-12">
+            <div class="card info-card customers-card">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">KWH <span>| This Year</span></h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <!--<i class="bi bi-people"></i>-->
+                  </div>
+                  <div class="ps-3">
+                    <h6>1244</h6>
+                    <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Customers Card -->
+          <!-- Reports -->
+          <div class="col-12">
+            <div class="card">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Reports <span>/Today</span></h5>
+                <!-- Line Chart -->
+                <canvas id="lineChart" style="max-height: 500px"></canvas>
+                <script>
+                  document.addEventListener('DOMContentLoaded', () => {
+                    new Chart(document.querySelector('#polarAreaChart'), {
+                      type: 'polarArea',
+                      data: {
+                        labels: ['Red', 'Green', 'Yellow', 'Grey', 'Blue'],
+                        datasets: [
+                          {
+                            label: 'My First Dataset',
+                            data: [11, 16, 7, 3, 14],
+                            backgroundColor: ['rgb(255, 99, 132)', 'rgb(75, 192, 192)', 'rgb(255, 205, 86)', 'rgb(201, 203, 207)', 'rgb(54, 162, 235)'],
+                          },
+                        ],
+                      },
+                    });
+                  });
+                </script>
+                <!-- End Line Chart -->
+              </div>
+            </div>
+          </div>
+          <!-- End Reports -->
+
+          <!-- Manage Billing -->
+          <div class="col-12">
+            <div class="card recent-sales overflow-auto">
+              <div class="card-body">
+                <div class="row">
+                  <h5 class="card-title-table">
+                    Manage <span>| Gedung</span>
+                    <button type="button" class="btn btn-primary rounded-pill float-right" data-bs-target="#modalAddbill" data-bs-toggle="modal">Add Gedung</button>
+                  </h5>
+                  <table id="billing" class="table table-striped table-borderless dataTable">
+                    <thead>
+                      <tr>
+                        <th scope="col">User ID</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Daya Listrik</th>
+                        <th scope="col">Tagihan Listrik(Rp)</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <nav></nav>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Manage Billing -->
+          <!-- Modal Add Billing-->
+          <div class="modal fade" id="modalAddbill" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form id="contact" action="{{url_for('insertBilling')}}" method="POST">
+                  <div class="modal-header">
+                    <div class="section-heading">
+                      <h6>Add Electrical Billing</h6>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label>Tarif Listrik (VA):</label>
+                      <select class="form-select" aria-label="Default select example" name="tarif_listrik" id="tarif_listrik" required>
+                        <option selected>Open this select menu</option>
+                        <option value="900">900 VA</option>
+                        <option value="1300">1.300 VA</option>
+                        <option value="2200">2.200 VA</option>
+                        <option value="3500-5500">3.500-5500 VA</option>
+                        <option value="6600 ke atas">lebih dari sama dengan 6.600</option>
+                      </select>
+                    </div>
+                    <div class="mb-3">
+                      <label>Tagihan Listrik Bulanan (dalam rupiah tanpa titik):</label>
+                      <input class="form-control" name="tagihan_listrik" required="1" type="number" />
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <fieldset>
+                      <button type="submit" id="form-submit" class="btn btn-primary">Add Billing</button>
+                    </fieldset>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal Add Billing -->
+          <!-- Manage Appliance -->
+          <div class="col-12">
+            <div class="card recent-sales overflow-auto">
+              <div class="card-body">
+                <div class="row">
+                  <h5 class="card-title-table">
+                    Manage <span>| Device</span>
+                    <button type="button" class="btn btn-primary rounded-pill float-right" data-bs-target="#modalAddappliace" data-bs-toggle="modal">Add New Device</button>
+                  </h5>
+                  <table id="appliance" class="table table-striped table-borderless dataTable">
+                    <thead>
+                      <tr>
+                        <th scope="col">User ID</th>
+                        <th scope="col">Device ID</th>
+                        <th scope="col">Daya Device</th>
+                        <th scope="col">Tingkat Prioritas</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <nav></nav>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Manage Appliance -->
+          <!-- Modal Add Appliance-->
+          <div class="modal fade" id="modalAddappliace" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form id="contact" action="{{url_for('insertDevice')}}" method="POST">
+                  <div class="modal-header">
+                    <div class="section-heading">
+                      <h6>Add Device</h6>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label>Device ID:</label>
+                      <input class="form-control" name="device_id" type="number" required />
+                    </div>
+                    <div class="mb-3">
+                      <label>Device Name:</label>
+                      <input class="form-control" name="device_name" type="text" required />
+                    </div>
+                    <div class="mb-3">
+                      <label>Daya Satu Device (dalam satuan kWh):</label>
+                      <input class="form-control" name="daya_device" type="number" step="any" required />
+                    </div>
+                    <div class="mb-3">
+                      <label for="">Jumlah Device</label>
+                      <input class="form-control" name="jumlah_device" type="number" required />
+                    </div>
+                    <div class="mb-3">
+                      <label for="prioritas">Tingkat Prioritas:</label>
+                      <select class="form-select" aria-label="Default select example" name="prioritas" id="priority" required>
+                        <option selected>Open this select menu</option>
+                        <option value="Very High">Very High</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                        <option value="Very Low">Very Low</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <fieldset>
+                      <button type="submit" id="form-submit" class="btn btn-primary">Add Device</button>
+                    </fieldset>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- End Modal Add Appliance -->
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<!-- End Main -->
+
+{% endblock %}
