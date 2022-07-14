@@ -397,25 +397,5 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ url_for('static', filename='assets/js/echarts.js') }}"></script>
     <script src="{{ url_for('static', filename='linechart.js') }}"></script>
-    
-      <!-- Template for datatables -->
-    <script>
-      $(document).ready(function () {
-        $('#realdata').DataTable({
-          pagingType:'full_numbers',
-          ajax: '/api/data',
-          serverSide: true,
-          columns: [
-            {data: 'Index'},
-            {data: 'Date'},
-            {data: 'Time'},
-            {data: 'Kwh'}
-          ],
-        });
-        options: {
-          responsive: true
-        }
-      });
-    </script>
   </body>
 </html>
