@@ -140,22 +140,22 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        
-                          <div class="mb-3">
-                            <label>Tarif Listrik (VA):</label>
-                            <select class="form-select" aria-label="Default select example" name="tarif_listrik" id="tarif_listrik" required>
-                              <option selected>Open this select menu</option>
-                              <option value="900">900 VA</option>
-                              <option value="1300">1.300 VA</option>
-                              <option value="2200">2.200 VA</option>
-                              <option value="3500-5500">3.500-5500 VA</option>
-                              <option value="6600 ke atas"> lebih dari sama dengan 6.600</option>
-                            </select>
-                          </div>
-                          <div class="mb-3">
-                            <label>Tagihan Listrik Bulanan (dalam rupiah tanpa titik):</label>
-                            <input class="form-control" name="tagihan_listrik" required="1" type="number">
-                          </div>
+                      
+                        <div class="mb-3">
+                          <label>Tarif Listrik (VA):</label>
+                          <select class="form-select" aria-label="Default select example" name="tarif_listrik" id="tarif_listrik" required>
+                            <option selected>Open this select menu</option>
+                            <option value="900">900 VA</option>
+                            <option value="1300">1.300 VA</option>
+                            <option value="2200">2.200 VA</option>
+                            <option value="3500-5500">3.500-5500 VA</option>
+                            <option value="6600 ke atas"> lebih dari sama dengan 6.600</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <label>Tagihan Listrik Bulanan (dalam rupiah tanpa titik):</label>
+                          <input class="form-control" name="tagihan_listrik" required="1" type="number">
+                        </div>
                         
                       </div>
                       <div class="modal-footer">
@@ -183,6 +183,7 @@
                             <tr>
                               <th scope="col">User ID</th>
                               <th scope="col">Device ID</th>
+                              <th scope="col">Device Name</th>
                               <th scope="col">Daya Device</th>
                               <th scope="col">Tingkat Prioritas</th>
                               <th scope="col">Action</th>
