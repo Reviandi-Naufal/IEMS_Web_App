@@ -7,7 +7,7 @@ from apps import app, db, bcrypt
 from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
 from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted
 from flask_login import login_user, current_user, logout_user, login_required
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 import numpy as np
 from colorama import Fore
 # import pandas as pd
@@ -78,13 +78,14 @@ def dashboard():
     days3 = timedelta(days=3)
     days4 = timedelta(days=4)
     days5 = timedelta(days=5)
+    days6 = timedelta(days=6)
+    days7 = timedelta(days=7)
 
-    today_date = date.today() - days2
+    today_date = date.today() - days1
     today = today_date.strftime("%Y-%m-%d")
 
-    yesterday_date = date.today() - days3
+    yesterday_date = date.today() - days2
     yesterday = yesterday_date.strftime("%Y-%m-%d")
-
 
     # tarik data dari database disini buat today
     # dataall = real_data.query.all()
@@ -113,7 +114,6 @@ def dashboard():
         selisih = round(selisih*100)
         selisih = str(selisih) + "% " + "Increase"
         
-
     elif (rata2_today < rata2_yesterday):
         selisih = ((rata2_today - rata2_yesterday)/rata2_today) 
         selisih = round(selisih*100)
