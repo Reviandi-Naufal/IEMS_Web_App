@@ -353,6 +353,7 @@ def schedule_appliance():
         all_data = deviceinput.query.all()
         all_billing = billinginput.query.all()
     return render_template("scheduling.html", Devices=all_data, Billing=all_billing)
+    # return render_template("scheduling.html")
 
 @app.route('/api/billing')
 @login_required
@@ -491,7 +492,7 @@ def appliance():
         if col_index is None:
             break
         col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['User ID', 'Device ID', 'Device Name', 'Daya Device','Tingkat Prioritas']:
+        if col_name not in ['User ID', 'Device ID', 'Device Name', 'Daya Device','Tingkat Prioritas', 'Action']:
             col_name = 'user_id'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
         col = getattr(deviceinput, col_name)
