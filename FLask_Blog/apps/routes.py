@@ -9,6 +9,7 @@ from apps.database import User, billinginput, deviceinput, real_data, real_dataS
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, timedelta
 import numpy as np
+from colorama import Fore
 # import pandas as pd
 
 
@@ -71,11 +72,19 @@ def account():
 @app.route("/dashboard/")
 @login_required
 def dashboard():
-    today_date = date.today() - timedelta(days=1)
+
+    days1 = timedelta(days=1)
+    days2 = timedelta(days=2)
+    days3 = timedelta(days=3)
+    days4 = timedelta(days=4)
+    days5 = timedelta(days=5)
+
+    today_date = date.today() - days2
     today = today_date.strftime("%Y-%m-%d")
 
-    yesterday_date = date.today() - timedelta(days=2)
+    yesterday_date = date.today() - days3
     yesterday = yesterday_date.strftime("%Y-%m-%d")
+
 
     # tarik data dari database disini buat today
     # dataall = real_data.query.all()
@@ -84,10 +93,8 @@ def dashboard():
     # yesterday_data = dataall[dataall['Date'] == yesterday]
     #for loop untuk bikin list yg isinya data dari query today & yesterd
 
-    # Kwh_kemarin = real_data.query.filter_by(Date = '2021-09-02').all()
-    # Kwh_hariIni = real_data.query.filter_by(Date = '2021-09-01').all()
-    Kwh_kemarin = real_data.query.filter_by(Date = today).all()
-    Kwh_hariIni = real_data.query.filter_by(Date = yesterday).all()
+    Kwh_kemarin = real_data.query.filter_by(Date = yesterday ).all()
+    Kwh_hariIni = real_data.query.filter_by(Date = today ).all()
 
     today_list = []
     yesterday_list = []
@@ -99,47 +106,30 @@ def dashboard():
 
     rata2_today = np.mean(today_list)
     rata2_yesterday = np.mean(yesterday_list)
+    todaykwh = "{:.2f}".format(rata2_today)
 
-    selisih = ((rata2_today - rata2_yesterday)/rata2_today)
-    selisih = round(selisih*100)
-    print(f"{selisih} %")
+    if (rata2_today >  rata2_yesterday):
+        selisih = ((rata2_today - rata2_yesterday)/rata2_today)
+        selisih = round(selisih*100)
+        selisih = str(selisih) + "% " + "Increase"
+        
+
+    elif (rata2_today < rata2_yesterday):
+        selisih = ((rata2_today - rata2_yesterday)/rata2_today) 
+        selisih = round(selisih*100)
+        selisih = abs(selisih)
+        selisih = str(selisih) + "% " + "Decrease"
+    else:
+        selisih = ((rata2_today - rata2_yesterday)/rata2_today)
+        selisih = round(selisih*100)
+        selisih = print("-")
+
     # selisih = 24
     # realdata = real_data.query.all()
     # labels = real_data.query.with_entities(real_data.Date).all()
     # values = real_data.query.with_entities(real_data.Kwh).all()
-    return render_template('dashboard.html', diff=f"{selisih} %")
-    # page_num = request.args.get('page_num')
-    # search_date = request.args.get('search_by_date')
-    # print(f"search by date {search_date}")
-    # page_num = int(page_num) if page_num else 1
-    # if search_date :
-    #     realdata = real_data\
-    #                 .query\
-    #                 .filter(real_data.Date.contains(search_date))\
-    #                 .paginate(
-    #                     page=page_num,
-    #                     per_page=25,
-    #                     max_per_page=50,
-    #                     error_out=False
-    #                 )           
-    # else:
-    #     print(f"page num -> {page_num}")
-    #     realdata = real_data\
-    #          .query\
-    #          .order_by(real_data.Index.desc())\
-    #          .paginate(
-    #              page=page_num,
-    #              per_page=25,
-    #              max_per_page=50,
-    #              error_out=False
-    #          )
+    return render_template('dashboard.html', kwh_today=f"{selisih}", todaykwh=f"{todaykwh}")
 
-    # result = {
-    #     "total_records": realdata.total,
-    #     "page": realdata.page,
-    #     "items": realdata.items
-    # }
-    # return render_template('dashboard.html',data=realdata)
 
 @app.route('/get_data_lineChart')
 @login_required
@@ -208,42 +198,6 @@ def data():
         'draw': request.args.get('draw', type=int),
     }
 
-@app.route('/kwhtoday', methods=['GET','POST'])
-@login_required
-def kwhtoday():
-
-    if request.method == "POST":
-        today_date = date.today()
-        today = today_date.strftime("%Y-%m-%D")
-        
-        yesterday_date = date.today() - timedelta(days=1)
-        yesterday = yesterday_date.strftime("%Y-%m-%D")
-        
-        # tarik data dari database disini buat today
-        dataall = real_data.query.all()
-        today_data = dataall[dataall['Date'] == today]
-    
-        # tarik data dari database disini buat yesterday
-        yesterday_data = dataall[dataall['Date'] == yesterday]
-        #for loop untuk bikin list yg isinya data dari query today & yesterday
-        
-        today_list = []
-        yesterday_list = []
-    
-        for i in range(len(today_data)):
-            today_list.append(today_data[i].Kwh)
-        
-        for i in range(len(yesterday_data)):
-            yesterday_list.append(yesterday_data[i].Kwh)
-        
-        rata2_today = np.mean(today_list)
-        rata2_yesterday = np.mean(yesterday_list)
-        
-        # selisih = rata2_today - rata2_yesterday
-        selisih = 24
-    
-        return render_template('dashboard.html', diff=24)
-    return render_template('dashboard.html', diff=24)
 
 @app.route("/algoritma1")
 @login_required
