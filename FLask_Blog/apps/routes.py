@@ -1,6 +1,7 @@
 import os
 import re
 import secrets
+import time
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from apps import app, db, bcrypt
@@ -9,8 +10,8 @@ from apps.database import User, billinginput, deviceinput, real_data, real_dataS
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, datetime, timedelta
 import numpy as np
+#import pandas as pd
 from colorama import Fore
-# import pandas as pd
 
 
 
@@ -75,11 +76,10 @@ def dashboard():
 
     days1 = timedelta(days=1)
     days2 = timedelta(days=2)
-    days3 = timedelta(days=3)
-    days4 = timedelta(days=4)
-    days5 = timedelta(days=5)
-    days6 = timedelta(days=6)
-    days7 = timedelta(days=7)
+    weeks1= timedelta(weeks=1)
+    weeks2 = timedelta(weeks=2)
+    month1 = timedelta(weeks=4)
+    month2 = timedelta(weeks=8)
 
     today_date = date.today() - days1
     today = today_date.strftime("%Y-%m-%d")
@@ -87,27 +87,76 @@ def dashboard():
     yesterday_date = date.today() - days2
     yesterday = yesterday_date.strftime("%Y-%m-%d")
 
+    weks_list=[]
+    for i in range(1,8):
+        weekly_date = date.today() - timedelta(days=i)
+        weeklyan = weekly_date.strftime("%Y-%m-%d")
+        weks_list.append(weeklyan)
+        #weks_list.strftime("%y-%m-%d")
+
+    for i in range(8,15):
+        yeswekkly_date = date.today() - timedelta(days=i)
+        yesweeklyan = yeswekkly_date.strftime("%Y-%m-%d")
+
+
+    monthly_date = date.today() - month1
+    monthlylyan = monthly_date.strftime("%Y-%m-%d")
+
+    yesmonthly_date = date.today() - month2
+    yesmonthlyan = yesmonthly_date.strftime("%Y-%m-%d")
+
     # tarik data dari database disini buat today
-    # dataall = real_data.query.all()
     # today_data = dataall[dataall['Date'] == today_date]
     # tarik data dari database disini buat yesterday
     # yesterday_data = dataall[dataall['Date'] == yesterday]
-    #for loop untuk bikin list yg isinya data dari query today & yesterd
+    #for loop untuk bikin list yg isinya data dari query today & yesterday
+
 
     Kwh_kemarin = real_data.query.filter_by(Date = yesterday ).all()
     Kwh_hariIni = real_data.query.filter_by(Date = today ).all()
 
+    kwh_weekly = real_data.query.filter_by(Date = weeklyan).all()
+    yeskwh_weekly = real_data.query.filter_by(Date = yesweeklyan).all()
+
+    kwh_monthly = real_data.query.filter_by(Date = monthlylyan).all()
+    yeskwh_monthly = real_data.query.filter_by(Date = yesmonthlyan).all()
+
     today_list = []
     yesterday_list = []
+    weekly_list = []
+    yesweekly_list = []
+    monthly_list = []
+    yesmonthly_list = []
+
     for i in range(len(Kwh_hariIni)):
         today_list.append(Kwh_hariIni[i].Kwh)
 
     for i in range(len(Kwh_kemarin)):
         yesterday_list.append(Kwh_kemarin[i].Kwh)
 
+    for i in range(len(kwh_weekly)):
+        weekly_list.append(kwh_weekly[i].Kwh)
+
+    for i in range(len(yeskwh_weekly)):
+        yesweekly_list.append(yeskwh_weekly[i].Kwh)
+
+    for i in range(len(kwh_monthly)):
+        monthly_list.append(kwh_monthly[i].Kwh)
+
+    for i in range(len(yeskwh_monthly)):
+        yesmonthly_list.append(yeskwh_monthly[i].Kwh)
+
     rata2_today = np.mean(today_list)
     rata2_yesterday = np.mean(yesterday_list)
     todaykwh = "{:.2f}".format(rata2_today)
+
+    rata2_weekly = np.mean(weekly_list)
+    rata2_yesweekly = np.mean(yesweekly_list)
+    weekly = "{:.2f}".format(rata2_weekly)
+
+    rata2_monthly = np.mean(monthly_list)
+    rata2_yesmonthly = np.mean(yesmonthly_list)
+    monthly = "{:.2f}".format(rata2_monthly)
 
     if (rata2_today >  rata2_yesterday):
         selisih = ((rata2_today - rata2_yesterday)/rata2_today)
@@ -124,11 +173,42 @@ def dashboard():
         selisih = round(selisih*100)
         selisih = print("-")
 
+    if (rata2_weekly >  rata2_yesweekly):
+        selisihw = ((rata2_weekly - rata2_yesweekly)/rata2_weekly)
+        selisihw = round(selisihw*100)
+        selisihw = str(selisihw) + "% " + "Increase"
+
+    elif (rata2_weekly < rata2_yesweekly):
+        selisihw = ((rata2_weekly - rata2_yesweekly)/rata2_weekly) 
+        selisihw = round(selisihw*100)
+        selisihw = abs(selisihw)
+        selisihw = str(selisihw) + "% " + "Decrease"
+    else:
+        selisihw = ((rata2_weekly - rata2_yesweekly)/rata2_weekly)
+        selisihw = round(selisihw*100)
+        selisihw = print("-")
+
+    if (rata2_monthly >  rata2_yesmonthly):
+        selisihm = ((rata2_monthly - rata2_yesmonthly)/rata2_monthly)
+        selisihm = round(selisihm*100)
+        selisihm = str(selisihm) + "% " + "Increase"
+
+    elif (rata2_monthly < rata2_yesmonthly):
+        selisihm = ((rata2_monthly - rata2_yesmonthly)/rata2_monthly) 
+        selisihm = round(selisihm*100)
+        selisihm = abs(selisihm)
+        selisihm = str(selisihm) + "% " + "Decrease"
+    else:
+        selisihm = ((rata2_monthly - rata2_yesmonthly)/rata2_monthly)
+        selisihm = round(selisihm*100)
+        selisihm = print("-")
+
+
     # selisih = 24
     # realdata = real_data.query.all()
     # labels = real_data.query.with_entities(real_data.Date).all()
     # values = real_data.query.with_entities(real_data.Kwh).all()
-    return render_template('dashboard.html', kwh_today=f"{selisih}", todaykwh=f"{todaykwh}")
+    return render_template('dashboard.html', kwh_today=f"{selisih}", rata2_today=rata2_today, rata2_yesterday= rata2_yesterday, todaykwh=f"{todaykwh}", weeklykwh=f"{selisihw}", weekly=f"{weekly}", monthlykwh=f"{selisihm}", monthly=f"{monthly}")
 
 
 @app.route('/get_data_lineChart')
