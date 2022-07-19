@@ -127,11 +127,11 @@
                       <div class="ps-3">
                         <h6 class="h6 card-text text-black">{{ todaykwh }} Kwh</h6>
                           {% if rata2_today > rata2_yesterday %}
-                          <span style="color:red" class="small pt-1 fw-bold">{{ kwh_today }}</span> <span class="text-muted small pt-2 ps-1"></span>
+                          <span style="color:red" class="small pt-1 fw-bold">{{ kwh_today }}</span> <span class="text-muted small pt-2 ps-1">Increase</span>
                           {% elif rata2_today < rata2_yesterday %}
-                          <span style="color:green" class="small pt-1 fw-bold">{{ kwh_today }}</span> <span class="text-muted small pt-2 ps-1"></span>
+                          <span style="color:green" class="small pt-1 fw-bold">{{ kwh_today }}</span> <span class="text-muted small pt-2 ps-1">Decrease</span>
                           {% else %}
-                          <span class="small pt-1 fw-bold">{{ kwh_today }}</span> <span class="text-muted small pt-2 ps-1"></span>
+                          <span class="small pt-1 fw-bold">{{ kwh_today }}</span> <span class="text-muted small pt-2 ps-1">Normal</span>
                           {% endif %}
                       </div>
                     </div>

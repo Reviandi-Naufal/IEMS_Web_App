@@ -161,13 +161,13 @@ def dashboard():
     if (rata2_today >  rata2_yesterday):
         selisih = ((rata2_today - rata2_yesterday)/rata2_today)
         selisih = round(selisih*100)
-        selisih = str(selisih) + "% " + "Increase"
+        selisih = str(selisih) + "% " 
         
     elif (rata2_today < rata2_yesterday):
         selisih = ((rata2_today - rata2_yesterday)/rata2_today) 
         selisih = round(selisih*100)
         selisih = abs(selisih)
-        selisih = str(selisih) + "% " + "Decrease"
+        selisih = str(selisih) + "% "
     else:
         selisih = ((rata2_today - rata2_yesterday)/rata2_today)
         selisih = round(selisih*100)
