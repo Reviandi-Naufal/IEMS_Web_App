@@ -88,218 +88,325 @@
   </ul>
 </aside>
 
-    <main id="main" class="main">
-      <div class="pagetitle">
-        <h1>Dashboard Scheduling</h1>
-        <nav>
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-            <li class="breadcrumb-item active">Scheduling</li>
-          </ol>
-        </nav>
-      </div>
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Dashboard Scheduling</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Scheduling</li>
+      </ol>
+    </nav>
+  </div>
 
-      <!-- Manage Billing -->
-      <div class="col-12">
-        <div class="card recent-sales overflow-auto">
-          <div class="card-body">
-            <div class="row">
-                <h5 class="card-title-table">Manage <span>| Billing</span>
-                  <button type="button" class="btn btn-primary rounded-pill float-right" data-bs-target="#modalAddbill" data-bs-toggle="modal">Add New Billing</button>
-                </h5>
-                <table id="billing" class="table table-striped table-borderless dataTable">
-                  <thead>
-                    <tr>
-                      <th>User ID</th>
-                      <th>Username</th>
-                      <th>Daya Listrik</th>
-                      <th>Tagihan Listrik(Rp)</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  {% for Billrow in Billing %}
-                  <tr>
-                    <td>{{Billrow.user_id_bill}}</td>
-                    <td>{{Billrow.username}}</td>
-                    <td>{{Billrow.tarif_listrik}} VA</td>
-                    <td>{{Billrow.tagihan_listrik}}</td>
-                    <td>
-                      <a href="/updateBilling" class="btn btn-warning btn-xs" data-target="#modalEditbill{{Billrow.user_id_bill}}" data-toggle="modal">Edit</a>
-                      <a href="/deleteBilling/{{Billrow.user_id_bill}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">
-                        Delete
-                      </a>
-                    </td>
-                  </tr>
-                  <!-- Modal Edit Billing-->
-                  <div class="modal fade" id="modalEditbill{{Billrow.user_id_bill}}" role="dialog">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h4 class="modal-title">
-                            Update Information
-                          </h4>
+  <!-- Manage Billing -->
+  <div class="col-12">
+    {% with Billmessages = get_flashed_messages() %}
+ 
+    {% if Billmessages %}
+
+    {% for messages in Billmessages %}
+    <div class="alert alert-success alert-dismissable" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+            <span aria-hidden="true">x</span>
+        </button>
+    {{messages}}
+    </div>
+    {% endfor %}
+
+    {% endif %}
+
+    {% endwith %}
+    <div class="card recent-sales overflow-auto">
+      <div class="card-body">
+        <div class="row">
+            <h5 class="card-title-table">Manage <span>| Billing</span>
+              <button type="button" class="btn btn-primary rounded-pill float-right" data-bs-target="#modalAddbill" data-bs-toggle="modal">Add New Billing</button>
+            </h5>
+            <table id="billing" class="table table-striped table-borderless dataTable">
+              <thead>
+                <tr>
+                  <th>User ID</th>
+                  <th>Username</th>
+                  <th>Daya Listrik</th>
+                  <th>Tagihan Listrik(Rp)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              {% for Billrow in Billing %}
+              <tr>
+                <td>{{Billrow.user_id_bill}}</td>
+                <td>{{Billrow.username}}</td>
+                <td>{{Billrow.tarif_listrik}} VA</td>
+                <td>{{Billrow.tagihan_listrik}}</td>
+                <td>
+                  <fieldset>
+                    <a href="/updateBilling" class="btn btn-warning btn-xs" data-bs-target="#modalEditbill{{Billrow.user_id_bill}}" data-bs-toggle="modal">Edit</a>
+                    <a href="/deleteBilling/{{Billrow.user_id_bill}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">
+                    Delete
+                    </a>
+                  </fieldset>
+                </td>
+              </tr>
+              <!-- Modal Edit Billing-->
+              <div class="modal fade" id="modalEditbill{{Billrow.user_id_bill}}" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <form action="{{url_for('updateBilling')}}" method="POST">
+                      <div class="modal-header">
+                        <h4 class="modal-title">
+                          Update Information
+                        </h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="mb-3">
+                          <fieldset>
+                            <label>Tarif Listrik (VA):</label>
+                            <input name="billingUpdate" type="hidden" value="{{Billrow.user_id_bill}}">
+                            <select class="form-select" aria-label="Default select example" name="tarif_listrik" id="tarif_listrik">
+                              <option selected>Open this select menu</option>
+                              <option value="900">900 VA</option>
+                              <option value="1.300">1.300 VA</option>
+                              <option value="2.200">2.200 VA</option>
+                              <option value="3.500-5500">3.500-5500 VA</option>
+                              <option value="6.600 keatas"> lebih dari sama dengan 6.600 VA</option>
+                            </select>
+                          </fieldset>
                         </div>
-                        <div class="modal-body">
-                          <form action="{{url_for('updateBilling')}}" method="POST">
-                            <div class="form-group">
-                              <label>Tarif Listrik (VA):</label>
-                              <input name="billing" type="hidden" value="{{Billrow.user_id_bill}}">
-                              <select class="form-select" aria-label="Default select example" name="tarif_listrik" id="tarif_listrik">
-                                <option selected>Open this select menu</option>
-                                <option value="900">900 VA</option>
-                                <option value="1.300">1.300 VA</option>
-                                <option value="2.200">2.200 VA</option>
-                                <option value="3.500-5500">3.500-5500 VA</option>
-                                <option value="6.600 keatas"> lebih dari sama dengan 6.600 VA</option>
-                              </select>
-                            </div>
-                            <div class="form-group">
-                              <label>Tagihan Listrik Bulanan (dalam rupiah tanpa titik):</label>
-                              <input class="form-control" name="tagihan_listrik" type="number" value="{{Billrow.tagihan_listrik}}">
-                            </div>
-                            <div class="form-group">
-                              <button class="btn btn-primary" type="submit">Update</button>
-                            </div>
-                          </form>
+                        <div class="mb-3">
+                          <fieldset>
+                            <label>Tagihan Listrik Bulanan (dalam rupiah tanpa titik):</label>
+                            <input class="form-control" name="tagihan_listrik" type="number" value="{{Billrow.tagihan_listrik}}">
+                          </fieldset>
                         </div>
-                        <div class="modal-footer">
-                          <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                        <div class="mb-3">
+                          <fieldset>
+                            <button class="btn btn-primary" type="submit">Update</button>
+                          </fieldset>
                         </div>
                       </div>
-                    </div>
+                      <div class="modal-footer">
+                        <fieldset>
+                          <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                        </fieldset>
+                      </div>
+                  </form>
                   </div>
-                  {% endfor %}
-                </table>
+                </div>
+              </div>
+              {% endfor %}
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Manage Billing -->
+
+  <!-- Modal Add Billing-->
+  <div class="modal fade" id="modalAddbill" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="contact" action="{{url_for('insertBilling')}}" method="POST">
+          <div class="modal-header">
+            <div class="section-heading">
+              <h6> Add Electrical Billing</h6>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          
+            <div class="mb-3">
+              <label>Tarif Listrik (VA):</label>
+              <select class="form-select" aria-label="Default select example" name="tarif_listrik" id="tarif_listrik" required>
+                <option selected>Open this select menu</option>
+                <option value="900">900 VA</option>
+                <option value="1300">1.300 VA</option>
+                <option value="2200">2.200 VA</option>
+                <option value="3500-5500">3.500-5500 VA</option>
+                <option value="6600 ke atas"> lebih dari sama dengan 6.600</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label>Tagihan Listrik Bulanan (dalam rupiah tanpa titik):</label>
+              <input class="form-control" name="tagihan_listrik" required="1" type="number">
+            </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <fieldset>
+              <button type="submit" id="form-submit" class="btn btn-primary">Add Billing</button>
+            </fieldset>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal Add Billing -->
+
+  <!-- Manage Appliance -->
+  <div class="col-12">
+    <div class="card recent-sales overflow-auto">
+      <div class="card-body">
+        <div class="row">
+          <h5 class="card-title-table">Manage <span>| Appliance</span>
+            <button type="button" class="btn btn-primary rounded-pill float-right" data-bs-target="#modalAddappliace" data-bs-toggle="modal">Add New Device</button>
+          </h5>
+          <table id="appliance" class="table table-striped table-borderless dataTable">
+            <thead>
+              <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Device ID</th>
+                <th>Device Name</th>
+                <th>Daya Device</th>
+                <th>Tingkat Prioritas</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            {% for row in Devices %}
+            <tr>
+              <td>{{row.user_id}}</td>
+              <td>{{row.username}}</td>
+              <td>{{row.device_id}}</td>
+              <td>{{row.device_name}}</td>
+              <td>{{row.total_daya}} kWh</td>
+              <td>{{row.tingkat_prioritas}}</td>
+    
+              <td>
+                <fieldset>
+                  <a href="/updateDevice" class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modaledit{{row.device_id}}">
+                    Edit
+                  </a>
+                  <a href="/deleteDevice/{{row.device_id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">
+                    Delete
+                  </a>
+                </fieldset>
+              </td>
+            </tr>
+            <!-- Modal Edit Device-->
+            <div class="modal fade" id="modaledit{{row.device_id}}" role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Update Information</h4>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{{url_for('updateDevice')}}" method="POST">
+                      <fieldset>
+                        <div class="mb-3">
+                          <label>Device ID:</label>
+                          <input name="applianceUpdate" type="hidden" value="{{row.device_id}}">
+                          <input class="form-control" name="device_id" type="number" value="{{row.device_id}}">
+                        </div>
+                      </fieldset>
+                      <div class="mb-3">
+                        <fieldset>
+                          <label>Device Name:</label>
+                          <input class="form-control" name="device_name" type="text" value="{{row.device_name}}">
+                        </fieldset>
+                      </div>
+                      <div class="mb-3">
+                        <fieldset>
+                          <label>Daya Satu Device (dalam satuan kWh):</label>
+                          <input class="form-control" name="daya_device" type="number" value="{{row.daya_device}}">
+                        </fieldset>
+                      </div>
+                      <div class="mb-3">
+                        <fieldset>
+                          <label for="">Jumlah Device</label>
+                          <input class ="form-control" name="jumlah_device" type="number" value="{{row.jumlah_device}}"/>
+                        </fieldset>
+                      </div>
+                      <div class="mb-3">
+                        <fieldset>
+                          <label for="prioritas">Tingkat Prioritas:</label>
+                          <select class="form-select" aria-label="Default select example" name="prioritas" id="priority">
+                            <option selected>Open this select menu</option>
+                            <option value="Very High">Very High</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                            <option value="Very Low">Very Low</option>
+                          </select>
+                        </fieldset>  
+                      </div>
+                      
+                      <div class="mb-3">
+                        <fieldset>
+                          <button class="btn btn-primary" type="submit">Update</button>
+                        </fieldset>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <fieldset>
+                      <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Manage Appliance -->
+
+  <!-- Modal Add Appliance-->
+  <div class="modal fade" id="modalAddappliace" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="contact" action="{{url_for('insertDevice')}}" method="POST">
+          <div class="modal-header">
+            <div class="section-heading">
+              <h6> Add Device</h6>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label>Device ID:</label>
+              <input class="form-control" name="device_id" type="number" required>
+            </div>
+            <div class="mb-3">
+              <label>Device Name:</label>
+              <input class="form-control" name="device_name" type="text" required>
+            </div>
+            <div class="mb-3">
+              <label>Daya Satu Device (dalam satuan kWh):</label>
+              <input class="form-control" name="daya_device" type="number" step="any" required>
+            </div>
+            <div class="mb-3">
+              <label for="">Jumlah Device</label>
+              <input class ="form-control" name="jumlah_device" type="number" required>
+            </div>
+            <div class="mb-3">
+              <label for="prioritas">Tingkat Prioritas:</label>
+              <select class="form-select" aria-label="Default select example" name="prioritas" id="priority" required>
+                <option selected>Open this select menu</option>
+                <option value="Very High">Very High</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+                <option value="Very Low">Very Low</option>
+              </select>
             </div>
           </div>
-        </div>
-      </div>
-      <!-- End Manage Billing -->
-
-      <!-- Modal Add Billing-->
-      <div class="modal fade" id="modalAddbill" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <form id="contact" action="{{url_for('insertBilling')}}" method="POST">
-              <div class="modal-header">
-                <div class="section-heading">
-                  <h6> Add Electrical Billing</h6>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-              
-                <div class="mb-3">
-                  <label>Tarif Listrik (VA):</label>
-                  <select class="form-select" aria-label="Default select example" name="tarif_listrik" id="tarif_listrik" required>
-                    <option selected>Open this select menu</option>
-                    <option value="900">900 VA</option>
-                    <option value="1300">1.300 VA</option>
-                    <option value="2200">2.200 VA</option>
-                    <option value="3500-5500">3.500-5500 VA</option>
-                    <option value="6600 ke atas"> lebih dari sama dengan 6.600</option>
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label>Tagihan Listrik Bulanan (dalam rupiah tanpa titik):</label>
-                  <input class="form-control" name="tagihan_listrik" required="1" type="number">
-                </div>
-                
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <fieldset>
-                  <button type="submit" id="form-submit" class="btn btn-primary">Add Billing</button>
-                </fieldset>
-              </div>
-            </form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <fieldset>
+              <button type="submit" id="form-submit" class="btn btn-primary">Add Device</button>
+            </fieldset>
           </div>
-        </div>
+        </form>
       </div>
-      <!-- End Modal Add Billing -->
-
-      <!-- Manage Appliance -->
-      <div class="col-12">
-        <div class="card recent-sales overflow-auto">
-          <div class="card-body">
-            <div class="row">
-                <h5 class="card-title-table">Manage <span>| Appliance</span>
-                  <button type="button" class="btn btn-primary rounded-pill float-right" data-bs-target="#modalAddappliace" data-bs-toggle="modal">Add New Device</button>
-                </h5>
-                <table id="appliance" class="table table-striped table-borderless dataTable">
-                  <thead>
-                    <tr>
-                      <th scope="col">User ID</th>
-                      <th scope="col">Device ID</th>
-                      <th scope="col">Device Name</th>
-                      <th scope="col">Daya Device</th>
-                      <th scope="col">Tingkat Prioritas</th>
-                      <th scope="col">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                  <nav> 
-                  </nav>
-                </table>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- End Manage Appliance -->
-
-      <!-- Modal Add Appliance-->
-      <div class="modal fade" id="modalAddappliace" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <form id="contact" action="{{url_for('insertDevice')}}" method="POST">
-              <div class="modal-header">
-                <div class="section-heading">
-                  <h6> Add Device</h6>
-                </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <div class="mb-3">
-                  <label>Device ID:</label>
-                  <input class="form-control" name="device_id" type="number" required>
-                </div>
-                <div class="mb-3">
-                  <label>Device Name:</label>
-                  <input class="form-control" name="device_name" type="text" required>
-                </div>
-                <div class="mb-3">
-                  <label>Daya Satu Device (dalam satuan kWh):</label>
-                  <input class="form-control" name="daya_device" type="number" step="any" required>
-                </div>
-                <div class="mb-3">
-                  <label for="">Jumlah Device</label>
-                  <input class ="form-control" name="jumlah_device" type="number" required>
-                </div>
-                <div class="mb-3">
-                  <label for="prioritas">Tingkat Prioritas:</label>
-                  <select class="form-select" aria-label="Default select example" name="prioritas" id="priority" required>
-                    <option selected>Open this select menu</option>
-                    <option value="Very High">Very High</option>
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                    <option value="Very Low">Very Low</option>
-                  </select>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <fieldset>
-                  <button type="submit" id="form-submit" class="btn btn-primary">Add Device</button>
-                </fieldset>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <!-- End Modal Add Appliance -->
-    </main>
-    <!-- End #main -->
-    {% endblock %}
+    </div>
+  </div>
+  <!-- End Modal Add Appliance -->
+</main>
+<!-- End #main -->
+{% endblock %}
 

@@ -184,3 +184,26 @@ class hasil_penjadwalan(db.Model):
         self.durasi = durasi
         self.tanggal = tanggal
         self.waktu = waktu
+
+class Device_usage_duration(db.Model):
+    user_id = db.Column(db.Integer)
+    device_id = db.Column(db.Integer, nullable=False, primary_key=True)
+    device_name = db.Column(db.String(50), nullable=False)
+    duration_scheduled = db.column(db.String(50), nullable=False)
+    duration_left = db.Column(db.String(50), nullable=False)
+
+    def __init__(self, user_id, device_id, device_name, duration_scheduled, duration_left):
+        self.user_id = user_id
+        self.device_id  = device_id
+        self.device_name = device_name
+        self.duration_scheduled = duration_scheduled
+        self.duration_left = duration_left
+    
+    def to_dict(self):
+        return {
+            'user_id' : self.user_id,
+            'device_id' : self.device_id,
+            'device_name' : self.device_name,
+            'duration_scheduled' : self.duration_scheduled,
+            'duration_left' : self.duration_left,
+        }
