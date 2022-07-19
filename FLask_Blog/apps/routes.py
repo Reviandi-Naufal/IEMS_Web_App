@@ -6,7 +6,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from apps import app, db, bcrypt
 from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, Device_usage_duration
+from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, device_usage_duration
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, datetime, timedelta
 import numpy as np
@@ -511,51 +511,51 @@ def insertDevice():
  
         return redirect(url_for('schedule_appliance'))
 
-@app.route('/api/appliance')
-@login_required
-def appliance():
-    query = deviceinput.query
+# @app.route('/api/appliance')
+# @login_required
+# def appliance():
+#     query = deviceinput.query
 
-    # search filter
-    search = request.args.get('search[value]')
-    if search:
-        query = query.filter(db.or_(
-            deviceinput.username.like(f'%{search}%'),
-            deviceinput.tarif_listrik.like(f'%{search}%')
-        ))
-    total_filtered = query.count()
+#     # search filter
+#     search = request.args.get('search[value]')
+#     if search:
+#         query = query.filter(db.or_(
+#             deviceinput.username.like(f'%{search}%'),
+#             deviceinput.tarif_listrik.like(f'%{search}%')
+#         ))
+#     total_filtered = query.count()
 
-    # sorting
-    order = []
-    i = 0
-    while True:
-        col_index = request.args.get(f'order[{i}][column]')
-        if col_index is None:
-            break
-        col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['User ID', 'Device ID', 'Device Name', 'Daya Device','Tingkat Prioritas', 'Action']:
-            col_name = 'user_id'
-        descending = request.args.get(f'order[{i}][dir]') == 'desc'
-        col = getattr(deviceinput, col_name)
-        if descending:
-            col = col.desc()
-        order.append(col)
-        i += 1
-    if order:
-        query = query.order_by(*order)
+#     # sorting
+#     order = []
+#     i = 0
+#     while True:
+#         col_index = request.args.get(f'order[{i}][column]')
+#         if col_index is None:
+#             break
+#         col_name = request.args.get(f'columns[{col_index}][data]')
+#         if col_name not in ['User ID', 'Device ID', 'Device Name', 'Daya Device','Tingkat Prioritas', 'Action']:
+#             col_name = 'user_id'
+#         descending = request.args.get(f'order[{i}][dir]') == 'desc'
+#         col = getattr(deviceinput, col_name)
+#         if descending:
+#             col = col.desc()
+#         order.append(col)
+#         i += 1
+#     if order:
+#         query = query.order_by(*order)
 
-    # pagination
-    start = request.args.get('start', type=int)
-    length = request.args.get('length', type=int)
-    query = query.offset(start).limit(length)
+#     # pagination
+#     start = request.args.get('start', type=int)
+#     length = request.args.get('length', type=int)
+#     query = query.offset(start).limit(length)
 
-    # response
-    return {
-        'data': [deviceinput.to_dict() for deviceinput in query],
-        'recordsFiltered': total_filtered,
-        'recordsTotal': deviceinput.query.count(),
-        'draw': request.args.get('draw', type=int),
-    }
+#     # response
+#     return {
+#         'data': [deviceinput.to_dict() for deviceinput in query],
+#         'recordsFiltered': total_filtered,
+#         'recordsTotal': deviceinput.query.count(),
+#         'draw': request.args.get('draw', type=int),
+#     }
 
 #this is our update route where we are going to update our employee
 @app.route('/updateDevice', methods = ['GET', 'POST'])
@@ -589,14 +589,15 @@ def deleteDevice(id):
 @app.route('/api/dataTimer')
 @login_required
 def dataTimer():
-    query = Device_usage_duration.query
+    query = device_usage_duration.query
 
     # search filter
     search = request.args.get('search[value]')
     if search:
         query = query.filter(db.or_(
-            real_data.Date.like(f'%{search}%'),
-            real_data.Time.like(f'%{search}%')
+            device_usage_duration.user_id.like(f'%{search}%'),
+            device_usage_duration.device_id.like(f'%{search}%'),
+            device_usage_duration.device_name.like(f'%{search}%')
         ))
     total_filtered = query.count()
 
@@ -611,7 +612,7 @@ def dataTimer():
         if col_name not in ['user_id', 'device_id', 'device_name', 'duration_scheduled', 'duration_left']:
             col_name = 'device_id'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
-        col = getattr(Device_usage_duration, col_name)
+        col = getattr(device_usage_duration, col_name)
         if descending:
             col = col.desc()
         order.append(col)
@@ -626,9 +627,9 @@ def dataTimer():
 
     # response
     return {
-        'data': [Device_duration.to_dict() for Device_duration in query],
+        'data': [device_duration.to_dict() for device_duration in query],
         'recordsFiltered': total_filtered,
-        'recordsTotal': Device_usage_duration.query.count(),
+        'recordsTotal': device_usage_duration.query.count(),
         'draw': request.args.get('draw', type=int),
     }
 

@@ -303,6 +303,27 @@
       });
     </script>
 
+    <!-- Template for Scheduling table Data Timer -->
+    <script>
+      $(document).ready(function () {
+        $('#Timer').DataTable({
+          pagingType: 'full_numbers',
+          ajax: '/api/dataTimer',
+          serverSide: true,
+          columns: [
+            { data: 'user_id' }, 
+            { data: 'device_id' }, 
+            { data: 'device_name' },
+            { data: 'duration_scheduled' }, 
+            { data: 'duration_left' }
+          ],
+        });
+        options: {
+          responsive: true;
+        }
+      });
+    </script>
+
     <!-- Template Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ url_for('static', filename='assets/js/echarts.js') }}"></script>

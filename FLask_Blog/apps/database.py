@@ -185,11 +185,11 @@ class hasil_penjadwalan(db.Model):
         self.tanggal = tanggal
         self.waktu = waktu
 
-class Device_usage_duration(db.Model):
+class device_usage_duration(db.Model):
     user_id = db.Column(db.Integer)
     device_id = db.Column(db.Integer, nullable=False, primary_key=True)
     device_name = db.Column(db.String(50), nullable=False)
-    duration_scheduled = db.column(db.String(50), nullable=False)
+    duration_scheduled = db.Column(db.String(50), nullable=False)
     duration_left = db.Column(db.String(50), nullable=False)
 
     def __init__(self, user_id, device_id, device_name, duration_scheduled, duration_left):
@@ -207,3 +207,8 @@ class Device_usage_duration(db.Model):
             'duration_scheduled' : self.duration_scheduled,
             'duration_left' : self.duration_left,
         }
+
+class device_usage_durationSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = device_usage_duration
+        created_at = auto_field(dump_only=True)
