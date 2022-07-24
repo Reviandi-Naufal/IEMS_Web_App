@@ -314,13 +314,14 @@
             { data: 'user_id' }, 
             { data: 'device_id' }, 
             { data: 'device_name' },
-            { data: 'duration_scheduled' }, 
+            { data: 'duration_scheduled' },
+            { data: 'duration_used' }, 
             { data: 'duration_left' }
           ],
-        });
-        options: {
-          responsive: true;
+          options: {
+          responsive: true
         }
+        });
       });
     </script>
 
@@ -329,5 +330,6 @@
     <script src="{{ url_for('static', filename='assets/js/echarts.js') }}"></script>
     <script src="{{ url_for('static', filename='linechart.js') }}"></script>
     <script src="{{ url_for('static', filename='tcnlinechart.js') }}"></script>
+    <script src="{{ url_for('static', filename='clusteringchart.js') }}"></script>
   </body>
 </html>

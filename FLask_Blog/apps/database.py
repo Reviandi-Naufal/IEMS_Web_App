@@ -190,6 +190,7 @@ class device_usage_duration(db.Model):
     device_id = db.Column(db.Integer, nullable=False, primary_key=True)
     device_name = db.Column(db.String(50), nullable=False)
     duration_scheduled = db.Column(db.String(50), nullable=False)
+    duration_used = db.Column(db.String(50), nullable=False)
     duration_left = db.Column(db.String(50), nullable=False)
 
     def __init__(self, user_id, device_id, device_name, duration_scheduled, duration_left):
@@ -197,6 +198,7 @@ class device_usage_duration(db.Model):
         self.device_id  = device_id
         self.device_name = device_name
         self.duration_scheduled = duration_scheduled
+        self.duration_used = duration_used
         self.duration_left = duration_left
     
     def to_dict(self):
@@ -205,6 +207,7 @@ class device_usage_duration(db.Model):
             'device_id' : self.device_id,
             'device_name' : self.device_name,
             'duration_scheduled' : self.duration_scheduled,
+            'duration_used' : self.duration_used,
             'duration_left' : self.duration_left,
         }
 
