@@ -87,17 +87,11 @@ def dashboard():
     yesterday_date = date.today() - days2
     yesterday = yesterday_date.strftime("%Y-%m-%d")
 
-    weks_list=[]
-    for i in range(1,8):
-        weekly_date = date.today() - timedelta(days=i)
-        weeklyan = weekly_date.strftime("%Y-%m-%d")
-        weks_list.append(weeklyan)
-        #weks_list.strftime("%y-%m-%d")
+    weekly_date = date.today() - weeks1
+    weeklyan = weekly_date.strftime("%Y-%m-%d")
 
-    for i in range(8,15):
-        yeswekkly_date = date.today() - timedelta(days=i)
-        yesweeklyan = yeswekkly_date.strftime("%Y-%m-%d")
-
+    yeswekkly_date = date.today() - weeks2
+    yesweeklyan = yeswekkly_date.strftime("%Y-%m-%d")
 
     monthly_date = date.today() - month1
     monthlylyan = monthly_date.strftime("%Y-%m-%d")
@@ -115,11 +109,11 @@ def dashboard():
     Kwh_kemarin = real_data.query.filter_by(Date = yesterday ).all()
     Kwh_hariIni = real_data.query.filter_by(Date = today ).all()
 
-    kwh_weekly = real_data.query.filter_by(Date = weeklyan).all()
-    yeskwh_weekly = real_data.query.filter_by(Date = yesweeklyan).all()
+    kwh_weekly = real_data.query.filter(real_data.Date >= weeklyan).all()
+    yeskwh_weekly = real_data.query.filter(real_data.Date >= yesweeklyan).all()
 
-    kwh_monthly = real_data.query.filter_by(Date = monthlylyan).all()
-    yeskwh_monthly = real_data.query.filter_by(Date = yesmonthlyan).all()
+    kwh_monthly = real_data.query.filter(real_data.Date >= monthlylyan).all()
+    yeskwh_monthly = real_data.query.filter(real_data.Date >= yesmonthlyan).all()
 
     today_list = []
     yesterday_list = []
@@ -146,16 +140,17 @@ def dashboard():
     for i in range(len(yeskwh_monthly)):
         yesmonthly_list.append(yeskwh_monthly[i].Kwh)
 
-    rata2_today = np.mean(today_list)
-    rata2_yesterday = np.mean(yesterday_list)
+    rata2_today = np.sum(today_list)
+    rata2_yesterday = np.sum(yesterday_list)
     todaykwh = "{:.2f}".format(rata2_today)
 
-    rata2_weekly = np.mean(weekly_list)
-    rata2_yesweekly = np.mean(yesweekly_list)
+    rata2_weekly = np.sum(weekly_list)
+    rata2_yesweekly = np.sum(yesweekly_list)
     weekly = "{:.2f}".format(rata2_weekly)
+    # weekly = weekly/len(weekly)
 
-    rata2_monthly = np.mean(monthly_list)
-    rata2_yesmonthly = np.mean(yesmonthly_list)
+    rata2_monthly = np.sum(monthly_list)
+    rata2_yesmonthly = np.sum(yesmonthly_list)
     monthly = "{:.2f}".format(rata2_monthly)
 
     if (rata2_today >  rata2_yesterday):
@@ -176,28 +171,28 @@ def dashboard():
     if (rata2_weekly >  rata2_yesweekly):
         selisihw = ((rata2_weekly - rata2_yesweekly)/rata2_weekly)
         selisihw = round(selisihw*100)
-        selisihw = str(selisihw) + "% " + "Increase"
+        selisihw = str(selisihw) + "% " 
 
     elif (rata2_weekly < rata2_yesweekly):
         selisihw = ((rata2_weekly - rata2_yesweekly)/rata2_weekly) 
         selisihw = round(selisihw*100)
         selisihw = abs(selisihw)
-        selisihw = str(selisihw) + "% " + "Decrease"
+        selisihw = str(selisihw) + "% " 
     else:
         selisihw = ((rata2_weekly - rata2_yesweekly)/rata2_weekly)
-        selisihw = round(selisihw*100)
+        selisihw = selisihw*100
         selisihw = print("-")
 
     if (rata2_monthly >  rata2_yesmonthly):
         selisihm = ((rata2_monthly - rata2_yesmonthly)/rata2_monthly)
         selisihm = round(selisihm*100)
-        selisihm = str(selisihm) + "% " + "Increase"
+        selisihm = str(selisihm) + "% "
 
     elif (rata2_monthly < rata2_yesmonthly):
         selisihm = ((rata2_monthly - rata2_yesmonthly)/rata2_monthly) 
         selisihm = round(selisihm*100)
         selisihm = abs(selisihm)
-        selisihm = str(selisihm) + "% " + "Decrease"
+        selisihm = str(selisihm) + "% "
     else:
         selisihm = ((rata2_monthly - rata2_yesmonthly)/rata2_monthly)
         selisihm = round(selisihm*100)
@@ -231,6 +226,21 @@ def get_data_lineChart():
     # lineChartData_schema = real_dataSchema(many=True)
     # output = lineChartData_schema.dump(lineChartData)
     return jsonify(output_line)
+
+def calculate_percentage(val, total):
+   """Calculates the percentage of a value over a total"""
+   percent = np.round((np.divide(val, total) * 100), 2)
+   return percent
+
+@app.route('/get_piechart_data')
+def get_piechart_data():
+   contract_labels = ['Kwh', 'Date', 'Time']
+   _ = real_data.groupby('Date').size().values
+   class_percent = calculate_percentage(_, np.sum(_)) #Getting the value counts and total
+
+   piechart_data= []
+   real_data(piechart_data, class_percent, contract_labels)
+   return jsonify(piechart_data)
 
 @app.route('/api/data')
 @login_required

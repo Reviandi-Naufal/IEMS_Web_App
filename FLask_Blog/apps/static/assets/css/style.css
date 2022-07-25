@@ -720,6 +720,14 @@ h6 {
   padding: 8px 15px;
 }
 
+.filter button{
+  color: #012970;
+}
+
+.advanced-search-body {
+  margin: 1rem;
+}
+
 /* Info Cards */
 .dashboard .info-card {
   padding-bottom: 10px;
