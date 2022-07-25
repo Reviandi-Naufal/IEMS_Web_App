@@ -130,34 +130,37 @@ class billinginput(db.Model):
 class deviceinput(db.Model):
     user_id = db.Column(db.Integer)
     username = db.Column(db.String(20), nullable=False)
-    device_id = db.Column(db.Integer, primary_key=True)
+    device_id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     device_name = db.Column(db.String(100))
     daya_device = db.Column(db.Float)
     jumlah_device = db.Column(db.Integer)
     total_daya = db.Column(db.Float)
     tingkat_prioritas = db.Column(db.String(100))
+    device_name_status = db.Column(db.String(100))
+    device_name_read = db.Column(db.String(100))
+    device_token = db.Column(db.String(100))
  
-    def __init__(self, userID, username, deviceID, deviceName, daya, jumlah_device, total_daya, prioritas):
+    def __init__(self, userID, username, deviceName, daya, jumlah_device, total_daya, prioritas, device_status, device_read, device_token):
         self.user_id = userID
         self.username = username
-        self.device_id = deviceID
         self.device_name = deviceName
         self.daya_device = daya
         self.jumlah_device = jumlah_device
         self.total_daya = total_daya
         self.tingkat_prioritas = prioritas
+        self.device_name_status = device_status
+        self.device_name_read = device_read
+        self.device_token = device_token
 
     def to_dict(self):
         return {
             'user_id' : self.user_id,
             'username' : self.username,
-            'device_id' : self.device_id,
             'device_name' : self.device_name,
             'daya_device' : self.daya_device,
             'jumlah_device' : self.jumlah_device,
             'total_daya' : self.total_daya,
             'tingkat_prioritas' : self.tingkat_prioritas,
-
         }
 
 class device_status(db.Model):

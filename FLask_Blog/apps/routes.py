@@ -12,6 +12,7 @@ from datetime import date, datetime, timedelta
 import numpy as np
 #import pandas as pd
 from colorama import Fore
+import sys
 
 
 
@@ -256,6 +257,17 @@ def data():
         ))
     total_filtered = query.count()
 
+    # filter by date
+    from_date = request.args.get('searchByFromdate')
+    to_date = request.args.get('searchByTodate')
+    if from_date and to_date:
+        query = query.filter(db.and_(
+            real_data.Date >= from_date,
+            real_data.Date <= to_date,
+        ))
+    total_filtered = query.count()
+    print(f'data : {from_date}', file=sys.stderr)
+
     # sorting
     order = []
     i = 0
@@ -286,8 +298,7 @@ def data():
         'recordsFiltered': total_filtered,
         'recordsTotal': real_data.query.count(),
         'draw': request.args.get('draw', type=int),
-    }
-
+    }        
 
 @app.route("/algoritma1")
 @login_required
@@ -508,14 +519,16 @@ def insertDevice():
     if request.method == 'POST':
         user_id = current_user.id
         username = current_user.username
-        device_id = request.form['device_id']
         device_name = request.form['device_name']
         daya_device = request.form['daya_device']
         jumlah_device = request.form['jumlah_device']
         total_daya = float(daya_device)*int(jumlah_device)
         tingkat_prioritas = request.form['prioritas']
+        device_status = request.form['device_status']
+        device_read = request.form['device_read']
+        device_token = request.form['device_token']
  
-        my_data = deviceinput(user_id, username, device_id, device_name, daya_device, jumlah_device, total_daya, tingkat_prioritas)
+        my_data = deviceinput(user_id, username, device_name, daya_device, jumlah_device, total_daya, tingkat_prioritas, device_status, device_read, device_token)
         db.session.add(my_data)
         db.session.commit()
  
