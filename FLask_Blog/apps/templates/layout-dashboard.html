@@ -309,20 +309,12 @@
 
     <!-- Template for Scheduling table Billing -->
     <script>
-      // $(document).ready(function () {
-      //   $('#billing').DataTable({
-      //     pagingType: 'full_numbers',
-      //     ajax: '/api/billing',
-      //     serverSide: true,
-      //     columns: [{ data: 'user_id_bill' }, { data: 'username' }, { data: 'tarif_listrik' }, { data: 'tagihan_listrik' }],
-      //   });
-      //   options: {
-      //     responsive: true;
-      //   }
-      // });
       $(document).ready(function () {
         $('#billing').DataTable({
           columns: [null, null, null, { orderable: false, searchable: false }, { orderable: false, searchable: false }],
+          options: {
+            responsive: true,
+          },
         });
       });
     </script>
@@ -330,43 +322,26 @@
     <!-- Template for Scheduling table Appliance -->
     <script>
       $(document).ready(function () {
-        var table = $('#appliance').DataTable({
-          pagingType: 'full_numbers',
-          ajax: '/api/appliance',
-          bserverSide: true,
-          columns: [
-            { data: 'user_id' },
-            { data: 'device_id' },
-            { data: 'device_name' },
-            { data: 'daya_device' },
-            { data: 'tingkat_prioritas' },
-            {
-              data: null,
-              defaultContent: '<a href="/deleteDevice" class="remove">Delete</a>',
-              orderable: false,
-            },
-          ],
+        $('#appliance').DataTable({
+          columns: [null, null, null, { orderable: false }, { orderable: false }, null, { orderable: false, searchable: false }],
           options: {
             responsive: true,
           },
         });
+      });
+    </script>
 
-        $('#appliance').on('click', 'a.remove', function () {
-          // var data = table.row( $(this).parents('tr') ).data();
-          var id = $(this).attr('id');
-          var string = id;
-          console.log(data, typeof data);
-          var confirmalert = confirm('Are you sure?');
-          //var row= this.parentNode.parentNode;
-          //alert(row.rowIndex);
-          if (confirmalert == true) {
-            $.post('/deleteDevice', { string: string }, function (data) {
-              $('#displaymessage').html(data);
-              $('#displaymessage').show();
-            });
-          } else {
-            alert('Invalid ID.');
-          }
+    <!-- Template for Scheduling table Data Timer -->
+    <script>
+      $(document).ready(function () {
+        $('#Timer').DataTable({
+          pagingType: 'full_numbers',
+          ajax: '/api/dataTimer',
+          serverSide: true,
+          columns: [{ data: 'user_id' }, { data: 'device_id' }, { data: 'device_name' }, { data: 'duration_scheduled' }, { data: 'duration_used' }, { data: 'duration_left' }],
+          options: {
+            responsive: true,
+          },
         });
       });
     </script>
@@ -377,5 +352,6 @@
     <script src="{{ url_for('static', filename='linechart.js') }}"></script>
     <script src="{{ url_for('static', filename='tcnlinechart.js') }}"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="{{ url_for('static', filename='clusteringchart.js') }}"></script>
   </body>
 </html>

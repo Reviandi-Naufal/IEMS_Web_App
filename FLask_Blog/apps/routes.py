@@ -6,7 +6,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from apps import app, db, bcrypt
 from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted
+from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, device_usage_duration
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, datetime, timedelta
 import numpy as np
@@ -399,51 +399,51 @@ def schedule_appliance():
     return render_template("scheduling.html", Devices=all_data, Billing=all_billing)
     # return render_template("scheduling.html")
 
-@app.route('/api/billing')
-@login_required
-def billing():
-    query = billinginput.query
+# @app.route('/api/billing')
+# @login_required
+# def billing():
+#     query = billinginput.query
 
-    # search filter
-    search = request.args.get('search[value]')
-    if search:
-        query = query.filter(db.or_(
-            billinginput.username.like(f'%{search}%'),
-            billinginput.tarif_listrik.like(f'%{search}%')
-        ))
-    total_filtered = query.count()
+#     # search filter
+#     search = request.args.get('search[value]')
+#     if search:
+#         query = query.filter(db.or_(
+#             billinginput.username.like(f'%{search}%'),
+#             billinginput.tarif_listrik.like(f'%{search}%')
+#         ))
+#     total_filtered = query.count()
 
-    # sorting
-    order = []
-    i = 0
-    while True:
-        col_index = request.args.get(f'order[{i}][column]')
-        if col_index is None:
-            break
-        col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['User ID', 'Username', 'Daya Listrik', 'Tagihan Listrik(RP)']:
-            col_name = 'username'
-        descending = request.args.get(f'order[{i}][dir]') == 'desc'
-        col = getattr(billinginput, col_name)
-        if descending:
-            col = col.desc()
-        order.append(col)
-        i += 1
-    if order:
-        query = query.order_by(*order)
+#     # sorting
+#     order = []
+#     i = 0
+#     while True:
+#         col_index = request.args.get(f'order[{i}][column]')
+#         if col_index is None:
+#             break
+#         col_name = request.args.get(f'columns[{col_index}][data]')
+#         if col_name not in ['User ID', 'Username', 'Daya Listrik', 'Tagihan Listrik(RP)']:
+#             col_name = 'username'
+#         descending = request.args.get(f'order[{i}][dir]') == 'desc'
+#         col = getattr(billinginput, col_name)
+#         if descending:
+#             col = col.desc()
+#         order.append(col)
+#         i += 1
+#     if order:
+#         query = query.order_by(*order)
 
-    # pagination
-    start = request.args.get('start', type=int)
-    length = request.args.get('length', type=int)
-    query = query.offset(start).limit(length)
+#     # pagination
+#     start = request.args.get('start', type=int)
+#     length = request.args.get('length', type=int)
+#     query = query.offset(start).limit(length)
 
-    # response
-    return {
-        'data': [billinginput.to_dict() for billinginput in query],
-        'recordsFiltered': total_filtered,
-        'recordsTotal': billinginput.query.count(),
-        'draw': request.args.get('draw', type=int),
-    }
+#     # response
+#     return {
+#         'data': [billinginput.to_dict() for billinginput in query],
+#         'recordsFiltered': total_filtered,
+#         'recordsTotal': billinginput.query.count(),
+#         'draw': request.args.get('draw', type=int),
+#     }
 
 # this route is for inserting billing data
 # to mysql database via html forms
@@ -470,14 +470,21 @@ def insertBilling():
 def updateBilling():
  
     if request.method == 'POST':
-        my_billing = billinginput.query.get(request.form.get('billing'))
+        my_billing = billinginput.query.get(request.form.get('billingUpdate'))
  
         my_billing.tarif_listrik = request.form['tarif_listrik']
         my_billing.tagihan_listrik = request.form['tagihan_listrik']
  
         db.session.commit()
         flash("Billing Updated Successfully", 'success')
- 
+
+        # if current_user.user_type == 'user':
+        #     all_data = deviceinput.query.filter_by(user_id=current_user.id).all()
+        #     all_billing = billinginput.query.filter_by(user_id_bill=current_user.id).all()
+        # else:
+        #     all_data = deviceinput.query.all()
+        #     all_billing = billinginput.query.all()
+        # return render_template("scheduling.html", Devices=all_data, Billing=all_billing)
         return redirect(url_for('schedule_appliance'))
 
 # This route is for deleting our employee
@@ -514,51 +521,51 @@ def insertDevice():
  
         return redirect(url_for('schedule_appliance'))
 
-@app.route('/api/appliance')
-@login_required
-def appliance():
-    query = deviceinput.query
+# @app.route('/api/appliance')
+# @login_required
+# def appliance():
+#     query = deviceinput.query
 
-    # search filter
-    search = request.args.get('search[value]')
-    if search:
-        query = query.filter(db.or_(
-            deviceinput.username.like(f'%{search}%'),
-            deviceinput.tarif_listrik.like(f'%{search}%')
-        ))
-    total_filtered = query.count()
+#     # search filter
+#     search = request.args.get('search[value]')
+#     if search:
+#         query = query.filter(db.or_(
+#             deviceinput.username.like(f'%{search}%'),
+#             deviceinput.tarif_listrik.like(f'%{search}%')
+#         ))
+#     total_filtered = query.count()
 
-    # sorting
-    order = []
-    i = 0
-    while True:
-        col_index = request.args.get(f'order[{i}][column]')
-        if col_index is None:
-            break
-        col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['User ID', 'Device ID', 'Device Name', 'Daya Device','Tingkat Prioritas', 'Action']:
-            col_name = 'user_id'
-        descending = request.args.get(f'order[{i}][dir]') == 'desc'
-        col = getattr(deviceinput, col_name)
-        if descending:
-            col = col.desc()
-        order.append(col)
-        i += 1
-    if order:
-        query = query.order_by(*order)
+#     # sorting
+#     order = []
+#     i = 0
+#     while True:
+#         col_index = request.args.get(f'order[{i}][column]')
+#         if col_index is None:
+#             break
+#         col_name = request.args.get(f'columns[{col_index}][data]')
+#         if col_name not in ['User ID', 'Device ID', 'Device Name', 'Daya Device','Tingkat Prioritas', 'Action']:
+#             col_name = 'user_id'
+#         descending = request.args.get(f'order[{i}][dir]') == 'desc'
+#         col = getattr(deviceinput, col_name)
+#         if descending:
+#             col = col.desc()
+#         order.append(col)
+#         i += 1
+#     if order:
+#         query = query.order_by(*order)
 
-    # pagination
-    start = request.args.get('start', type=int)
-    length = request.args.get('length', type=int)
-    query = query.offset(start).limit(length)
+#     # pagination
+#     start = request.args.get('start', type=int)
+#     length = request.args.get('length', type=int)
+#     query = query.offset(start).limit(length)
 
-    # response
-    return {
-        'data': [deviceinput.to_dict() for deviceinput in query],
-        'recordsFiltered': total_filtered,
-        'recordsTotal': deviceinput.query.count(),
-        'draw': request.args.get('draw', type=int),
-    }
+#     # response
+#     return {
+#         'data': [deviceinput.to_dict() for deviceinput in query],
+#         'recordsFiltered': total_filtered,
+#         'recordsTotal': deviceinput.query.count(),
+#         'draw': request.args.get('draw', type=int),
+#     }
 
 #this is our update route where we are going to update our employee
 @app.route('/updateDevice', methods = ['GET', 'POST'])
@@ -566,7 +573,7 @@ def appliance():
 def updateDevice():
  
     if request.method == 'POST':
-        my_data = deviceinput.query.get(request.form.get('id'))
+        my_data = deviceinput.query.get(request.form.get('applianceUpdate'))
  
         my_data.device_id = request.form['device_id']
         my_data.device_name = request.form['device_name']
@@ -588,6 +595,53 @@ def deleteDevice(id):
     flash("Device Deleted Successfully", 'success')
  
     return redirect(url_for('schedule_appliance'))
+
+@app.route('/api/dataTimer')
+@login_required
+def dataTimer():
+    query = device_usage_duration.query
+
+    # search filter
+    search = request.args.get('search[value]')
+    if search:
+        query = query.filter(db.or_(
+            device_usage_duration.user_id.like(f'%{search}%'),
+            device_usage_duration.device_id.like(f'%{search}%'),
+            device_usage_duration.device_name.like(f'%{search}%')
+        ))
+    total_filtered = query.count()
+
+    # sorting
+    order = []
+    i = 0
+    while True:
+        col_index = request.args.get(f'order[{i}][column]')
+        if col_index is None:
+            break
+        col_name = request.args.get(f'columns[{col_index}][data]')
+        if col_name not in ['user_id', 'device_id', 'device_name', 'duration_scheduled', 'duration_left']:
+            col_name = 'device_id'
+        descending = request.args.get(f'order[{i}][dir]') == 'desc'
+        col = getattr(device_usage_duration, col_name)
+        if descending:
+            col = col.desc()
+        order.append(col)
+        i += 1
+    if order:
+        query = query.order_by(*order)
+
+    # pagination
+    start = request.args.get('start', type=int)
+    length = request.args.get('length', type=int)
+    query = query.offset(start).limit(length)
+
+    # response
+    return {
+        'data': [device_duration.to_dict() for device_duration in query],
+        'recordsFiltered': total_filtered,
+        'recordsTotal': device_usage_duration.query.count(),
+        'draw': request.args.get('draw', type=int),
+    }
 
 #admin page
 @app.route("/admin")
