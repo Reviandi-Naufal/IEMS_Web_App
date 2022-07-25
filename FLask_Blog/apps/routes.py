@@ -380,9 +380,11 @@ def compare():
 @app.route("/schedule_appliance")
 @login_required
 def schedule_appliance():
-    if current_user.user_type == 'user':
-        all_data = deviceinput.query.filter_by(user_id=current_user.id).all()
-        all_billing = billinginput.query.filter_by(user_id_bill=current_user.id).all()
+    user_type = current_user.user_type
+    user_id = current_user.id
+    if user_type == 'user':
+        all_data = deviceinput.query.filter_by(user_id=user_id).all()
+        all_billing = billinginput.query.filter_by(user_id_bill=user_id).all()
     else:
         all_data = deviceinput.query.all()
         all_billing = billinginput.query.all()

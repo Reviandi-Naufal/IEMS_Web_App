@@ -1,4 +1,5 @@
-{% extends 'layout-dashboard.html'%}{%block title %} Dashboard - Scheduling{% endblock %}{%block content%}
+{% extends 'layout-dashboard.html'%}{%block title %} Dashboard - Scheduling{% endblock %}
+{%block content%}
 
 <!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
@@ -88,131 +89,144 @@
 </aside>
 
 <main id="main" class="main">
-    <div class="pagetitle">
-      <h1>Admin Panel</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
-          <li class="breadcrumb-item active">Admin Panel</li>
-        </ol>
-      </nav>
-    </div>
-            <!-- Manage Billing -->
-            <div class="col-12">
-              <div class="card recent-sales overflow-auto">
-                <div class="card-body">
-                  <div class="row">
-                      <h5 class="card-title-table">Manage <span> User</span>
-                        <button type="button" class="btn btn-primary rounded-pill float-right" data-bs-target="#modalAdduser" data-bs-toggle="modal">Add New User</button>
-                      </h5>
-                      <table id="admintable" class="table table-striped table-borderless dataTable">
-                        <thead>
-                          <tr>
-                            <th scope="col">User ID</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">User Type</th>
-                            <th scope="col">Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                        <nav> 
-                        </nav>
-                      </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- End Manage Billing -->
-
-            <!-- Modal Edit User-->
-            <!-- <div class="modal fade" id="modaledituser" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true"> -->
-              <!-- <div class="modal-dialog"> -->
-                <!-- <div class="modal-content"> -->
-                    <!-- <div class="modal-header"> -->
-                      <!-- <div class="section-heading"> -->
-                        <!-- <h6> Update Information</h6> -->
-                      <!-- </div> -->
-                      <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
-                    <!-- </div> -->
-                    <!-- <div class="modal-body"> -->
-                        <!-- <form action="{{url_for('updateUser')}}" method="POST"> -->
-                            <!-- <div class="form-group"> -->
-                            <!-- <label for="username">Username</label> -->
-                                <!-- <input name="userEdit" type="hidden" "> -->
-                                <!-- <input class="form-control" name="username" type="text" "> -->
-                            <!-- </div> -->
-                            <!-- <div class="form-group"> -->
-                                <!-- <label for="email">Email</label> -->
-                                <!-- <input class="form-control" name="email" type="email" "> -->
-                            <!-- </div> -->
-                            <!-- <div class="form-group"> -->
-                                <!-- <label for="prioritas">User Type</label> -->
-                                <!-- <select class="form-select" aria-label="Default select example" name="user_type" id="user_type"> -->
-                                    <!-- <option selected>Open this select menu</option> -->
-                                    <!-- <option value="admin">Administrator</option> -->
-                                    <!-- <option value="user">User</option> -->
-                                <!-- </select> -->
-                            <!-- </div> -->
-                    <!-- </div> -->
-                    <!-- <div class="modal-footer"> -->
-                      <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                      <!-- <fieldset> -->
-                        <!-- <button type="submit" id="form-submit" class="btn btn-primary">Update</button> -->
-                      <!-- </fieldset> -->
-                    <!-- </div> -->
-                  <!-- </form> -->
-                <!-- </div> -->
-              <!-- </div> -->
-            <!-- </div> -->
-            <!-- End Modal Modal Edit User -->
-
-             <!-- Modal Add User-->
-             <div class="modal fade" id="modalAdduser" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="pagetitle">
+    <h1>Admin Panel</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
+        <li class="breadcrumb-item active">Admin Panel</li>
+      </ol>
+    </nav>
+  </div>
+  <!-- Manage User -->
+  <div class="col-12">
+    <div class="card recent-sales overflow-auto">
+      <div class="card-body">
+        <div class="row">
+            <h5 class="card-title-table">Manage <span> User</span>
+              <button type="button" class="btn btn-primary rounded-pill float-right" data-bs-target="#modalAdduser" data-bs-toggle="modal">Add New User</button>
+            </h5>
+            <table id="admintable" class="table table-striped table-borderless dataTable">
+              <thead>
+                <tr>
+                  <th scope="col">User ID</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">User Type</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              {% for user in userData %}
+              <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.user_type }}</td>
+                <td>
+                  <fieldset>
+                    <a href="/updateUser" class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modaledituser{{ user.id }}">
+                      Edit
+                    </a>
+                    <a href="/deleteUser/{{user.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">
+                      Delete
+                    </a>
+                  </fieldset>
+                </td>
+              </tr>
+              <!-- Modal Edit User-->
+              <div class="modal fade" id="modaledituser{{ user.id }}" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
-                      <div class="modal-header">
-                        <div class="section-heading">
-                          <h6> Add New User</h6>
+                    <div class="modal-header">
+                      <h4> Update Information</h4>
+                    </div>
+                    <div class="modal-body">
+                      <form action="{{url_for('updateUser')}}" method="POST">
+                        <div class="mb-3">
+                          <fieldset>
+                            <label for="username">Username</label>
+                            <input name="userEdit" type="hidden" value="{{user.id}}">
+                            <input class="form-control" name="username" type="text" value="{{user.username}}">
+                          </fieldset>  
                         </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <form action="{{url_for('insertUser')}}" method="POST">
-                            <div class="form-group">
-                              <label for="username">Username</label>
-                              <input class="form-control" name="username" type="text" required>
-                            </div>
-                            <div class="form-group">
-                              <label for="email">Email</label>
-                              <input class="form-control" name="email" type="email" required>
-                            </div>
-                            <div class="form-group">
-                              <label>Password</label>
-                              <input class="form-control" name="password" type="password" step="any" required>
-                            </div>
-                            <div class="form-group">
-                              <label for="prioritas">User Type</label>
-                              <select class="form-select" aria-label="Default select example" name="user_type" id="user_type" required>
+                        <div class="mb-3">
+                          <fieldset>
+                            <label for="email">Email</label>
+                            <input class="form-control" name="email" type="email" value="{{user.email}}">
+                          </fieldset>
+                        </div>
+                        <div class="mb-3">
+                          <fieldset>
+                            <label for="prioritas">User Type</label>
+                            <select class="form-select" aria-label="Default select example" name="user_type" id="user_type">
                                 <option selected>Open this select menu</option>
                                 <option value="admin">Administrator</option>
                                 <option value="user">User</option>
-                              </select>
-                            </div>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <fieldset>
-                          <button type="submit" id="form-submit" class="btn btn-primary">Add User</button>
-                        </fieldset>
-                      </div>
-                    </form>
+                            </select>
+                          </fieldset>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <fieldset>
+                            <button type="submit" id="form-submit" class="btn btn-primary">Update</button>
+                          </fieldset>
+                        </div>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
-              <!-- End Modal Modal Add User -->
-
-
-
+              <!-- End Modal Modal Edit User -->
+              {% endfor %}
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Manage Billing -->
+  <!-- Modal Add User-->
+  <div class="modal fade" id="modalAdduser" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+            <div class="section-heading">
+              <h6> Add New User</h6>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="{{url_for('insertUser')}}" method="POST">
+                <div class="form-group">
+                  <label for="username">Username</label>
+                  <input class="form-control" name="username" type="text" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input class="form-control" name="email" type="email" required>
+                </div>
+                <div class="form-group">
+                  <label>Password</label>
+                  <input class="form-control" name="password" type="password" step="any" required>
+                </div>
+                <div class="form-group">
+                  <label for="prioritas">User Type</label>
+                  <select class="form-select" aria-label="Default select example" name="user_type" id="user_type" required>
+                    <option selected>Open this select menu</option>
+                    <option value="admin">Administrator</option>
+                    <option value="user">User</option>
+                  </select>
+                </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <fieldset>
+              <button type="submit" id="form-submit" class="btn btn-primary">Add User</button>
+            </fieldset>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- End Modal Modal Add User -->
+</main>
 {%endblock%}
