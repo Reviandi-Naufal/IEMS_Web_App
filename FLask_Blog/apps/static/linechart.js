@@ -1,6 +1,6 @@
 $.ajax({
   type: "GET",
-  url: "http://iems-telu.ismailab.xyz/get_data_lineChart",
+  url: "https://iems-telu.ismailab.xyz/get_data_lineChart",
   success: function (response) {
     var objectData = response;
     console.log(objectData, typeof objectData);
