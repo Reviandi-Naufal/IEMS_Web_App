@@ -1,6 +1,6 @@
 $.ajax({
-  type: 'GET',
-  url: 'http://127.0.0.1:5000/get_data_tcnlineChart',
+  type: "GET",
+  url: "http://0.0.0.0:5000/get_data_tcnlineChart",
   success: function (responseTCN) {
     var objectData = responseTCN;
     // console.log(objectData, typeof objectData);
@@ -14,26 +14,26 @@ $.ajax({
 });
 
 function buatTCNLineChart(dataSumbuX, dataSumbuY) {
-  var lineChart = echarts.init(document.getElementById('tcnlineChart'));
+  var lineChart = echarts.init(document.getElementById("tcnlineChart"));
 
   var option = {
     tooltip: {
-      trigger: 'axis',
+      trigger: "axis",
       axisPointer: {
-        type: 'shadow',
+        type: "shadow",
       },
     },
     xAxis: {
-      type: 'category',
+      type: "category",
       data: dataSumbuX,
     },
     yAxis: {
-      type: 'value',
+      type: "value",
     },
     series: [
       {
         data: dataSumbuY,
-        type: 'line',
+        type: "line",
       },
     ],
     responsive: true,
