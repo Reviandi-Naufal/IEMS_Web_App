@@ -1,6 +1,6 @@
 $.ajax({
   type: "GET",
-  url: "http://0.0.0.0:5000/get_data_tcnlineChart",
+  url: "https://iems-telu.ismailab.xyz/get_data_tcnlineChart",
   success: function (responseTCN) {
     var objectData = responseTCN;
     // console.log(objectData, typeof objectData);
