@@ -214,7 +214,20 @@ def get_data_lineChart():
         from_date = request.form['search_fromdate_linechart']
         to_date = request.form['search_todate_linechart']
         print(f'data linechart: from date type = {type(from_date)}, to date type = {type(to_date)}', file=sys.stderr)
-        return redirect(url_for('dashboard'))
+
+        lineChartData = real_data.query.filter(db.and_(
+            real_data.Date >= from_date,
+            real_data.Date <= to_date,
+        )).all()
+        
+        datetime = []
+        kwh = []
+        for i in range(len(lineChartData)):
+            datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
+            kwh.append(lineChartData[i].Kwh)
+        output_line = {"datetime": datetime, "Kwh" : kwh}
+        return jsonify(output_line)
+        # return redirect(url_for('dashboard'))
     else:
         lineChartData = real_data.query.all()
         datetime = []
