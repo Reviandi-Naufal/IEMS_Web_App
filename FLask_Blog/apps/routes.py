@@ -210,22 +210,17 @@ def dashboard():
 @app.route('/get_data_lineChart')
 @login_required
 def get_data_lineChart():
-    # labels = real_data.query.with_entities(real_data.Date).all()
-    # values = real_data.query.with_entities(real_data.Kwh).all()
-    
-    # labels_data = json.dumps(real_data.serialize_list(labels))
-    # values_data = json.dumps(real_data.serialize_list(values))
+    days1 = timedelta(days=1)
+    today_date = date.today() - days1
+    today = today_date.strftime("%Y-%m-%d")
 
-    # lineChartData = real_data.query.with_entities(real_data.Date, real_data.Time, real_data.Kwh)
-    lineChartData = real_data.query.all()
+    lineChartData = real_data.query.filter_by(Date = today ).all()
     datetime = []
     kwh = []
     for i in range(len(lineChartData)):
         datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
         kwh.append(lineChartData[i].Kwh)
     output_line = {"datetime": datetime, "Kwh" : kwh}
-    # lineChartData_schema = real_dataSchema(many=True)
-    # output = lineChartData_schema.dump(lineChartData)
     return jsonify(output_line)
 
 def calculate_percentage(val, total):
