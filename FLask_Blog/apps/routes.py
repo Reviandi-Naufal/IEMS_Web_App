@@ -223,7 +223,7 @@ def get_data_lineChart():
     lineChartData = real_data.query.filter(db.and_(
             real_data.Date >= monthlylyan,
             real_data.Date < today,
-        ))
+        )).all()
     
     datetime = []
     kwh = []
