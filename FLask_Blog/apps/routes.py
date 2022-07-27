@@ -288,7 +288,7 @@ def data():
             real_data.Date <= to_date,
         ))
     total_filtered = query.count()
-    print(f'data : {from_date}', file=sys.stderr)
+    # print(f'data : {from_date}', file=sys.stderr)
 
     # sorting
     order = []
