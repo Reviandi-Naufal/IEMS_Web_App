@@ -228,8 +228,8 @@ def get_data_lineChart():
         output_line = {"datetime": datetime, "Kwh" : kwh}
         if request.method == 'GET':
             return jsonify(output_line)
-        else:
-            return redirect(url_for('dashboard'))
+        # else:
+        #     return redirect(url_for('dashboard'))
     else:
         lineChartData = real_data.query.all()
         datetime = []
