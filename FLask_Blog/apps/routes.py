@@ -214,14 +214,15 @@ def get_data_lineChart():
         form_date = request.form['search_fromdate_linechart']
         to_date = request.form['search_todate_linechart']
         print(f'data linechart: from date = {from_date}, to date = {to_date}', file=sys.stderr)
-    lineChartData = real_data.query.all()
-    datetime = []
-    kwh = []
-    for i in range(len(lineChartData)):
-        datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
-        kwh.append(lineChartData[i].Kwh)
-    output_line = {"datetime": datetime, "Kwh" : kwh}
-    return jsonify(output_line)
+    else:
+        lineChartData = real_data.query.all()
+        datetime = []
+        kwh = []
+        for i in range(len(lineChartData)):
+            datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
+            kwh.append(lineChartData[i].Kwh)
+        output_line = {"datetime": datetime, "Kwh" : kwh}
+        return jsonify(output_line)
 
 def calculate_percentage(val, total):
    """Calculates the percentage of a value over a total"""
