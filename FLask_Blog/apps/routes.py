@@ -237,10 +237,6 @@ def get_data_lineChart():
     #     return jsonify(output_line)
     # else:
     lineChartData = real_data.query.filter_by(Date = today).all()
-    # lineChartData = real_data.query.filter(db.and_(
-    #         real_data.Date >= from_date,
-    #         real_data.Date <= to_date,
-    #     )).all()
     datetime = []
     kwh = []
     for i in range(len(lineChartData)):
