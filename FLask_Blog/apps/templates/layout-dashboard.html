@@ -373,19 +373,21 @@
     </script>
     <!-- End Template Datatables -->
     <script>
-      $.ajax({
-        url: "/get_data_lineChart/",
-        data: function (data_linechart) {
-          // Read values
-          var from_date_lc = $("#search_fromdate_linechart").val();
-          var to_date_lc = $("#search_todate_linechart").val();
-          console.log(from_date_lc);
-          console.log(to_date_lc);
+      $(document).ready(function () {
+        $.ajax({
+          url: "/get_data_lineChart/",
+          data: function (data_linechart) {
+            // Read values
+            var from_date_lc = $("#search_fromdate_linechart").val();
+            var to_date_lc = $("#search_todate_linechart").val();
+            console.log(from_date_lc);
+            console.log(to_date_lc);
 
-          // Append to data
-          data_linechart.searchByFromdateLc = from_date_lc;
-          data_linechart.searchByTodateLc = from_date_lc;
-        },
+            // Append to data
+            data_linechart.searchByFromdateLc = from_date_lc;
+            data_linechart.searchByTodateLc = from_date_lc;
+          },
+        });
       });
     </script>
     <script>
