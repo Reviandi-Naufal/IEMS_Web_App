@@ -241,7 +241,6 @@ def get_data_lineChart():
         #         real_data.Date >= from_date,
         #         real_data.Date <= to_date,
         #     )).all()
-
         datetime = []
         kwh = []
         for i in range(len(lineChartData)):
