@@ -212,8 +212,8 @@ def dashboard():
 def get_data_lineChart():
     from_date = request.args.get('searchByFromdateLc')
     to_date = request.args.get('searchByTodateLc')
+    print(f'data linechart: from date type = {type(from_date)}, to date type = {type(to_date)}', file=sys.stderr)
     if from_date and to_date:
-        print(f'data linechart: from date type = {type(from_date)}, to date type = {type(to_date)}', file=sys.stderr)
 
         lineChartData = real_data.query.filter(db.and_(
             real_data.Date >= from_date,
