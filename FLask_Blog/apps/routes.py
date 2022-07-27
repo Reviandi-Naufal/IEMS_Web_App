@@ -210,9 +210,9 @@ def dashboard():
 @app.route('/get_data_lineChart', methods=['GET','POST'])
 @login_required
 def get_data_lineChart():
-    if request.method == 'POST':
-        from_date = request.form['search_fromdate_linechart']
-        to_date = request.form['search_todate_linechart']
+    from_date = request.args.get('searchByFromdateLc')
+    to_date = request.args.get('searchByTodateLc')
+    if from_date and to_date:
         print(f'data linechart: from date type = {type(from_date)}, to date type = {type(to_date)}', file=sys.stderr)
 
         lineChartData = real_data.query.filter(db.and_(

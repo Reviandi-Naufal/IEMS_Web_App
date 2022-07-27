@@ -219,26 +219,24 @@
                         <h6>Filter</h6>
                       </li>
                       <div class="advanced-search-body" style="padding-top: 0px !important;">
-                        <form id = "joiningDateSearchLinechart" action="{{url_for('get_data_lineChart')}}" method="POST">
+                        <form id = "joiningDateSearchLinechart">
                           <div class="form-row">
-                          <li>
-                            <div class="mb-3" style="margin-bottom: 0px !important;">
-                              <label for="Doctor-name">From</label>
-                              <input type="date" name="search_fromdate_linechart" id="search_fromdate_linechart" class="form-control" >
+                            <li>
+                              <div class="form-group col-md-12 datepicker" style="margin-bottom: 0px !important;">
+                                <label for="Doctor-name">From</label>
+                                <input type="date" id="search_fromdate_linechart" class="form-control" >
+                              </div>
+                            </li>
+                            <li>
+                              <div class="form-group col-md-12 datepicker" style="margin-bottom: 0px !important;">
+                                <label for="dob">To</label>
+                                <input type="date" id="search_todate_linechart" class="form-control" >
+                              </div>
+                            </li>
+                            <li>
                             </div>
-                          </li>
-                          <li>
-                            <div class="mb-3" style="margin-bottom: 0px !important;">
-                              <label for="dob">To</label>
-                              <input type="date" name="search_todate_linechart" id="search_todate_linechart" class="form-control" >
-                            </div>
-                          </li>
-                          <li>
-                          </div>
-                          <fieldset>
-                            <button id="form-submit" type="submit">Go</button>
-                          </fieldset>
-                          </li>
+                            <button id="btn_search" type="button">Go</button>
+                            </li>
                         </form>
                     </ul>
                   </div>
