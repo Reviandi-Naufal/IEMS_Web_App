@@ -207,36 +207,10 @@ def dashboard():
     return render_template('dashboard.html', kwh_today=f"{selisih}", rata2_today=rata2_today, rata2_yesterday= rata2_yesterday, todaykwh=f"{todaykwh}", weeklykwh=f"{selisihw}", weekly=f"{weekly}", monthlykwh=f"{selisihm}", monthly=f"{monthly}")
 
 
-@app.route('/get_data_lineChart', methods=['POST'])
+@app.route('/get_data_lineChart')
 @login_required
 def get_data_lineChart():
-    days1 = timedelta(days=1)
-    month1 = timedelta(weeks=4)
-
-    today_date = date.today() - days1
-    today = today_date.strftime("%Y-%m-%d")
-
-    monthly_date = date.today() - month1
-    monthlylyan = monthly_date.strftime("%Y-%m-%d")
-
-    # if request.method == 'POST':
-    #     from_date = request.form['search_fromdate_linechart']
-    #     to_date = request.form['search_todate_linechart']
-    #     # lineChartData = real_data.query.filter_by(Date = today ).all()
-    #     lineChartData = real_data.query.filter(db.and_(
-    #             real_data.Date >= from_date,
-    #             real_data.Date <= to_date,
-    #         )).all()
-    #     print(f'data linechart : {from_date}', file=sys.stderr)
-    #     datetime = []
-    #     kwh = []
-    #     for i in range(len(lineChartData)):
-    #         datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
-    #         kwh.append(lineChartData[i].Kwh)
-    #     output_line = {"datetime": datetime, "Kwh" : kwh}
-    #     return jsonify(output_line)
-    # else:
-    lineChartData = real_data.query.filter_by(Date = today).all()
+    lineChartData = real_data.query.all()
     datetime = []
     kwh = []
     for i in range(len(lineChartData)):
@@ -283,7 +257,7 @@ def data():
             real_data.Date <= to_date,
         ))
     total_filtered = query.count()
-    # print(f'data : {from_date}', file=sys.stderr)
+    print(f'data : {from_date}', file=sys.stderr)
 
     # sorting
     order = []
