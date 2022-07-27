@@ -211,7 +211,7 @@ def dashboard():
 @login_required
 def get_data_lineChart():
     days1 = timedelta(days=1)
-    month1 = timedelta(months=1)
+    month1 = timedelta(weeks=4)
 
     today_date = date.today() - days1
     today = today_date.strftime("%Y-%m-%d")
