@@ -214,6 +214,7 @@ def get_data_lineChart():
         from_date = request.form['search_fromdate_linechart']
         to_date = request.form['search_todate_linechart']
         print(f'data linechart: from date = {from_date}, to date = {to_date}', file=sys.stderr)
+        return redirect(url_for('dashboard'))
     else:
         lineChartData = real_data.query.all()
         datetime = []
