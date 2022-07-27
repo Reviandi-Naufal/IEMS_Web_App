@@ -227,7 +227,7 @@ def get_data_lineChart():
                 real_data.Date >= from_date,
                 real_data.Date <= to_date,
             )).all()
-        print(f'data : {from_date}, {to_date}', file=sys.stderr)
+    
         datetime = []
         kwh = []
         for i in range(len(lineChartData)):
