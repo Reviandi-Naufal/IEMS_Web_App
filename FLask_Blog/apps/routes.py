@@ -211,8 +211,8 @@ def dashboard():
 @login_required
 def get_data_lineChart():
     if request.method == 'POST':
-        from_date = request.form.search_fromdate_linechart.data
-        to_date = request.form.search_todate_linechart.data
+        from_date = request.form['search_fromdate_linechart']
+        to_date = request.form['search_todate_linechart']
         print(f'data linechart: from date = {from_date}, to date = {to_date}', file=sys.stderr)
     else:
         lineChartData = real_data.query.all()
