@@ -219,35 +219,35 @@ def get_data_lineChart():
     monthly_date = date.today() - month1
     monthlylyan = monthly_date.strftime("%Y-%m-%d")
 
-    if request.method == 'POST':
-        from_date = request.form['search_fromdate_linechart']
-        to_date = request.form['search_todate_linechart']
-        # lineChartData = real_data.query.filter_by(Date = today ).all()
-        lineChartData = real_data.query.filter(db.and_(
-                real_data.Date >= from_date,
-                real_data.Date <= to_date,
-            )).all()
-        print(f'data linechart : {from_date}', file=sys.stderr)
-        datetime = []
-        kwh = []
-        for i in range(len(lineChartData)):
-            datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
-            kwh.append(lineChartData[i].Kwh)
-        output_line = {"datetime": datetime, "Kwh" : kwh}
-        return jsonify(output_line)
-    else:
-        lineChartData = real_data.query.filter_by(Date = today).all()
-        # lineChartData = real_data.query.filter(db.and_(
-        #         real_data.Date >= from_date,
-        #         real_data.Date <= to_date,
-        #     )).all()
-        datetime = []
-        kwh = []
-        for i in range(len(lineChartData)):
-            datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
-            kwh.append(lineChartData[i].Kwh)
-        output_line = {"datetime": datetime, "Kwh" : kwh}
-        return jsonify(output_line)
+    # if request.method == 'POST':
+    #     from_date = request.form['search_fromdate_linechart']
+    #     to_date = request.form['search_todate_linechart']
+    #     # lineChartData = real_data.query.filter_by(Date = today ).all()
+    #     lineChartData = real_data.query.filter(db.and_(
+    #             real_data.Date >= from_date,
+    #             real_data.Date <= to_date,
+    #         )).all()
+    #     print(f'data linechart : {from_date}', file=sys.stderr)
+    #     datetime = []
+    #     kwh = []
+    #     for i in range(len(lineChartData)):
+    #         datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
+    #         kwh.append(lineChartData[i].Kwh)
+    #     output_line = {"datetime": datetime, "Kwh" : kwh}
+    #     return jsonify(output_line)
+    # else:
+    lineChartData = real_data.query.filter_by(Date = today).all()
+    # lineChartData = real_data.query.filter(db.and_(
+    #         real_data.Date >= from_date,
+    #         real_data.Date <= to_date,
+    #     )).all()
+    datetime = []
+    kwh = []
+    for i in range(len(lineChartData)):
+        datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
+        kwh.append(lineChartData[i].Kwh)
+    output_line = {"datetime": datetime, "Kwh" : kwh}
+    return jsonify(output_line)
 
 def calculate_percentage(val, total):
    """Calculates the percentage of a value over a total"""
