@@ -210,6 +210,7 @@ def dashboard():
 @app.route('/get_data_lineChart', methods=['GET','POST'])
 @login_required
 def get_data_lineChart():
+    output_line = {}
     if request.method == 'POST':
         from_date = request.args.get('searchByFromdateLc')
         to_date = request.args.get('searchByTodateLc')
@@ -239,6 +240,7 @@ def get_data_lineChart():
             kwh.append(lineChartData[i].Kwh)
         output_line = {"datetime": datetime, "Kwh" : kwh}
         return jsonify(output_line)
+    return jsonify(output_line)
 
 def calculate_percentage(val, total):
    """Calculates the percentage of a value over a total"""
