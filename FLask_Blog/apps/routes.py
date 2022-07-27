@@ -227,8 +227,8 @@ def get_data_lineChart():
             datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
             kwh.append(lineChartData[i].Kwh)
         output_line = {"datetime": datetime, "Kwh" : kwh}
-        if request.method == 'GET':
-            return jsonify(output_line)
+        # if request.method == 'GET':
+        #     return jsonify(output_line)
         # else:
         #     return redirect(url_for('dashboard'))
     else:
@@ -240,7 +240,7 @@ def get_data_lineChart():
             kwh.append(lineChartData[i].Kwh)
         output_line = {"datetime": datetime, "Kwh" : kwh}
         return jsonify(output_line)
-    print(f'data linechart: from date type = {type(from_date)} ', file=sys.stderr)
+    print(f'data output line: {output_line}', file=sys.stderr)
     return redirect(url_for('dashboard'))
 
 def calculate_percentage(val, total):
