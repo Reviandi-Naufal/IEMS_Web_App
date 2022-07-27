@@ -390,7 +390,7 @@ def tcndata():
 @app.route("/clustering")
 @login_required
 def clustering():
-    return render_template('clustering.html')
+    return render_template('Clustering.html')
 
 @app.route("/compare")
 @login_required
