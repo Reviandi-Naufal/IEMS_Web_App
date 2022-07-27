@@ -378,6 +378,7 @@
         $("btn_search_linechart").click(function () {
           $.ajax({
             url: "/get_data_lineChart/",
+            type: "POST",
             data: function (data_linechart) {
               // Read values
               var from_date_lc = $("#search_fromdate_linechart").val();
