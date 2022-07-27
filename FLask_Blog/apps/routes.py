@@ -207,9 +207,13 @@ def dashboard():
     return render_template('dashboard.html', kwh_today=f"{selisih}", rata2_today=rata2_today, rata2_yesterday= rata2_yesterday, todaykwh=f"{todaykwh}", weeklykwh=f"{selisihw}", weekly=f"{weekly}", monthlykwh=f"{selisihm}", monthly=f"{monthly}")
 
 
-@app.route('/get_data_lineChart')
+@app.route('/get_data_lineChart', methods=['POST'])
 @login_required
 def get_data_lineChart():
+    if request.method == 'POST':
+        form_date = request.form['search_fromdate_linechart']
+        to_date = request.form['search_todate_linechart']
+        print(f'data linechart: from date = {from_date}, to date = {to_date}', file=sys.stderr)
     lineChartData = real_data.query.all()
     datetime = []
     kwh = []
@@ -257,7 +261,7 @@ def data():
             real_data.Date <= to_date,
         ))
     total_filtered = query.count()
-    print(f'data : {from_date}', file=sys.stderr)
+    # print(f'data : {from_date}', file=sys.stderr)
 
     # sorting
     order = []
