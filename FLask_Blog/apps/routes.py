@@ -207,7 +207,7 @@ def dashboard():
     return render_template('dashboard.html', kwh_today=f"{selisih}", rata2_today=rata2_today, rata2_yesterday= rata2_yesterday, todaykwh=f"{todaykwh}", weeklykwh=f"{selisihw}", weekly=f"{weekly}", monthlykwh=f"{selisihm}", monthly=f"{monthly}")
 
 
-@app.route('/get_data_lineChart')
+@app.route('/get_data_lineChart', methods=['GET','POST'])
 @login_required
 def get_data_lineChart():
     days1 = timedelta(days=1)
