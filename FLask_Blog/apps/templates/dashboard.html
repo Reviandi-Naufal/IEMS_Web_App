@@ -218,9 +218,28 @@
                       <li class="dropdown-header text-start">
                         <h6>Filter</h6>
                       </li>
-                      <li><a class="dropdown-item" href="#">Today</a></li>
-                      <li><a class="dropdown-item" href="#">This Month</a></li>
-                      <li><a class="dropdown-item" href="#">This Year</a></li>
+                      <div class="advanced-search-body" style="padding-top: 0px !important;">
+                        <form id = "joiningDateSearch">
+                          <div class="form-row">
+                          <li>
+                            <div class="form-group col-md-12 datepicker" style="margin-bottom: 0px !important;">
+                              <label for="Doctor-name">From</label>
+                              <input type="date" id="search_fromdate"
+                                class="form-control" >
+                            </div>
+                          </li>
+                          <li>
+                            <div class="form-group col-md-12 datepicker" style="margin-bottom: 0px !important;">
+                              <label for="dob">To</label>
+                              <input type="date" id="search_todate"
+                                class="form-control" >
+                            </div>
+                          </li>
+                          <li>
+                          </div>
+                          <button id="btn_search" type="button">Go</button>
+                          </li>
+                        </form>
                     </ul>
                   </div>
                   <div class="card-body">
