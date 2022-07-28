@@ -16,10 +16,16 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     user_type = db.Column(db.String(20), nullable=False, default='user',)
+    fullname = db.Column(db.String(120), unique=True, nullable=True)
+    about = db.Column(db.String(500), unique=True, nullable=True)
+    company = db.Column(db.String(150), unique=True, nullable=True)
+    job = db.Column(db.String(150), unique=True, nullable=True)
+    nim = db.Column(db.Integer, unique=True, nullable=True)
+    phone = db.Column(db.Integer, unique=True, nullable=True)
 
     #setting __repr__ method, it's to define how the object is printed out whenever it get printed out
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}','{self.image_file}')"
+        return f"User('{self.username}', '{self.email}','{self.image_file}','{self.fullname}','{self.about}','{self.company}','{self.job}','{self.nim}','{self.phone}')"
     
     def to_dict(self):
         return {
@@ -27,6 +33,12 @@ class User(db.Model, UserMixin):
             'username': self.username,
             'email': self.email,
             'user_type': self.user_type,
+            'fullname' : self.fullname,
+            'about' : self.about,
+            'company' : self.company,
+            'job' : self.job,
+            'nim' : self.nim,
+            'phone' : self.phone
         }
 
 #####################################################################################
