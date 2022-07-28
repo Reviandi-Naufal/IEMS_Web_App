@@ -9,11 +9,11 @@ $.ajax({
     var dataSumbuY = objectData.Kwh;
     // var dataCoba = Object.values(select)
     // console.log(dataSumbuY)
-    buatTCNLineChart(dataSumbuX, dataSumbuY);
+    buatGRULineChart(dataSumbuX, dataSumbuY);
   },
 });
 
-function buatTCNLineChart(dataSumbuX, dataSumbuY) {
+function buatGRULineChart(dataSumbuX, dataSumbuY) {
   var lineChart = echarts.init(document.getElementById('grulineChart'));
 
   var option = {
