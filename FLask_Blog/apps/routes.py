@@ -349,6 +349,16 @@ def tcndata():
         ))
     total_filtered = query.count()
 
+    # filter by date
+    from_date = request.args.get('searchByFromdate')
+    to_date = request.args.get('searchByTodate')
+    if from_date and to_date:
+        query = query.filter(db.and_(
+            real_data.Date >= from_date,
+            real_data.Date <= to_date,
+        ))
+    total_filtered = query.count()
+
     # sorting
     order = []
     i = 0

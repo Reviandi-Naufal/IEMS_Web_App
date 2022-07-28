@@ -403,11 +403,28 @@
 
     <script>
       $(document).ready(function () {
-        $("#tcndata").DataTable({
+        var dataTable_tcn = $("#tcndata").DataTable({
           pagingType: "full_numbers",
-          ajax: "/api/tcndata",
+          processing: true,
           serverSide: true,
+          ajax: {
+            url: "/api/tcndata",
+            data: function (data) {
+              // Read values
+              var from_date = $("#search_fromdate_tcn").val();
+              var to_date = $("#search_todate_tcn").val();
+
+              // Append to data
+              data.searchByFromdate = from_date;
+              data.searchByTodate = to_date;
+            },
+          },
           columns: [{ data: "DateTime" }, { data: "Kwh" }],
+        });
+
+        // Search button
+        $("#btn_search_tcn").click(function () {
+          dataTable_tcn.draw();
         });
         options: {
           responsive: true;
