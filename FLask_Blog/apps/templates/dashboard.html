@@ -122,7 +122,13 @@
                     <h5 class="card-title">KWH <span>| Today</span></h5>
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                        <!--<i class="bi bi-cart"></i>-->
+                        {% if rata2_today > rata2_yesterday %}
+                        <span src="{{ url_for('static', filename='assets/img/increase.png') }}" ></span>
+                        {% elif rata2_today < rata2_yesterday %}
+                        <span src="{{ url_for('static', filename='assets/img/decrease.png') }}"></span>
+                        {% else %}
+                        <i class="small"></i>
+                        {% endif %}
                       </div>
                       <div class="ps-3">
                         <h6 class="h6 card-text text-black">{{ todaykwh }} kWh</h6>
@@ -362,7 +368,7 @@
                   </div>
                   <div class="carousel-inner">
                     <div class="carousel-item active">
-                      <img src="assets/img/profile-img.jpg" class="d-block w-100" alt="..." />
+                      <img src="{{ url_for('static', filename='assets/img/ivan.png') }}" class="d-block w-100" alt="..." />
                       <div class="carousel-caption d-none d-md-block">
                         <h5>Arasy Banjir</h5>
                         <h6>NIM Arasy</h6>
@@ -370,7 +376,7 @@
                       </div>
                     </div>
                     <div class="carousel-item">
-                      <img src="assets/img/profile-img.jpg" class="d-block w-100" alt="..." />
+                      <img src="{{ url_for('static', filename='assets/img/ivan.png') }}" class="d-block w-100" alt="..." />
                       <div class="carousel-caption d-none d-md-block">
                         <h5>Ivan Satrio Pamungkas</h5>
                         <h6>NIM Ivan</h6>
@@ -378,11 +384,27 @@
                       </div>
                     </div>
                     <div class="carousel-item">
-                      <img src="assets/img/profile-img.jpg" class="d-block w-100" alt="..." />
+                      <img src="{{ url_for('static', filename='assets/img/ivan.png') }}" class="d-block w-100" alt="..." />
                       <div class="carousel-caption d-none d-md-block">
                         <h5>Fajri Nurfauzan</h5>
                         <h6>1103180184</h6>
                         <p>Using Algoritma LMU.</p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img src="{{ url_for('static', filename='assets/img/kent.png') }}" class="d-block w-100" alt="..." />
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5>Keneth Angelo</h5>
+                        <h6>1103180184</h6>
+                        <p>Using Algoritma TCN.</p>
+                      </div>
+                    </div>
+                    <div class="carousel-item">
+                      <img src="{{ url_for('static', filename='assets/img/rev.png') }}" class="d-block w-100" alt="..." />
+                      <div class="carousel-caption d-none d-md-block">
+                        <h5>Reviandi Naufal</h5>
+                        <h6>1103180184</h6>
+                        <p>Using Scheduling.</p>
                       </div>
                     </div>
                   </div>
