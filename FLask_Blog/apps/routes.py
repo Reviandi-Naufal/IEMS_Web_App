@@ -327,9 +327,9 @@ def get_data_grulineChart():
     # print(f'data linechartTCN: {output_line_tcn}', file=sys.stderr)
     return jsonify(output_line_gru)
 
-@app.route('/api/tcndata')
+@app.route('/api/grudata')
 @login_required
-def tcndata():
+def grudata():
     query = GRU_data_predicted.query
 
     # search filter
