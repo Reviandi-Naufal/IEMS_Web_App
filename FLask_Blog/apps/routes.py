@@ -6,14 +6,14 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from apps import app, db, bcrypt
 from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration
+from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, datetime, timedelta
 import numpy as np
 #import pandas as pd
 from colorama import Fore
 import sys
-
+import babel.numbers
 
 
 @app.route("/")
@@ -321,7 +321,10 @@ def algoritma3():
 @app.route("/algoritma4") #TCN
 @login_required
 def algoritma4():
-    return render_template('algoritma4.html')
+    tcn_price_data = tcn_price.query.all()
+    one_month_data = tcn_price_data[0].Tarif
+    one_month_price = babel.numbers.format_currency(number_string, "IDR", locale='id_ID')
+    return render_template('algoritma4.html', one_month_price=one_month_price)
 
 @app.route('/get_data_tcnlineChart')
 @login_required
