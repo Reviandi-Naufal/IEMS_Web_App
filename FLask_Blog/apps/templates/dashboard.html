@@ -123,9 +123,9 @@
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                         {% if rata2_today > rata2_yesterday %}
-                        <img src="{{ url_for('static', filename='assets/img/increase.png') }}">
+                        <img class="bi" src="{{ url_for('static', filename='assets/img/increase.png') }}" widht="50" height="50">
                         {% elif rata2_today < rata2_yesterday %}
-                        <img src="{{ url_for('static', filename='assets/img/decrease.png') }}">
+                        <img class="bi" src="{{ url_for('static', filename='assets/img/decrease.png') }}" widht="50" height="50">
                         {% else %}
                         <span class="small"></span>
                         {% endif %}
@@ -163,7 +163,13 @@
                     <h5 class="card-title">KWH <span>| This Weekly</span></h5>
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                        <!--<i class="bi bi-currency-dollar"></i>-->
+                        {% if rata2_today > rata2_yesterday %}
+                        <img class="bi" src="{{ url_for('static', filename='assets/img/increase.png') }}" widht="50" height="50">
+                        {% elif rata2_today < rata2_yesterday %}
+                        <img class="bi" src="{{ url_for('static', filename='assets/img/decrease.png') }}" widht="50" height="50">
+                        {% else %}
+                        <span class="small"></span>
+                        {% endif %}
                       </div>
                       <div class="ps-3">
                         <h6>{{ weekly }} Kwh</h6>
@@ -198,7 +204,13 @@
                     <h5 class="card-title">KWH <span>| This Month</span></h5>
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                        <!--<i class="bi bi-people"></i>-->
+                        {% if rata2_today > rata2_yesterday %}
+                        <img class="bi" src="{{ url_for('static', filename='assets/img/increase.png') }}" widht="50" height="50">
+                        {% elif rata2_today < rata2_yesterday %}
+                        <img class="bi" src="{{ url_for('static', filename='assets/img/decrease.png') }}" widht="50" height="50">
+                        {% else %}
+                        <span class="small"></span>
+                        {% endif %}
                       </div>
                       <div class="ps-3">
                         <h6>{{ monthly }} Kwh</h6>
