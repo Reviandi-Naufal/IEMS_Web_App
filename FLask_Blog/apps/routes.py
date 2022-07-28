@@ -243,6 +243,7 @@ def get_data_lineChart():
             kwh.append(lineChartData[i].Kwh)
         output_line = {"datetime": datetime, "Kwh" : kwh}
         return jsonify(output_line)
+    return redirect(url_for('dashboard.html'))
 
 def calculate_percentage(val, total):
    """Calculates the percentage of a value over a total"""
