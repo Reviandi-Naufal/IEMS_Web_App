@@ -326,13 +326,14 @@ def algoritma4():
 @app.route('/get_data_tcnlineChart')
 @login_required
 def get_data_tcnlineChart():
-    lineChartData = TCN_data_predicted.query.all()
+    lineChartDataTCN = TCN_data_predicted.query.all()
+
     datetime = []
-    predictions = []
-    for i in range(len(lineChartData)):
-        datetime.append(lineChartData[i].DateTime)
-        predictions.append(lineChartData[i].Kwh)
-    output_line = {"DateTime": datetime, "Predictions" : predictions}
+    kwh = []
+    for i in range(len(lineChartDataTCN)):
+        datetime.append(lineChartDataTCN[i].Date + " " + lineChartDataTCN[i].Time)
+        kwh.append(lineChartDataTCN[i].Kwh)
+    output_line = {"datetime": datetime, "Kwh" : kwh}
     return jsonify(output_line)
 
 @app.route('/api/tcndata')
@@ -367,8 +368,8 @@ def tcndata():
         if col_index is None:
             break
         col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['Date Time', 'Kwh']:
-            col_name = 'DateTime'
+        if col_name not in ['Index', 'Date', 'Time', 'Kwh']:
+            col_name = 'Date'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
         col = getattr(TCN_data_predicted, col_name)
         if descending:

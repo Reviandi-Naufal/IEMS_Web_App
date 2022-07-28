@@ -419,7 +419,12 @@
               data.searchByTodate = to_date;
             },
           },
-          columns: [{ data: "DateTime" }, { data: "Kwh" }],
+          columns: [
+            { data: "Index" },
+            { data: "Date" },
+            { data: "Time" },
+            { data: "Kwh" },
+          ],
         });
 
         // Search button

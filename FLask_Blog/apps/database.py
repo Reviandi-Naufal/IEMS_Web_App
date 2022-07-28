@@ -69,16 +69,23 @@ class LMU_data_predicted(db.Model):
     Predictions = db.Column(db.Float)
 
 class TCN_data_predicted(db.Model):
-    DateTime = db.Column(db.DateTime, primary_key=True)
+    Index = db.Column(db.Integer, primary_key=True)
+    Date = db.Column(db.Text)
+    Time = db.Column(db.Text)
     Kwh = db.Column(db.Float)
 
     def to_dict(self):
         return {
-            'DateTime' : self.DateTime,
+            'Index' : self.Index,
+            'Date' : self.Date,
+            'Time' : self.Time,
             'Kwh' : self.Kwh
         }
 
-
+class TCN_data_predictedSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = TCN_data_predicted
+        created_at = auto_field(dump_only=True)
 #####################################################################################
 # Creating Model Table for Clusttering
 
