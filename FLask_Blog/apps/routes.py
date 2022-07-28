@@ -313,19 +313,19 @@ def algoritma1():
 def algoritma2():
     return render_template('algoritma2.html')
 
-@app.route('/get_data_grulineChart')
-@login_required
-def get_data_grulineChart():
-    lineChartDataGRU = GRU_data_predicted.query.all()
-
-    datetime = []
-    kwh = []
-    for i in range(len(lineChartDataGRU)):
-        datetime.append(lineChartDataGRU[i].Date + " " + lineChartDataGRU[i].Time)
-        kwh.append(lineChartDataGRU[i].Kwh)
-    output_line_gru = {"datetime": datetime, "Kwh" : kwh}
-    # print(f'data linechartGRU: {output_line_gru}', file=sys.stderr)
-    return jsonify(output_line_gru)
+# @app.route('/get_data_grulineChart')
+# @login_required
+# def get_data_grulineChart():
+    # lineChartDataGRU = GRU_data_predicted.query.all()
+# 
+    # datetime = []
+    # kwh = []
+    # for i in range(len(lineChartDataGRU)):
+        # datetime.append(lineChartDataGRU[i].Date + " " + lineChartDataGRU[i].Time)
+        # kwh.append(lineChartDataGRU[i].Kwh)
+    # output_line_gru = {"datetime": datetime, "Kwh" : kwh}
+    # 
+    # return jsonify(output_line_gru)
 
 @app.route('/api/grudata')
 @login_required
