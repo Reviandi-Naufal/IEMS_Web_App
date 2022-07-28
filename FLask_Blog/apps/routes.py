@@ -351,7 +351,7 @@ def get_data_tcnlineChart():
     predictions = []
     for i in range(len(lineChartData)):
         datetime.append(lineChartData[i].DateTime)
-        predictions.append(lineChartData[i].Predictions)
+        predictions.append(lineChartData[i].Kwh)
     output_line = {"DateTime": datetime, "Predictions" : predictions}
     # lineChartData_schema = real_dataSchema(many=True)
     # output = lineChartData_schema.dump(lineChartData)
