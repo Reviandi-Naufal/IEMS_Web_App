@@ -307,6 +307,37 @@
     </script>
     <!-- End Template Datatables -->
 
+    <!-- Start Table RNN -->
+    <script>
+      $(document).ready(function () {
+        var dataTable_rnn = $('#rnndata').DataTable({
+          pagingType: 'full_numbers',
+          processing: true,
+          serverSide: true,
+          ajax: {
+            url: '/api/rnndata',
+            data: function (data) {
+              // Read values
+              var from_date = $('#search_fromdate_rnn').val();
+              var to_date = $('#search_todate_rnn').val();
+              // Append to data
+              data.searchByFromdate = from_date;
+              data.searchByTodate = to_date;
+            },
+          },
+          columns: [{ data: 'Index' }, { data: 'Date' }, { data: 'Time' }, { data: 'Kwh' }],
+        });
+        // Search button
+        $('#btn_search_rnn').click(function () {
+          dataTable_rnn.draw();
+        });
+        options: {
+          responsive: true;
+        }
+      });
+    </script>
+    <!-- End Table RNN -->
+
     <!-- Start Table GRU -->
     <script>
       $(document).ready(function () {

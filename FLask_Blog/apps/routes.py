@@ -6,7 +6,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from apps import app, db, bcrypt
 from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema
+from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema, RNN_data_predicted, RNN_data_predictedSchema
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, datetime, timedelta
 import numpy as np
@@ -308,24 +308,94 @@ def data():
 def algoritma1():
     return render_template('algoritma1.html')
 
+@app.route('/get_data_rnnlineChart')
+@login_required
+def get_data_rnnlineChart():
+    lineChartDataRNN = RNN_data_predicted.query.all()
+
+    datetime = []
+    kwh = []
+    for i in range(len(lineChartDataRNN)):
+        datetime.append(lineChartDataRNN[i].Date + " " + lineChartDataRNN[i].Time)
+        kwh.append(lineChartDataRNN[i].Kwh)
+    output_line_rnn = {"datetime": datetime, "Kwh" : kwh}
+    
+    return jsonify(output_line_rnn)
+
+@app.route('/api/rnndata')
+@login_required
+def rnndata():
+    query = RNN_data_predicted.query
+
+    # search filter
+    search = request.args.get('search[value]')
+    if search:
+        query = query.filter(db.or_(
+            RNN_data_predicted.DateTime.like(f'%{search}%'),
+            RNN_data_predicted.Kwh.like(f'%{search}%')
+        ))
+    total_filtered = query.count()
+
+    # filter by date
+    from_date = request.args.get('searchByFromdate')
+    to_date = request.args.get('searchByTodate')
+    if from_date and to_date:
+        query = query.filter(db.and_(
+            RNN_data_predicted.Date >= from_date,
+            RNN_data_predicted.Date <= to_date,
+        ))
+    total_filtered = query.count()
+
+    # sorting
+    order = []
+    i = 0
+    while True:
+        col_index = request.args.get(f'order[{i}][column]')
+        if col_index is None:
+            break
+        col_name = request.args.get(f'columns[{col_index}][data]')
+        if col_name not in ['Index', 'Date', 'Time', 'Kwh']:
+            col_name = 'Date'
+        descending = request.args.get(f'order[{i}][dir]') == 'desc'
+        col = getattr(RNN_data_predicted, col_name)
+        if descending:
+            col = col.desc()
+        order.append(col)
+        i += 1
+    if order:
+        query = query.order_by(*order)
+
+    # pagination
+    start = request.args.get('start', type=int)
+    length = request.args.get('length', type=int)
+    query = query.offset(start).limit(length)
+
+    # response
+    return {
+        'data': [RNN_data_predicted.to_dict() for RNN_data_predicted in query],
+        'recordsFiltered': total_filtered,
+        'recordsTotal': RNN_data_predicted.query.count(),
+        'draw': request.args.get('draw', type=int),
+    }
+
 @app.route("/algoritma2") #GRU
 @login_required
 def algoritma2():
     return render_template('algoritma2.html')
 
-# @app.route('/get_data_grulineChart')
-# @login_required
-# def get_data_grulineChart():
-    # lineChartDataGRU = GRU_data_predicted.query.all()
-# 
-    # datetime = []
-    # kwh = []
-    # for i in range(len(lineChartDataGRU)):
-        # datetime.append(lineChartDataGRU[i].Date + " " + lineChartDataGRU[i].Time)
-        # kwh.append(lineChartDataGRU[i].Kwh)
-    # output_line_gru = {"datetime": datetime, "Kwh" : kwh}
-    # 
-    # return jsonify(output_line_gru)
+@app.route('/get_data_grulineChart')
+@login_required
+def get_data_grulineChart():
+    lineChartDataGRU = GRU_data_predicted.query.all()
+
+    datetime = []
+    kwh = []
+    for i in range(len(lineChartDataGRU)):
+        datetime.append(lineChartDataGRU[i].Date + " " + lineChartDataGRU[i].Time)
+        kwh.append(lineChartDataGRU[i].Kwh)
+    output_line_gru = {"datetime": datetime, "Kwh" : kwh}
+    
+    return jsonify(output_line_gru)
 
 @app.route('/api/grudata')
 @login_required

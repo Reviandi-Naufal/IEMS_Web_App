@@ -54,10 +54,23 @@ class real_dataSchema(ma.SQLAlchemyAutoSchema):
 #####################################################################################
 # Creating Model table for Prediction
 class RNN_data_predicted(db.Model):
-    DateTime = db.Column(db.DateTime, primary_key=True)
+    Index = db.Column(db.Integer, primary_key=True)
+    Date = db.Column(db.Text)
+    Time = db.Column(db.Text)
     Kwh = db.Column(db.Float)
-    Predictions = db.Column(db.Float)
 
+    def to_dict(self):
+        return {
+            'Index' : self.Index,
+            'Date' : self.Date,
+            'Time' : self.Time,
+            'Kwh' : self.Kwh
+        }
+class RNN_data_predictedSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = RNN_data_predicted
+        created_at = auto_field(dump_only=True)
+        
 class GRU_data_predicted(db.Model):
     Index = db.Column(db.Integer, primary_key=True)
     Date = db.Column(db.Text)
@@ -77,9 +90,18 @@ class GRU_data_predictedSchema(ma.SQLAlchemyAutoSchema):
         created_at = auto_field(dump_only=True)
 
 class LMU_data_predicted(db.Model):
-    DateTime = db.Column(db.DateTime, primary_key=True)
+    Index = db.Column(db.Integer, primary_key=True)
+    Date = db.Column(db.Text)
+    Time = db.Column(db.Text)
     Kwh = db.Column(db.Float)
-    Predictions = db.Column(db.Float)
+
+    def to_dict(self):
+        return {
+            'Index' : self.Index,
+            'Date' : self.Date,
+            'Time' : self.Time,
+            'Kwh' : self.Kwh
+        }
 
 class TCN_data_predicted(db.Model):
     Index = db.Column(db.Integer, primary_key=True)
