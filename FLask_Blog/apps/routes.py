@@ -231,10 +231,10 @@ def get_data_lineChart():
     else:
         # lineChartData = real_data.query.all()
         lineChartData = real_data.query.filter(db.and_(
-            real_data.Date >= from_date,
-            real_data.Date <= to_date,
+            real_data.Date >= '2022-06-05',
+            real_data.Date <= '2022-06-06',
         )).all()
-        
+
         datetime = []
         kwh = []
         for i in range(len(lineChartData)):
