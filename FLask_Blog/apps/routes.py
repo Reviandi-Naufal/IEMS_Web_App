@@ -211,8 +211,8 @@ def dashboard():
 @login_required
 def get_data_lineChart():
     # output_line_filter = {}
-    from_date = request.args.get('searchByFromdateLc')
-    to_date = request.args.get('searchByTodateLc')
+    from_date = request.form['search_fromdate_linechart']
+    to_date = request.form['search_todate_linechart']
     print(f'data linechart: from date type = {type(from_date)}, to date type = {type(to_date)}', file=sys.stderr)
 
     if from_date != None and to_date != None:
