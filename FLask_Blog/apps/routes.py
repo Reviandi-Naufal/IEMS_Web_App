@@ -323,7 +323,7 @@ def algoritma3():
 def algoritma4():
     tcn_price_data = tcn_price.query.all()
     one_month_data = tcn_price_data[0].Tarif
-    one_month_price = babel.numbers.format_currency(one_month_price, "IDR", locale='id_ID')
+    one_month_price = babel.numbers.format_currency(one_month_data, "IDR", locale='id_ID')
     return render_template('algoritma4.html', one_month_price=one_month_price)
 
 @app.route('/get_data_tcnlineChart')
