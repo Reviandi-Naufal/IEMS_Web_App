@@ -89,6 +89,7 @@ class TCN_data_predictedSchema(ma.SQLAlchemyAutoSchema):
 
 class tcn_price(db.Model):
     Index = db.Column(db.Integer, primary_key=True)
+    range_date = db.Column(db.String)
     Total_Kwh = db.Column(db.Float)
     Tarif = db.Column(db.Float)
 #####################################################################################
