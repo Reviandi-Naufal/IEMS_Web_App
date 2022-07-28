@@ -207,12 +207,12 @@ def dashboard():
     return render_template('dashboard.html', kwh_today=f"{selisih}", rata2_today=rata2_today, rata2_yesterday= rata2_yesterday, todaykwh=f"{todaykwh}", weeklykwh=f"{selisihw}", weekly=f"{weekly}", monthlykwh=f"{selisihm}", monthly=f"{monthly}")
 
 
-@app.route('/get_data_lineChart', methods=['POST'])
+@app.route('/get_data_lineChart')
 @login_required
 def get_data_lineChart():
     # output_line_filter = {}
-    from_date = request.form['search_fromdate_linechart']
-    to_date = request.form['search_todate_linechart']
+    from_date = request.args.get('searchByFromdateLc')
+    to_date = request.args.get('searchByTodateLc')
     print(f'data linechart: from date type = {type(from_date)}, to date type = {type(to_date)}', file=sys.stderr)
 
     if from_date != None and to_date != None:
