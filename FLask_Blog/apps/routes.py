@@ -325,6 +325,7 @@ def algoritma4():
     one_month_price_data = tcn_price_data[0].Tarif
     one_month_price = babel.numbers.format_currency(one_month_price_data, "IDR", locale='id_ID')
     one_month_kwh_data = tcn_price_data[0].Total_Kwh
+    one_month_kwh_data = "{:.2f}".format(one_month_kwh_data)
     return render_template('algoritma4.html', one_month_price=one_month_price, one_month_kwh_data=one_month_kwh_data)
 
 @app.route('/get_data_tcnlineChart')
