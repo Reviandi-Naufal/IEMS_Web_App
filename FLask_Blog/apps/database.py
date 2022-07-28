@@ -75,7 +75,7 @@ class TCN_data_predicted(db.Model):
     def to_dict(self):
         return {
             'DateTime' : self.DateTime,
-            'Kwh' : self.Predictions
+            'Kwh' : self.Kwh
         }
 
 
