@@ -577,7 +577,7 @@ def algoritma4():
 
     return render_template('algoritma4.html', one_month_price=one_month_price, one_month_kwh_data=one_month_kwh_data, one_month_range=one_month_range,two_month_price=two_month_price, two_month_kwh_data=two_month_kwh_data, two_month_range=two_month_range,three_month_price=three_month_price,three_month_kwh_data=three_month_kwh_data, three_month_range=three_month_range,four_month_price=four_month_price, four_month_kwh_data=four_month_kwh_data, four_month_range=four_month_range, five_month_price=five_month_price, five_month_kwh_data=five_month_kwh_data, five_month_range=five_month_range, six_month_price=six_month_price, six_month_kwh_data=six_month_kwh_data, six_month_range=six_month_range)
 
-@app.route('/get_data_tcnlineCharts')
+@app.route('/get_data_tcnlineChart')
 @login_required
 def get_data_tcnlineChart():
     lineChartDataTCN = TCN_data_predicted.query.all()
