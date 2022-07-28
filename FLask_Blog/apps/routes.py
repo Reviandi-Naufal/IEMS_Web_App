@@ -213,37 +213,23 @@ def get_data_lineChart():
     # output_line_filter = {}
     from_date = request.args.get('search_fromdate_linechart')
     to_date = request.args.get('search_todate_linechart')
-    if from_date and to_date:
-        print(f'data linechart: from date type = {type(from_date)}, to date type = {type(to_date)}', file=sys.stderr)
-
+    print(f'data linechart: from date type = {type(from_date)}, to date type = {type(to_date)}', file=sys.stderr)
+    
+    if from_date != None and to_date != None:
         lineChartData = real_data.query.filter(db.and_(
             real_data.Date >= from_date,
             real_data.Date <= to_date,
         )).all()
-        
-        datetime = []
-        kwh = []
-        for i in range(len(lineChartData)):
-            datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
-            kwh.append(lineChartData[i].Kwh)
-        output_line = {"datetime": datetime, "Kwh" : kwh}
-        return jsonify(output_line)
     else:
-        print(f'data linechart: from date type = {type(from_date)}, to date type = {type(to_date)}', file=sys.stderr)
-        # lineChartData = real_data.query.all()
-        lineChartData = real_data.query.filter(db.and_(
-            real_data.Date >= '2022-06-05',
-            real_data.Date <= '2022-06-06',
-        )).all()
+        lineChartData = real_data.query.all()
 
-        datetime = []
-        kwh = []
-        for i in range(len(lineChartData)):
-            datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
-            kwh.append(lineChartData[i].Kwh)
-        output_line = {"datetime": datetime, "Kwh" : kwh}
-        return jsonify(output_line)
-    return redirect(url_for('dashboard.html'))
+    datetime = []
+    kwh = []
+    for i in range(len(lineChartData)):
+        datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
+        kwh.append(lineChartData[i].Kwh)
+    output_line = {"datetime": datetime, "Kwh" : kwh}
+    return jsonify(output_line)
 
 def calculate_percentage(val, total):
    """Calculates the percentage of a value over a total"""
