@@ -213,7 +213,7 @@ def get_data_lineChart():
     # output_line_filter = {}
     from_date = request.args.get('searchByFromdateLc')
     to_date = request.args.get('searchByTodateLc')
-    print(f'data linechart: from date type = {type(from_date)}, to date type = {type(to_date)}', file=sys.stderr)
+    # print(f'data linechart: from date type = {type(from_date)}, to date type = {type(to_date)}', file=sys.stderr)
 
     if from_date != None and to_date != None:
         lineChartData = real_data.query.filter(db.and_(
@@ -333,8 +333,9 @@ def get_data_tcnlineChart():
     for i in range(len(lineChartDataTCN)):
         datetime.append(lineChartDataTCN[i].Date + " " + lineChartDataTCN[i].Time)
         kwh.append(lineChartDataTCN[i].Kwh)
-    output_line = {"datetime": datetime, "Kwh" : kwh}
-    return jsonify(output_line)
+    output_line_tcn = {"datetime": datetime, "Kwh" : kwh}
+    print(f'data linechartTCN: {output_line_tcn}', file=sys.stderr)
+    return jsonify(output_line_tcn)
 
 @app.route('/api/tcndata')
 @login_required

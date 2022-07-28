@@ -3,7 +3,7 @@ $.ajax({
   url: "https://iems-telu.ismailab.xyz/get_data_lineChart",
   success: function (response) {
     var objectData = response;
-    console.log(objectData, typeof objectData);
+    // console.log(objectData, typeof objectData);
     // var select = Object.values(response)
     var dataSumbuX = objectData.datetime;
     var dataSumbuY = objectData.Kwh;

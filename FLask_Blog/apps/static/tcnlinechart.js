@@ -5,8 +5,8 @@ $.ajax({
     var objectData = responseTCN;
     // console.log(objectData, typeof objectData);
     // var select = Object.values(response)
-    var dataSumbuX = objectData.DateTime;
-    var dataSumbuY = objectData.Predictions;
+    var dataSumbuX = objectData.datetime;
+    var dataSumbuY = objectData.Kwh;
     // var dataCoba = Object.values(select)
     // console.log(dataSumbuY)
     buatTCNLineChart(dataSumbuX, dataSumbuY);
