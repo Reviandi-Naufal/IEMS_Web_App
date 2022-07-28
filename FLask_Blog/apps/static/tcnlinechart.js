@@ -14,7 +14,7 @@ $.ajax({
 });
 
 function buatTCNLineChart(dataSumbuX, dataSumbuY) {
-  var lineChart = echarts.init(document.getElementById("tcnlineChart"));
+  var TCNlineChart = echarts.init(document.getElementById("tcnlineChart"));
 
   var option = {
     tooltip: {
@@ -39,5 +39,5 @@ function buatTCNLineChart(dataSumbuX, dataSumbuY) {
     responsive: true,
   };
 
-  lineChart.setOption(option);
+  TCNlineChart.setOption(option);
 }

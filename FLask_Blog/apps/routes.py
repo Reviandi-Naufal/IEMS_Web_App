@@ -6,7 +6,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from apps import app, db, bcrypt
 from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, device_usage_duration
+from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, datetime, timedelta
 import numpy as np
