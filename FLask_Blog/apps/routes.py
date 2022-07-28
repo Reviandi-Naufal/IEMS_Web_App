@@ -226,9 +226,10 @@ def get_data_lineChart():
         for i in range(len(lineChartData)):
             datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
             kwh.append(lineChartData[i].Kwh)
-        output_line_filter = {"datetime": datetime, "Kwh" : kwh}
-        return jsonify(output_line_filter)
+        output_line = {"datetime": datetime, "Kwh" : kwh}
+        return jsonify(output_line)
     else:
+        print(f'data linechart: from date type = {type(from_date)}, to date type = {type(to_date)}', file=sys.stderr)
         # lineChartData = real_data.query.all()
         lineChartData = real_data.query.filter(db.and_(
             real_data.Date >= '2022-06-05',
