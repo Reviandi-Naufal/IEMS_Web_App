@@ -328,6 +328,8 @@ def algoritma4():
     one_month_price = babel.numbers.format_currency(one_month_price_data, "IDR", locale='id_ID')
     one_month_kwh_data = tcn_price_data[0].Total_Kwh
     one_month_kwh_data = "{:.2f}".format(one_month_kwh_data)
+    one_month_range = tcn_price_data[0].range_date
+    print(f'one_month_range : {one_month_range}', file=sys.stderr)
 
     #Predict dua bulan kedepan
     two_month_price_data = tcn_price_data[1].Tarif
@@ -359,7 +361,7 @@ def algoritma4():
     six_month_kwh_data = tcn_price_data[5].Total_Kwh
     six_month_kwh_data = "{:.2f}".format(six_month_kwh_data)
 
-    return render_template('algoritma4.html', one_month_price=one_month_price, one_month_kwh_data=one_month_kwh_data, two_month_price=two_month_price, two_month_kwh_data=two_month_kwh_data, three_month_price=three_month_price,three_month_kwh_data=three_month_kwh_data, four_month_price=four_month_price, four_month_kwh_data=four_month_kwh_data, five_month_price=five_month_price,five_month_kwh_data=five_month_kwh_data, six_month_price=six_month_price, six_month_kwh_data=six_month_kwh_data)
+    return render_template('algoritma4.html', one_month_price=one_month_price, one_month_kwh_data=one_month_kwh_data, one_month_range=one_month_range,two_month_price=two_month_price, two_month_kwh_data=two_month_kwh_data, three_month_price=three_month_price,three_month_kwh_data=three_month_kwh_data, four_month_price=four_month_price, four_month_kwh_data=four_month_kwh_data, five_month_price=five_month_price,five_month_kwh_data=five_month_kwh_data, six_month_price=six_month_price, six_month_kwh_data=six_month_kwh_data)
 
 @app.route('/get_data_tcnlineChart')
 @login_required
