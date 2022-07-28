@@ -122,11 +122,10 @@
                     <h5 class="card-title">KWH <span>| Today</span></h5>
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                        <img src="{{ url_for('static', filename='assets/img/increase.png') }}">
                         {% if rata2_today > rata2_yesterday %}
-                         <span class="bi" src="{{ url_for('static', filename='assets/img/increase.png') }}"></span>
+                        <img src="{{ url_for('static', filename='assets/img/increase.png') }}">
                         {% elif rata2_today < rata2_yesterday %}
-                        <span class="bi" src="{{ url_for('static', filename='assets/img/decrease.png') }}"></span>
+                        <img src="{{ url_for('static', filename='assets/img/decrease.png') }}">
                         {% else %}
                         <span class="small"></span>
                         {% endif %}
