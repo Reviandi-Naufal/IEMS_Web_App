@@ -324,7 +324,7 @@ def get_data_grulineChart():
         datetime.append(lineChartDataGRU[i].Date + " " + lineChartDataGRU[i].Time)
         kwh.append(lineChartDataGRU[i].Kwh)
     output_line_gru = {"datetime": datetime, "Kwh" : kwh}
-    # print(f'data linechartTCN: {output_line_tcn}', file=sys.stderr)
+    # print(f'data linechartGRU: {output_line_gru}', file=sys.stderr)
     return jsonify(output_line_gru)
 
 @app.route('/api/grudata')
