@@ -71,6 +71,10 @@ class GRU_data_predicted(db.Model):
             'Time' : self.Time,
             'Kwh' : self.Kwh
         }
+class GRU_data_predictedSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = GRU_data_predicted
+        created_at = auto_field(dump_only=True)
 
 class LMU_data_predicted(db.Model):
     DateTime = db.Column(db.DateTime, primary_key=True)
