@@ -1,8 +1,8 @@
 $.ajax({
   type: "GET",
   url: "https://iems-telu.ismailab.xyz/get_data_tcnlineChart",
-  success: function (responseTCN) {
-    var objectData = responseTCN;
+  success: function (response) {
+    var objectData = response;
     // console.log(objectData, typeof objectData);
     // var select = Object.values(response)
     var dataSumbuX = objectData.datetime;
@@ -14,7 +14,7 @@ $.ajax({
 });
 
 function buatTCNLineChart(dataSumbuX, dataSumbuY) {
-  var TCNlineChart = echarts.init(document.getElementById("tcnlineChart"));
+  var lineChart = echarts.init(document.getElementById("tcnlineChart"));
 
   var option = {
     tooltip: {
@@ -39,5 +39,5 @@ function buatTCNLineChart(dataSumbuX, dataSumbuY) {
     responsive: true,
   };
 
-  TCNlineChart.setOption(option);
+  lineChart.setOption(option);
 }

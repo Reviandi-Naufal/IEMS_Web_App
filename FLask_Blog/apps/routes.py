@@ -334,7 +334,7 @@ def get_data_tcnlineChart():
         datetime.append(lineChartDataTCN[i].Date + " " + lineChartDataTCN[i].Time)
         kwh.append(lineChartDataTCN[i].Kwh)
     output_line_tcn = {"datetime": datetime, "Kwh" : kwh}
-    print(f'data linechartTCN: {output_line_tcn}', file=sys.stderr)
+    # print(f'data linechartTCN: {output_line_tcn}', file=sys.stderr)
     return jsonify(output_line_tcn)
 
 @app.route('/api/tcndata')
