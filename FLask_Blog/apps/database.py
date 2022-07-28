@@ -59,9 +59,10 @@ class RNN_data_predicted(db.Model):
     Predictions = db.Column(db.Float)
 
 class GRU_data_predicted(db.Model):
-    DateTime = db.Column(db.DateTime, primary_key=True)
+    Index = db.Column(db.Integer, primary_key=True)
+    Date = db.Column(db.Text)
+    Time = db.Column(db.Text)
     Kwh = db.Column(db.Float)
-    Predictions = db.Column(db.Float)
 
     def to_dict(self):
         return {
