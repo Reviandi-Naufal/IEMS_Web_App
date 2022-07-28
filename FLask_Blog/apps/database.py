@@ -70,12 +70,12 @@ class LMU_data_predicted(db.Model):
 
 class TCN_data_predicted(db.Model):
     DateTime = db.Column(db.DateTime, primary_key=True)
-    Predictions = db.Column(db.Float)
+    Kwh = db.Column(db.Float)
 
     def to_dict(self):
         return {
             'DateTime' : self.DateTime,
-            'Predictions' : self.Predictions
+            'Kwh' : self.Predictions
         }
 
 
