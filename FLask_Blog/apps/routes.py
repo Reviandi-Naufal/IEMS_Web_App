@@ -303,22 +303,22 @@ def data():
         'draw': request.args.get('draw', type=int),
     }        
 
-@app.route("/algoritma1")
+@app.route("/algoritma1") #RNN
 @login_required
 def algoritma1():
     return render_template('algoritma1.html')
 
-@app.route("/algoritma2")
+@app.route("/algoritma2") #GRU
 @login_required
 def algoritma2():
     return render_template('algoritma2.html')
 
-@app.route("/algoritma3")
+@app.route("/algoritma3") #LMU
 @login_required
 def algoritma3():
     return render_template('algoritma3.html')
 
-@app.route("/algoritma4")
+@app.route("/algoritma4") #TCN
 @login_required
 def algoritma4():
     return render_template('algoritma4.html')
@@ -326,13 +326,6 @@ def algoritma4():
 @app.route('/get_data_tcnlineChart')
 @login_required
 def get_data_tcnlineChart():
-    # labels = real_data.query.with_entities(real_data.Date).all()
-    # values = real_data.query.with_entities(real_data.Kwh).all()
-    
-    # labels_data = json.dumps(real_data.serialize_list(labels))
-    # values_data = json.dumps(real_data.serialize_list(values))
-
-    # lineChartData = real_data.query.with_entities(real_data.Date, real_data.Time, real_data.Kwh)
     lineChartData = TCN_data_predicted.query.all()
     datetime = []
     predictions = []
@@ -340,8 +333,6 @@ def get_data_tcnlineChart():
         datetime.append(lineChartData[i].DateTime)
         predictions.append(lineChartData[i].Kwh)
     output_line = {"DateTime": datetime, "Predictions" : predictions}
-    # lineChartData_schema = real_dataSchema(many=True)
-    # output = lineChartData_schema.dump(lineChartData)
     return jsonify(output_line)
 
 @app.route('/api/tcndata')
@@ -354,7 +345,7 @@ def tcndata():
     if search:
         query = query.filter(db.or_(
             TCN_data_predicted.DateTime.like(f'%{search}%'),
-            TCN_data_predicted.Predictions.like(f'%{search}%')
+            TCN_data_predicted.Kwh.like(f'%{search}%')
         ))
     total_filtered = query.count()
 
@@ -366,7 +357,7 @@ def tcndata():
         if col_index is None:
             break
         col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['Date Time', 'Predictions']:
+        if col_name not in ['Date Time', 'Kwh']:
             col_name = 'DateTime'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
         col = getattr(TCN_data_predicted, col_name)
