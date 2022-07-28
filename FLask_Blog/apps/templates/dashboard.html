@@ -123,9 +123,9 @@
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                         {% if rata2_today > rata2_yesterday %}
-                        <span src="{{ url_for('static', filename='assets/img/increase.png') }}" ></span>
+                         <i class="bi" src="{{ url_for('static', filename='assets/img/increase.png') }}"></i>
                         {% elif rata2_today < rata2_yesterday %}
-                        <span src="{{ url_for('static', filename='assets/img/decrease.png') }}"></span>
+                        <i class="bi" src="{{ url_for('static', filename='assets/img/decrease.png') }}"></i>
                         {% else %}
                         <i class="small"></i>
                         {% endif %}
@@ -422,7 +422,7 @@
                       </div>
                     </div>
                     <div class="carousel-item">
-                      <img src="{{ url_for('static', filename='assets/img/mankotak.jpeg') }}" class="d-block w-100" alt="......" />
+                      <img src="{{ url_for('static', filename='assets/img/m.jpeg') }}" class="d-block w-100" alt="......" />
                       <div class="carousel-caption d-none d-md-block">
                         <h5>Amanda Austin</h5>
                         <h6>NIM Manda</h6>
