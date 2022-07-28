@@ -6,7 +6,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from apps import app, db, bcrypt
 from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema, RNN_data_predicted, RNN_data_predictedSchema
+from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema, RNN_data_predicted, RNN_data_predictedSchema, LMU_data_predicted, LMU_data_predictedSchema
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, datetime, timedelta
 import numpy as np
@@ -458,6 +458,76 @@ def grudata():
 def algoritma3():
     return render_template('algoritma3.html')
 
+@app.route('/get_data_lmulineChart')
+@login_required
+def get_data_lmulineChart():
+    lineChartDataLMU = LMU_data_predicted.query.all()
+
+    datetime = []
+    kwh = []
+    for i in range(len(lineChartDataLMU)):
+        datetime.append(lineChartDataLMU[i].Date + " " + lineChartDataLMU[i].Time)
+        kwh.append(lineChartDataLMU[i].Kwh)
+    output_line_lmu = {"datetime": datetime, "Kwh" : kwh}
+    
+    return jsonify(output_line_lmu)
+
+@app.route('/api/lmudata')
+@login_required
+def lmudata():
+    query = LMU_data_predicted.query
+
+    # search filter
+    search = request.args.get('search[value]')
+    if search:
+        query = query.filter(db.or_(
+            LMU_data_predicted.DateTime.like(f'%{search}%'),
+            LMU_data_predicted.Kwh.like(f'%{search}%')
+        ))
+    total_filtered = query.count()
+
+    # filter by date
+    from_date = request.args.get('searchByFromdate')
+    to_date = request.args.get('searchByTodate')
+    if from_date and to_date:
+        query = query.filter(db.and_(
+            LMU_data_predicted.Date >= from_date,
+            LMU_data_predicted.Date <= to_date,
+        ))
+    total_filtered = query.count()
+
+    # sorting
+    order = []
+    i = 0
+    while True:
+        col_index = request.args.get(f'order[{i}][column]')
+        if col_index is None:
+            break
+        col_name = request.args.get(f'columns[{col_index}][data]')
+        if col_name not in ['Index', 'Date', 'Time', 'Kwh']:
+            col_name = 'Date'
+        descending = request.args.get(f'order[{i}][dir]') == 'desc'
+        col = getattr(LMU_data_predicted, col_name)
+        if descending:
+            col = col.desc()
+        order.append(col)
+        i += 1
+    if order:
+        query = query.order_by(*order)
+
+    # pagination
+    start = request.args.get('start', type=int)
+    length = request.args.get('length', type=int)
+    query = query.offset(start).limit(length)
+
+    # response
+    return {
+        'data': [LMU_data_predicted.to_dict() for LMU_data_predicted in query],
+        'recordsFiltered': total_filtered,
+        'recordsTotal': LMU_data_predicted.query.count(),
+        'draw': request.args.get('draw', type=int),
+    }
+
 @app.route("/algoritma4") #TCN
 @login_required
 def algoritma4():
@@ -507,7 +577,7 @@ def algoritma4():
 
     return render_template('algoritma4.html', one_month_price=one_month_price, one_month_kwh_data=one_month_kwh_data, one_month_range=one_month_range,two_month_price=two_month_price, two_month_kwh_data=two_month_kwh_data, two_month_range=two_month_range,three_month_price=three_month_price,three_month_kwh_data=three_month_kwh_data, three_month_range=three_month_range,four_month_price=four_month_price, four_month_kwh_data=four_month_kwh_data, four_month_range=four_month_range, five_month_price=five_month_price, five_month_kwh_data=five_month_kwh_data, five_month_range=five_month_range, six_month_price=six_month_price, six_month_kwh_data=six_month_kwh_data, six_month_range=six_month_range)
 
-@app.route('/get_data_tcnlineChart')
+@app.route('/get_data_tcnlineCharts')
 @login_required
 def get_data_tcnlineChart():
     lineChartDataTCN = TCN_data_predicted.query.all()

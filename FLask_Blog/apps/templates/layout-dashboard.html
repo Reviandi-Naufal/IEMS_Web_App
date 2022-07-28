@@ -369,6 +369,37 @@
     </script>
     <!-- End Table GRU -->
 
+    <!-- Start Table LMU -->
+    <script>
+      $(document).ready(function () {
+        var dataTable_lmu = $('#lmudata').DataTable({
+          pagingType: 'full_numbers',
+          processing: true,
+          serverSide: true,
+          ajax: {
+            url: '/api/lmudata',
+            data: function (data) {
+              // Read values
+              var from_date = $('#search_fromdate_lmu').val();
+              var to_date = $('#search_todate_lmu').val();
+              // Append to data
+              data.searchByFromdate = from_date;
+              data.searchByTodate = to_date;
+            },
+          },
+          columns: [{ data: 'Index' }, { data: 'Date' }, { data: 'Time' }, { data: 'Kwh' }],
+        });
+        // Search button
+        $('#btn_search_lmu').click(function () {
+          dataTable_lmu.draw();
+        });
+        options: {
+          responsive: true;
+        }
+      });
+    </script>
+    <!-- End Table LMU -->
+
     <!-- Start Table TCN -->
     <script>
       $(document).ready(function () {
@@ -448,6 +479,7 @@
     <script src="{{ url_for('static', filename='tcnlinechart.js') }}"></script>
     <script src="{{ url_for('static', filename='grulinechart.js') }}"></script>
     <script src="{{ url_for('static', filename='rnnlinechart.js') }}"></script>
+    <script src="{{ url_for('static', filename='lmulinechart.js') }}"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="{{ url_for('static', filename='clusteringchart.js') }}"></script>
   </body>

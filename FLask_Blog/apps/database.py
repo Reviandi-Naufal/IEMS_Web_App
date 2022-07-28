@@ -70,7 +70,7 @@ class RNN_data_predictedSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = RNN_data_predicted
         created_at = auto_field(dump_only=True)
-        
+
 class GRU_data_predicted(db.Model):
     Index = db.Column(db.Integer, primary_key=True)
     Date = db.Column(db.Text)
@@ -102,6 +102,11 @@ class LMU_data_predicted(db.Model):
             'Time' : self.Time,
             'Kwh' : self.Kwh
         }
+class LMU_data_predictedSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = LMU_data_predicted
+        created_at = auto_field(dump_only=True)
+
 
 class TCN_data_predicted(db.Model):
     Index = db.Column(db.Integer, primary_key=True)

@@ -1,6 +1,6 @@
 $.ajax({
-  type: "GET",
-  url: "https://iems-telu.ismailab.xyz/get_data_tcnlineChart",
+  type: 'GET',
+  url: 'https://iems-telu.ismailab.xyz/get_data_tcnlineCharts',
   success: function (response) {
     var objectData = response;
     console.log(objectData, typeof objectData);
@@ -14,26 +14,26 @@ $.ajax({
 });
 
 function buatTCNLineChart(dataSumbuX, dataSumbuY) {
-  var lineChart = echarts.init(document.getElementById("tcnlineChart"));
+  var lineChart = echarts.init(document.getElementById('tcnlineChart'));
 
   var option = {
     tooltip: {
-      trigger: "axis",
+      trigger: 'axis',
       axisPointer: {
-        type: "shadow",
+        type: 'shadow',
       },
     },
     xAxis: {
-      type: "category",
+      type: 'category',
       data: dataSumbuX,
     },
     yAxis: {
-      type: "value",
+      type: 'value',
     },
     series: [
       {
         data: dataSumbuY,
-        type: "line",
+        type: 'line',
       },
     ],
     responsive: true,
