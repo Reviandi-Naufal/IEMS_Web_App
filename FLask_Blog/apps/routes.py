@@ -6,7 +6,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from apps import app, db, bcrypt
 from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price
+from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, datetime, timedelta
 import numpy as np
@@ -312,6 +312,76 @@ def algoritma1():
 @login_required
 def algoritma2():
     return render_template('algoritma2.html')
+
+@app.route('/get_data_grulineChart')
+@login_required
+def get_data_grulineChart():
+    lineChartDataGRU = GRU_data_predicted.query.all()
+
+    datetime = []
+    kwh = []
+    for i in range(len(lineChartDataGRU)):
+        datetime.append(lineChartDataGRU[i].Date + " " + lineChartDataGRU[i].Time)
+        kwh.append(lineChartDataGRU[i].Kwh)
+    output_line_gru = {"datetime": datetime, "Kwh" : kwh}
+    # print(f'data linechartTCN: {output_line_tcn}', file=sys.stderr)
+    return jsonify(output_line_gru)
+
+@app.route('/api/tcndata')
+@login_required
+def tcndata():
+    query = GRU_data_predicted.query
+
+    # search filter
+    search = request.args.get('search[value]')
+    if search:
+        query = query.filter(db.or_(
+            GRU_data_predicted.DateTime.like(f'%{search}%'),
+            GRU_data_predicted.Kwh.like(f'%{search}%')
+        ))
+    total_filtered = query.count()
+
+    # filter by date
+    from_date = request.args.get('searchByFromdate')
+    to_date = request.args.get('searchByTodate')
+    if from_date and to_date:
+        query = query.filter(db.and_(
+            GRU_data_predicted.Date >= from_date,
+            GRU_data_predicted.Date <= to_date,
+        ))
+    total_filtered = query.count()
+
+    # sorting
+    order = []
+    i = 0
+    while True:
+        col_index = request.args.get(f'order[{i}][column]')
+        if col_index is None:
+            break
+        col_name = request.args.get(f'columns[{col_index}][data]')
+        if col_name not in ['Index', 'Date', 'Time', 'Kwh']:
+            col_name = 'Date'
+        descending = request.args.get(f'order[{i}][dir]') == 'desc'
+        col = getattr(GRU_data_predicted, col_name)
+        if descending:
+            col = col.desc()
+        order.append(col)
+        i += 1
+    if order:
+        query = query.order_by(*order)
+
+    # pagination
+    start = request.args.get('start', type=int)
+    length = request.args.get('length', type=int)
+    query = query.offset(start).limit(length)
+
+    # response
+    return {
+        'data': [GRU_data_predicted.to_dict() for GRU_data_predicted in query],
+        'recordsFiltered': total_filtered,
+        'recordsTotal': GRU_data_predicted.query.count(),
+        'draw': request.args.get('draw', type=int),
+    }
 
 @app.route("/algoritma3") #LMU
 @login_required

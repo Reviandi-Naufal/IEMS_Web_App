@@ -63,6 +63,14 @@ class GRU_data_predicted(db.Model):
     Kwh = db.Column(db.Float)
     Predictions = db.Column(db.Float)
 
+    def to_dict(self):
+        return {
+            'Index' : self.Index,
+            'Date' : self.Date,
+            'Time' : self.Time,
+            'Kwh' : self.Kwh
+        }
+
 class LMU_data_predicted(db.Model):
     DateTime = db.Column(db.DateTime, primary_key=True)
     Kwh = db.Column(db.Float)
