@@ -231,6 +231,7 @@ def get_data_lineChart():
         #     return jsonify(output_line)
         # else:
         #     return redirect(url_for('dashboard'))
+        return jsonify(output_line)
     else:
         lineChartData = real_data.query.all()
         datetime = []
@@ -240,8 +241,8 @@ def get_data_lineChart():
             kwh.append(lineChartData[i].Kwh)
         output_line = {"datetime": datetime, "Kwh" : kwh}
         return jsonify(output_line)
-    print(f'data output line: {output_line}', file=sys.stderr)
-    return redirect(url_for('dashboard'))
+    # print(f'data output line: {output_line}', file=sys.stderr)
+    # return redirect(url_for('dashboard'))
 
 def calculate_percentage(val, total):
    """Calculates the percentage of a value over a total"""
