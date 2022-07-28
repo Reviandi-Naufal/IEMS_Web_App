@@ -210,7 +210,7 @@ def dashboard():
 @app.route('/get_data_lineChart', methods=['GET','POST'])
 @login_required
 def get_data_lineChart():
-    output_line = {}
+    output_line_filter = {}
     if request.method == 'POST':
         from_date = request.form['search_fromdate_linechart']
         to_date = request.form['search_todate_linechart']
@@ -226,7 +226,7 @@ def get_data_lineChart():
         for i in range(len(lineChartData)):
             datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
             kwh.append(lineChartData[i].Kwh)
-        output_line = {"datetime": datetime, "Kwh" : kwh}
+        output_line_filter = {"datetime": datetime, "Kwh" : kwh}
         # if request.method == 'GET':
         #     return jsonify(output_line)
         # else:
@@ -241,8 +241,19 @@ def get_data_lineChart():
             kwh.append(lineChartData[i].Kwh)
         output_line = {"datetime": datetime, "Kwh" : kwh}
         return jsonify(output_line)
-    print(f'data output line: {output_line}', file=sys.stderr)
-    return jsonify(output_line)
+    
+    if request.method == 'GET':
+        print(f'data output line: {output_line_filter}', file=sys.stderr)
+        return jsonify(output_line_filter)
+    else:
+        lineChartData = real_data.query.all()
+        datetime = []
+        kwh = []
+        for i in range(len(lineChartData)):
+            datetime.append(lineChartData[i].Date + " " + lineChartData[i].Time)
+            kwh.append(lineChartData[i].Kwh)
+        output_line = {"datetime": datetime, "Kwh" : kwh}
+        return jsonify(output_line)
 
 def calculate_percentage(val, total):
    """Calculates the percentage of a value over a total"""
