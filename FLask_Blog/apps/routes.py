@@ -242,7 +242,7 @@ def get_data_lineChart():
         output_line = {"datetime": datetime, "Kwh" : kwh}
         return jsonify(output_line)
     print(f'data output line: {output_line}', file=sys.stderr)
-    return redirect(url_for('dashboard'))
+    return jsonify(output_line)
 
 def calculate_percentage(val, total):
    """Calculates the percentage of a value over a total"""
