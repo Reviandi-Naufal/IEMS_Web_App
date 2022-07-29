@@ -30,7 +30,12 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ url_for('static', filename='assets/css/style.css') }}" rel="stylesheet" />
-
+    <link href="{{ url_for('static', filename='assets/scss/clock.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='assets/scss/clock.css.map') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='assets/scss/common.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='assets/scss/common.css.map') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='assets/scss/mixins.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='assets/scss/mixins.css.map') }}" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
   </head>
 
@@ -45,24 +50,41 @@
         <i class="bi bi-list toggle-sidebar-btn"></i>
       </div>
       <!-- End Logo -->
-
-      <div class="search-bar">
-        <form class="search-form d-flex align-items-center" method="POST" action="#">
-          <input type="text" name="query" placeholder="Search" title="Enter search keyword" />
-          <button type="submit" title="Search">
-            <i class="bi bi-search"></i>
-          </button>
-        </form>
-      </div>
+      <!-- <div class="clock-container"> -->
+      <!-- <div class="clock-col"> -->
+      <!-- <p class="clock-day clock-timer"></p> -->
+      <!-- <p class="clock-label">Day</p> -->
+      <!-- </div> -->
+      <!-- <div class="clock-col"> -->
+      <!-- <p class="clock-hours clock-timer"></p> -->
+      <!-- <p class="clock-label">Hours</p> -->
+      <!-- </div> -->
+      <!-- <div class="clock-col"> -->
+      <!-- <p class="clock-minutes clock-timer"></p> -->
+      <!-- <p class="clock-label">Minutes</p> -->
+      <!-- </div> -->
+      <!-- <div class="clock-col"> -->
+      <!-- <p class="clock-seconds clock-timer"></p> -->
+      <!-- <p class="clock-label">Seconds</p> -->
+      <!-- </div> -->
+      <!-- </div> -->
+      <!-- <div class="search-bar"> -->
+      <!-- <form class="search-form d-flex align-items-center" method="POST" action="#"> -->
+      <!-- <input type="text" name="query" placeholder="Search" title="Enter search keyword" /> -->
+      <!-- <button type="submit" title="Search"> -->
+      <!-- <i class="bi bi-search"></i> -->
+      <!-- </button> -->
+      <!-- </form> -->
+      <!-- </div> -->
       <!-- End Search Bar -->
 
       <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
-          <li class="nav-item d-block d-lg-none">
-            <a class="nav-link nav-icon search-bar-toggle" href="#">
-              <i class="bi bi-search"></i>
-            </a>
-          </li>
+          <!-- <li class="nav-item d-block d-lg-none"> -->
+          <!-- <a class="nav-link nav-icon search-bar-toggle" href="#"> -->
+          <!-- <i class="bi bi-search"></i> -->
+          <!-- </a> -->
+          <!-- </li> -->
           <!-- End Search Icon-->
           {% if current_user.user_type == 'admin' %}
           <div class="theme-switch-wrapper">
@@ -179,6 +201,7 @@
     <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/dark.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/clock.js') }}"></script>
 
     <!-- Datatables Admin-->
     <script>
@@ -266,8 +289,10 @@
       $(document).ready(function () {
         var dataTable_rnn = $('#rnndata').DataTable({
           pagingType: 'full_numbers',
+          lengthChange: true,
           processing: true,
           serverSide: true,
+          responsive: true,
           ajax: {
             url: '/api/rnndata',
             data: function (data) {
@@ -297,8 +322,10 @@
       $(document).ready(function () {
         var dataTable_gru = $('#grudata').DataTable({
           pagingType: 'full_numbers',
+          lengthChange: true,
           processing: true,
           serverSide: true,
+          responsive: true,
           ajax: {
             url: '/api/grudata',
             data: function (data) {
@@ -328,8 +355,10 @@
       $(document).ready(function () {
         var dataTable_lmu = $('#lmudata').DataTable({
           pagingType: 'full_numbers',
+          lengthChange: true,
           processing: true,
           serverSide: true,
+          responsive: true,
           ajax: {
             url: '/api/lmudata',
             data: function (data) {
@@ -359,8 +388,10 @@
       $(document).ready(function () {
         var dataTable_tcn = $('#tcndata').DataTable({
           pagingType: 'full_numbers',
+          lengthChange: true,
           processing: true,
           serverSide: true,
+          responsive: true,
           ajax: {
             url: '/api/tcndata',
             data: function (data) {
