@@ -45,7 +45,7 @@
         <i class="bi bi-list toggle-sidebar-btn"></i>
       </div>
       <!-- End Logo -->
-
+      {% if current_user.user_type == 'admin' %}
       <div class="search-bar">
         <form class="search-form d-flex align-items-center" method="POST" action="#">
           <input type="text" name="query" placeholder="Search" title="Enter search keyword" />
@@ -65,7 +65,15 @@
           </li>
           <!-- End Search Icon-->
 
-          {% if current_user.user_type == 'admin' %}
+          <div class="theme-switch-wrapper">
+            <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider round"></div>
+          </label>
+          </div>
+
+
+          {% endif %} {% if current_user.user_type == 'admin' %}
           <!-- Admin Nav -->
           <li class="nav-item">
             <a class="nav-link nav-icon" href="/admin">
@@ -171,6 +179,7 @@
     <!-- Template Main JS File -->
     <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/dark.js') }}"></script>
 
     <!-- Datatables Admin-->
     <script>

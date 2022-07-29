@@ -1,30 +1,28 @@
-/**
-* Template Name: NiceAdmin - v2.2.2
-* Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-
-/*--------------------------------------------------------------
-# General
---------------------------------------------------------------*/
 :root {
   scroll-behavior: smooth;
+  --primary-color: #302ae6;
+  --secondary-color: #536390;
+  --font-color: #444444;
+  --bg-color: #f6f9ff;
+  --heading-color: #292922;
+  --a-color: #012970;
+  --spancard-color: #899bbd;
+  --card-body: #fff;
 }
 
 body {
   font-family: 'Open Sans', sans-serif;
-  background: #f6f9ff;
-  color: #444444;
+  background-color: var(--bg-color);
+  color: var(--font-color);
 }
 
 a {
-  color: #4154f1;
+  color: var(--a-color);
   text-decoration: none;
 }
 
 a:hover {
-  color: #717ff5;
+  color: var(--a-color);
   text-decoration: none;
 }
 
@@ -35,6 +33,17 @@ h4,
 h5,
 h6 {
   font-family: 'Nunito', sans-serif;
+}
+
+[data-theme='dark'] {
+  --primary-color: #5692f3;
+  --secondary-color: #8185ab;
+  --font-color: #e2e1ff;
+  --bg-color: #28233a;
+  --heading-color: #8681ab;
+  --a-color: #e7e1ffd1;
+  --spancard-color: #888d98d7;
+  --card-body: #36323ee3;
 }
 
 /*--------------------------------------------------------------
@@ -61,7 +70,7 @@ h6 {
   font-size: 24px;
   margin-bottom: 0;
   font-weight: 600;
-  color: #012970;
+  color: var(--a-color);
 }
 
 /*--------------------------------------------------------------
@@ -219,6 +228,7 @@ h6 {
   border: none;
   border-radius: 5px;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  background: var(--card-body);
 }
 
 .card-header,
@@ -233,7 +243,7 @@ h6 {
   padding: 20px 0 15px 0;
   font-size: 18px;
   font-weight: 500;
-  color: #012970;
+  color: var(--a-color);
   font-family: 'Poppins', sans-serif;
 }
 
@@ -246,12 +256,13 @@ h6 {
 }
 
 .card-title span {
-  color: #899bbd;
+  color: var(--spancard-color);
   font-size: 14px;
   font-weight: 400;
 }
 .card-body {
   padding: 0 20px 20px 20px;
+  background: var(--card-body);
 }
 
 .card-img-overlay {
@@ -280,7 +291,12 @@ h6 {
 
 /* Accordion */
 .accordion-item {
-  border: 1px solid #ebeef4;
+  border: 1px solid var(--card-body);
+  background: var(--card-body);
+  font-style: var(--secondary-color);
+}
+.accordion-button {
+  color: var(--spancard-color);
 }
 
 .accordion-button:focus {
@@ -288,8 +304,8 @@ h6 {
   box-shadow: none;
 }
 .accordion-button:not(.collapsed) {
-  color: #012970;
-  background-color: #f6f9ff;
+  color: var(--a-color);
+  background-color: var(--card-body);
 }
 
 .accordion-flush .accordion-button {
@@ -299,11 +315,11 @@ h6 {
 }
 .accordion-flush .accordion-button:not(.collapsed) {
   box-shadow: none;
-  color: #4154f1;
+  color: var(--a-color);
 }
 .accordion-flush .accordion-body {
   padding: 0 0 15px 0;
-  color: #3e4f6f;
+  color: var(--spancard-color);
   font-size: 15px;
 }
 
@@ -325,7 +341,7 @@ h6 {
   color: #899bbd;
 }
 .breadcrumb .active {
-  color: #51678f;
+  color: var(--a-color);
   font-weight: 600;
 }
 
@@ -597,6 +613,59 @@ h6 {
     left: -300px;
   }
 }
+/*Simple css to style it like a toggle switch*/
+.theme-switch-wrapper {
+  display: flex;
+  align-items: center;
+}
+.theme-switch {
+  display: inline-block;
+  height: 34px;
+  position: relative;
+  width: 60px;
+}
+
+.theme-switch input {
+  display: none;
+}
+
+.slider {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: 0.4s;
+}
+
+.slider:before {
+  background-color: #fff;
+  bottom: 4px;
+  content: '';
+  height: 26px;
+  left: 4px;
+  position: absolute;
+  transition: 0.4s;
+  width: 26px;
+}
+
+input:checked + .slider {
+  background-color: #66bb6a;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
 
 .sidebar-nav {
   padding: 0;
@@ -720,7 +789,7 @@ h6 {
   padding: 8px 15px;
 }
 
-.filter button{
+.filter button {
   color: #012970;
 }
 
@@ -734,7 +803,7 @@ h6 {
 }
 .dashboard .info-card h6 {
   font-size: 28px;
-  color: #012970;
+  color: var(--a-color);
   font-weight: 700;
   margin: 0;
   padding: 0;
