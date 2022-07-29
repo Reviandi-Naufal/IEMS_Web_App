@@ -34,6 +34,7 @@
         <!-- </li> -->
       </ul>
     </li>
+    {% if current_user.user_type == 'admin' %}
     <!-- End Prediction Nav -->
     <li class="nav-item">
       <a class="nav-link collapsed" href="/clustering"> <i class="bi bi-journal-text"></i><span>Clustering</span></a>
@@ -55,8 +56,9 @@
   -->
     </li>
     <!-- End Clustering Nav -->
+    {% endif %}
     <li class="nav-item">
-      <a class="nav-link" href="/schedule_appliance"> <i class="bi bi-layout-text-window-reverse"></i><span>Scheduling</span> </a>
+      <a class="nav-link collapsed" href="/schedule_appliance"> <i class="bi bi-layout-text-window-reverse"></i><span>Scheduling</span> </a>
       <!--
   <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
     <li>
@@ -68,6 +70,7 @@
   </ul>
   -->
     </li>
+    {% if current_user.user_type == 'admin' %}
     <!-- End Schedule Nav -->
     <li class="nav-item">
       <a class="nav-link collapsed" href="/compare"> <i class="bi bi-bar-chart"></i><span>Compare</span> </a>
@@ -84,6 +87,7 @@
       <!-- </ul> -->
     </li>
     <!-- End Compare Nav -->
+    {% endif %}
   </ul>
 </aside>
 
