@@ -687,63 +687,66 @@ def clustering():
 def compare():
     return render_template('compare.html')
 
-# @app.route('/get_data_compstacklineChart')
-# @login_required
-# def get_data_compstacklineChart():
-    # lineChartDataRNN = RNN_data_predicted.query.all()
-    # lineChartDataGRU = GRU_data_predicted.query.all()
-    # lineChartDataLMU = LMU_data_predicted.query.all()
-    # lineChartDataTCN = TCN_data_predicted.query.all()
-# 
-    # datetime = []
-    # kwh = []
-# 
-    # if datetime.append(lineChartDataRNN[i].Date + " " + lineChartDataRNN[i].Time) != NULL:
+@app.route('/get_data_compstacklineChart')
+@login_required
+def get_data_compstacklineChart():
+    lineChartDataRNN = RNN_data_predicted.query.all()
+    lineChartDataGRU = GRU_data_predicted.query.all()
+    lineChartDataLMU = LMU_data_predicted.query.all()
+    lineChartDataTCN = TCN_data_predicted.query.all()
+
+    datetime = []
+    kwhrnn = []
+    kwhgru = []
+    kwhlmu = []
+    kwhtcn = []
+
+    # if datetime.append(lineChartDataRNN[i].Date + " " + lineChartDataRNN[i].Time) != True:
         # for i in range(len(lineChartDataRNN)):
             # datetime.append(lineChartDataRNN[i].Date + " " + lineChartDataRNN[i].Time)
-            # kwh.append(lineChartDataRNN[i].Kwh)
+            # kwhrnn.append(lineChartDataRNN[i].Kwh)
         # for i in range(len(lineChartDataGRU)):
-            # kwh.append(lineChartDataGRU[i].Kwh)
+            # kwhgru.append(lineChartDataGRU[i].Kwh)
         # for i in range(len(lineChartDataLMU)):
-            # kwh.append(lineChartDataLMU[i].Kwh)
+            # kwhlmu.append(lineChartDataLMU[i].Kwh)
         # for i in range(len(lineChartDataTCN)):    
-            # kwh.append(lineChartDataTCN[i].Kwh)
-    # elif datetime.append(lineChartDataGRU[i].Date + " " + lineChartDataGRU[i].Time) != NULL:
+            # kwhtcn.append(lineChartDataTCN[i].Kwh)
+    # elif datetime.append(lineChartDataGRU[i].Date + " " + lineChartDataGRU[i].Time) != True:
         # for i in range(len(lineChartDataGRU)):
             # datetime.append(lineChartDataGRU[i].Date + " " + lineChartDataGRU[i].Time)
-            # kwh.append(lineChartDataGRU[i].Kwh)
+            # kwhgru.append(lineChartDataGRU[i].Kwh)
         # for i in range(len(lineChartDataRNN)):
-            # kwh.append(lineChartDataRNN[i].Kwh)
+            # kwhrnn.append(lineChartDataRNN[i].Kwh)
         # for i in range(len(lineChartDataLMU)):
-            # kwh.append(lineChartDataLMU[i].Kwh)
+            # kwhlmu.append(lineChartDataLMU[i].Kwh)
         # for i in range(len(lineChartDataTCN)):    
-            # kwh.append(lineChartDataTCN[i].Kwh)
-    # elif datetime.append(lineChartDataLMU[i].Date + " " + lineChartDataLMU[i].Time) != NULL:
-        # for i in range(len(lineChartDataLMU)):
-            # datetime.append(lineChartDataLMU[i].Date + " " + lineChartDataGRU[i].Time)
-            # kwh.append(lineChartDataLMU[i].Kwh)
-        # for i in range(len(lineChartDataRNN)):
-            # kwh.append(lineChartDataRNN[i].Kwh)
-        # for i in range(len(lineChartDataGRU)):
-            # kwh.append(lineChartDataGRU[i].Kwh)
-        # for i in range(len(lineChartDataTCN)):
-            # kwh.append(lineChartDataTCN[i].Kwh) 
-    # elif datetime.append(lineChartDataGRU[i].Date + " " + lineChartDataGRU[i].Time) != NULL:
+            # kwhtcn.append(lineChartDataTCN[i].Kwh)
+    # elif datetime.append(lineChartDataLMU[i].Date + " " + lineChartDataLMU[i].Time) != True:
+    for i in range(len(lineChartDataLMU)):
+        datetime.append(lineChartDataLMU[i].Date + " " + lineChartDataGRU[i].Time)
+        kwhlmu.append(lineChartDataLMU[i].Kwh)
+    for i in range(len(lineChartDataRNN)):
+        kwhrnn.append(lineChartDataRNN[i].Kwh)
+    for i in range(len(lineChartDataGRU)):
+        kwhgru.append(lineChartDataGRU[i].Kwh)
+    for i in range(len(lineChartDataTCN)):
+        kwhtcn.append(lineChartDataTCN[i].Kwh) 
+    # elif datetime.append(lineChartDataGRU[i].Date + " " + lineChartDataGRU[i].Time) != True:
         # for i in range(len(lineChartDataTCN)):
             # datetime.append(lineChartDataTCN[i].Date + " " + lineChartDataTCN[i].Time)
-            # kwh.append(lineChartDataTCN[i].Kwh)
+            # kwhtcn.append(lineChartDataTCN[i].Kwh)
         # for i in range(len(lineChartDataRNN)):
-            # kwh.append(lineChartDataRNN[i].Kwh)
+            # kwhrnn.append(lineChartDataRNN[i].Kwh)
         # for i in range(len(lineChartDataGRU)):
-            # kwh.append(lineChartDataGRU[i].Kwh)
+            # kwhgru.append(lineChartDataGRU[i].Kwh)
         # for i in range(len(lineChartDataLMU)):
-            # kwh.append(lineChartDataLMU[i].Kwh)
+            # kwhlmu.append(lineChartDataLMU[i].Kwh)
     # else:
         # print("error")
-    # 
-    # output_line_com = {"datetime": datetime, "Kwh" : kwh}
-    # 
-    # return jsonify(output_line_com)
+    
+    output_line_com = {"datetime": datetime, "Kwhrnn" : kwhrnn, "Kwhgru" : kwhgru, "Kwhlmu" : kwhlmu, "Kwhtcn" : kwhtcn}
+    
+    return jsonify(output_line_com)
 
 
 @app.route("/schedule_appliance")

@@ -1,35 +1,37 @@
 $.ajax({
   type: 'GET',
-  url: 'https://iems-telu.ismailab.xyz/get_data_grulineChart',
-  url: 'https://iems-telu.ismailab.xyz/get_data_rnnlineChart',
+  url: 'http://iems-telu.ismailab.xyz/get_data_compstacklineChart',
   success: function (response) {
     var objectData = response;
     console.log(objectData, typeof objectData);
 
-    var dataSumbuXgru = objectData.datetime;
-    var dataSumbuYgru = objectData.Kwh;
+    var dataSumbuX = objectData.datetime;
+    var dataSumbuYrnn = objectData.Kwhrnn;
+    var dataSumbuYgru = objectData.Kwhgru;
+    var dataSumbuYlmu = objectData.Kwhlmu;
+    var dataSumbuYtcn = objectData.Kwhtcn;
 
-    buatCompLineChart(dataSumbuXgru, dataSumbuYgru);
+    buatCompLineChart(dataSumbuX, dataSumbuYrnn, dataSumbuYgru, dataSumbuYlmu, dataSumbuYtcn);
   },
 });
 
-function senddatagru() {
-  $.ajax({
-    type: 'POST',
-    url: 'https://iems-telu.ismailab.xyz/get_data_grulineChart',
-    success: function (response) {
-      var objectData = response;
-      console.log(objectData, typeof objectData);
+// function senddatagru() {
+//   $.ajax({
+// type: 'POST',
+// url: 'https://iems-telu.ismailab.xyz/get_data_grulineChart',
+// success: function (response) {
+//   var objectData = response;
+//   console.log(objectData, typeof objectData);
+//
+//   var dataSumbuXgru = objectData.datetime;
+//   var dataSumbuYgru = objectData.Kwh;
+//
+//   buatCompLineChart(dataSumbuXgru, dataSumbuYgru);
+// },
+//   });
+// }
 
-      var dataSumbuXgru = objectData.datetime;
-      var dataSumbuYgru = objectData.Kwh;
-
-      buatCompLineChart(dataSumbuXgru, dataSumbuYgru);
-    },
-  });
-}
-
-function buatCompLineChart(dataSumbuX, dataSumbuY) {
+function buatCompLineChart(dataSumbuX, dataSumbuYrnn, dataSumbuYgru, dataSumbuYlmu, dataSumbuYtcn) {
   var stacked_line = echarts.init(document.getElementById('comlineChart'));
 
   var option = {
