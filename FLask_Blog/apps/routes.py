@@ -62,14 +62,42 @@ def account():
             current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
+        current_user.fullname = form.fullname.data
+        current_user.company = form.company.data
+        current_user.job = form.job.data
+        current_user.nim = form.nim.data
+        current_user.phone = form.phone.data
+        current_user.about = form.about.data
         db.session.commit()
         flash('Your account has been updated!', 'success')
         return redirect(url_for('account'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
+        form.fullname.data = current_user.fullname
+        form.company.data = current_user.company
+        form.job.data = current_user.job
+        form.nim.data = current_user.nim
+        form.phone.data = current_user.phone
+        form.about.data = current_user.about
     image_file = url_for('static', filename='img/' + current_user.image_file)
     return render_template('account.html', image_file=image_file, form=form)
+
+# @app.route('/updateProfile', methods = ['GET', 'POST'])
+# @login_required
+# def updateprofile():
+#  
+    # if request.method == 'POST':
+        # my_data = User.query.get(request.form.get('userEdit'))
+#  
+        # my_data.username = request.form['username']
+# 
+        # my_data.email = request.form['email']
+#  
+        # db.session.commit()
+        # flash("User Info Updated Successfully", 'success')
+#  
+        # return redirect(url_for('account'))
 
 @app.route("/dashboard/")
 @login_required
