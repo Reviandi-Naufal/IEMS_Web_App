@@ -119,6 +119,11 @@ class LMU_data_predictedSchema(ma.SQLAlchemyAutoSchema):
         model = LMU_data_predicted
         created_at = auto_field(dump_only=True)
 
+class lmu_price(db.Model):
+    Index = db.Column(db.Integer, primary_key=True)
+    range_date = db.Column(db.String)
+    Total_Kwh = db.Column(db.Float)
+    Tarif = db.Column(db.Float)
 
 class TCN_data_predicted(db.Model):
     Index = db.Column(db.Integer, primary_key=True)
