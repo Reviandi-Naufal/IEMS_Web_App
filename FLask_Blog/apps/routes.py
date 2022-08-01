@@ -640,104 +640,104 @@ def lmudata():
 @login_required
 def algoritma4():
     tcn_price_data = tcn_price.query.all()
-    df_predict = pd.read_sql_table('TCN_data_predicted',TCN_data_predicted.query.all(),columns=['Date','Time','Kwh'])
-    df_predict = Parsing_Data(df_predict)
+    # df_predict = pd.read_sql_table('TCN_data_predicted',TCN_data_predicted.query.all(),columns=['Date','Time','Kwh'])
+    # df_predict = Parsing_Data(df_predict)
 
-    hari_1 = df_predict[:24]
-    hari_2 = df_predict[24:48]
-    minggu_1 = df_predict[:168]
-    minggu_2 = df_predict[168:336]
-    bulan_1 = df_predict[:720]
-    bulan_2 = df_predict[720:1440]
+    # hari_1 = df_predict[:24]
+    # hari_2 = df_predict[24:48]
+    # minggu_1 = df_predict[:168]
+    # minggu_2 = df_predict[168:336]
+    # bulan_1 = df_predict[:720]
+    # bulan_2 = df_predict[720:1440]
 
-    range_date_list = []
-    range_date_list.append(concat_date(hari_1))
-    range_date_list.append(concat_date(hari_2))
-    range_date_list.append(concat_date(minggu_1))
-    range_date_list.append(concat_date(minggu_2))
-    range_date_list.append(concat_date(bulan_1))
-    range_date_list.append(concat_date(bulan_2))
+    # range_date_list = []
+    # range_date_list.append(concat_date(hari_1))
+    # range_date_list.append(concat_date(hari_2))
+    # range_date_list.append(concat_date(minggu_1))
+    # range_date_list.append(concat_date(minggu_2))
+    # range_date_list.append(concat_date(bulan_1))
+    # range_date_list.append(concat_date(bulan_2))
 
-    total_kwh = []
-    total_kwh_hari_1 = float(hari_1.sum())
-    total_kwh_hari_2 = float(hari_2.sum())
-    total_kwh_minggu_1 = float(minggu_1.sum())
-    total_kwh_minggu_2 = float(minggu_2.sum())
-    total_kwh_bulan_1 = float(bulan_1.sum())
-    total_kwh_bulan_2 = float(bulan_2.sum())
+    # total_kwh = []
+    # total_kwh_hari_1 = float(hari_1.sum())
+    # total_kwh_hari_2 = float(hari_2.sum())
+    # total_kwh_minggu_1 = float(minggu_1.sum())
+    # total_kwh_minggu_2 = float(minggu_2.sum())
+    # total_kwh_bulan_1 = float(bulan_1.sum())
+    # total_kwh_bulan_2 = float(bulan_2.sum())
 
-    total_kwh.append(total_kwh_hari_1)
-    total_kwh.append(total_kwh_hari_2)
-    total_kwh.append(total_kwh_minggu_1)
-    total_kwh.append(total_kwh_minggu_2)
-    total_kwh.append(total_kwh_bulan_1)
-    total_kwh.append(total_kwh_bulan_2)
+    # total_kwh.append(total_kwh_hari_1)
+    # total_kwh.append(total_kwh_hari_2)
+    # total_kwh.append(total_kwh_minggu_1)
+    # total_kwh.append(total_kwh_minggu_2)
+    # total_kwh.append(total_kwh_bulan_1)
+    # total_kwh.append(total_kwh_bulan_2)
 
-    # days1 = timedelta(days=1)
-    # days2 = timedelta(days=2)
-    # weeks1= timedelta(weeks=1)
-    # weeks2 = timedelta(weeks=2)
-    # month1 = timedelta(weeks=4)
-    # month2 = timedelta(weeks=8)
-    # 
-    # today_date = date.today() + days1
-    # today = today_date.strftime("%Y-%m-%d")
+    days1 = timedelta(days=1)
+    days2 = timedelta(days=2)
+    weeks1= timedelta(weeks=1)
+    weeks2 = timedelta(weeks=2)
+    month1 = timedelta(weeks=4)
+    month2 = timedelta(weeks=8)
+    
+    today_date = date.today() + days1
+    today = today_date.strftime("%Y-%m-%d")
 
-    # yesterday_date = date.today() + days2
-    # yesterday = yesterday_date.strftime("%Y-%m-%d")
+    yesterday_date = date.today() + days2
+    yesterday = yesterday_date.strftime("%Y-%m-%d")
 
-    # weekly_date = date.today() + weeks1
-    # weeklyan = weekly_date.strftime("%Y-%m-%d")
+    weekly_date = date.today() + weeks1
+    weeklyan = weekly_date.strftime("%Y-%m-%d")
 
-    # yeswekkly_date = date.today() + weeks2
-    # yesweeklyan = yeswekkly_date.strftime("%Y-%m-%d")
+    yeswekkly_date = date.today() + weeks2
+    yesweeklyan = yeswekkly_date.strftime("%Y-%m-%d")
 
-    # monthly_date = date.today() + month1
-    # monthlylyan = monthly_date.strftime("%Y-%m-%d")
+    monthly_date = date.today() + month1
+    monthlylyan = monthly_date.strftime("%Y-%m-%d")
 
-    # yesmonthly_date = date.today() + month2
-    # yesmonthlyan = yesmonthly_date.strftime("%Y-%m-%d")
+    yesmonthly_date = date.today() + month2
+    yesmonthlyan = yesmonthly_date.strftime("%Y-%m-%d")
 
-    # Kwh_kemarin = TCN_data_predicted.query.filter_by(Date = yesterday ).all()
-    # Kwh_hariIni = TCN_data_predicted.query.filter_by(Date = today ).all()
+    Kwh_kemarin = TCN_data_predicted.query.filter_by(Date = yesterday ).all()
+    Kwh_hariIni = TCN_data_predicted.query.filter_by(Date = today ).all()
 
-    # kwh_weekly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= weeklyan).all()
-    # yeskwh_weekly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= yesweeklyan).all()
+    kwh_weekly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= weeklyan).all()
+    yeskwh_weekly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= yesweeklyan).all()
 
-    # kwh_monthly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= monthlylyan).all()
-    # yeskwh_monthly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= yesmonthlyan).all()
+    kwh_monthly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= monthlylyan).all()
+    yeskwh_monthly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= yesmonthlyan).all()
 
-    # today_list = []
-    # yesterday_list = []
-    # weekly_list = []
-    # yesweekly_list = []
-    # monthly_list = []
-    # yesmonthly_list = []
+    today_list = []
+    yesterday_list = []
+    weekly_list = []
+    yesweekly_list = []
+    monthly_list = []
+    yesmonthly_list = []
 
-    # for i in range(len(Kwh_hariIni)):
-        # today_list.append(Kwh_hariIni[i].Kwh)
-    # for i in range(len(Kwh_kemarin)):
-        # yesterday_list.append(Kwh_kemarin[i].Kwh)
-    # for i in range(len(kwh_weekly)):
-        # weekly_list.append(kwh_weekly[i].Kwh)
-    # for i in range(len(yeskwh_weekly)):
-        # yesweekly_list.append(yeskwh_weekly[i].Kwh)
-    # for i in range(len(kwh_monthly)):
-        # monthly_list.append(kwh_monthly[i].Kwh)
-    # for i in range(len(yeskwh_monthly)):
-        # yesmonthly_list.append(yeskwh_monthly[i].Kwh)
+    for i in range(len(Kwh_hariIni)):
+        today_list.append(Kwh_hariIni[i].Kwh)
+    for i in range(len(Kwh_kemarin)):
+        yesterday_list.append(Kwh_kemarin[i].Kwh)
+    for i in range(len(kwh_weekly)):
+        weekly_list.append(kwh_weekly[i].Kwh)
+    for i in range(len(yeskwh_weekly)):
+        yesweekly_list.append(yeskwh_weekly[i].Kwh)
+    for i in range(len(kwh_monthly)):
+        monthly_list.append(kwh_monthly[i].Kwh)
+    for i in range(len(yeskwh_monthly)):
+        yesmonthly_list.append(yeskwh_monthly[i].Kwh)
 
-    rata2_today = total_kwh_hari_1
-    rata2_yesterday = total_kwh_hari_2
-    todaykwh = total_kwh_hari_1
+    rata2_today = np.sum(today_list)
+    rata2_yesterday = np.sum(yesterday_list)
+    todaykwh = "{:.2f}".format(rata2_today)
 
-    rata2_weekly =total_kwh_minggu_1
-    rata2_yesweekly = total_kwh_minggu_2
-    weekly = total_kwh_minggu_1
+    rata2_weekly = np.sum(weekly_list)
+    rata2_yesweekly = np.sum(yesweekly_list)
+    weekly = "{:.2f}".format(rata2_weekly)
 
-    rata2_monthly = total_kwh_bulan_1
-    rata2_yesmonthly = total_kwh_bulan_2
-    monthly = total_kwh_bulan_1
+    rata2_monthly = np.sum(monthly_list)
+    rata2_yesmonthly = np.sum(yesmonthly_list)
+    monthly = "{:.2f}".format(rata2_monthly)
     
     if (rata2_today >  rata2_yesterday):
         selisih = ((rata2_today - rata2_yesterday)/rata2_today)
