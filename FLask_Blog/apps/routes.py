@@ -12,10 +12,44 @@ from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, datetime, timedelta
 # import _overlapped
 import numpy as np
-#import pandas as pd
+import pandas as pd
 from colorama import Fore
 import sys
 import babel.numbers
+
+def Parsing_Data(data):
+    # Feature Selection
+    Data_pakai = data
+    DateTime = Data_pakai['Date'] + ' ' + Data_pakai['Time']
+    Data_pakai['DateTime'] = DateTime
+    Data_pakai = Data_pakai.drop(columns="Date")
+    Data_pakai = Data_pakai.drop(columns="Time")
+
+    # Parsing DateTime
+    format = '%Y-%m-%d %H:%M:%S'
+    Data_pakai['DateTime'] = pd.to_datetime(Data_pakai['DateTime'], format=format, errors='coerce')
+    Data_pakai = Data_pakai.set_index(Data_pakai['DateTime'])
+    Data_pakai.drop(['DateTime'], axis=1, inplace=True)
+
+    return Data_pakai
+
+def date_time_split(data):
+    Data_split = data
+    Data_split.reset_index(inplace=True)
+    Data_split[['Date', 'Time']] = Data_split['DateTime'].astype(str).str.split(" ", expand=True)
+    Data_split = Data_split.drop(columns='DateTime')
+    Data_split = Data_split.drop(columns=['Kwh','index'])
+    return Data_split
+
+def concat_date(bulan):
+    range_date_bulan = bulan.reset_index()
+    range_date_bulan = date_time_split(range_date_bulan)
+    for i in range_date_bulan['Date'][:1]:
+        first_date = i
+    for j in range_date_bulan['Date'][-1:]:
+        last_date = j
+    month_range = str(first_date)+ ' -> '+ str(last_date)
+    return month_range
 
 
 @app.route("/")
@@ -606,7 +640,38 @@ def lmudata():
 @login_required
 def algoritma4():
     tcn_price_data = tcn_price.query.all()
-    # df_predicted = TCN_data_predicted.query.all()
+    # df_predict = pd.read_sql_table('TCN_data_predicted',TCN_data_predicted.query.all(),columns=['Date','Time','Kwh'])
+    # df_predict = Parsing_Data(df_predict)
+
+    # hari_1 = df_predict[:24]
+    # hari_2 = df_predict[24:48]
+    # minggu_1 = df_predict[:168]
+    # minggu_2 = df_predict[168:336]
+    # bulan_1 = df_predict[:720]
+    # bulan_2 = df_predict[720:1440]
+
+    # range_date_list = []
+    # range_date_list.append(concat_date(hari_1))
+    # range_date_list.append(concat_date(hari_2))
+    # range_date_list.append(concat_date(minggu_1))
+    # range_date_list.append(concat_date(minggu_2))
+    # range_date_list.append(concat_date(bulan_1))
+    # range_date_list.append(concat_date(bulan_2))
+
+    # total_kwh = []
+    # total_kwh_hari_1 = float(hari_1.sum())
+    # total_kwh_hari_2 = float(hari_2.sum())
+    # total_kwh_minggu_1 = float(minggu_1.sum())
+    # total_kwh_minggu_2 = float(minggu_2.sum())
+    # total_kwh_bulan_1 = float(bulan_1.sum())
+    # total_kwh_bulan_2 = float(bulan_2.sum())
+
+    # total_kwh.append(total_kwh_hari_1)
+    # total_kwh.append(total_kwh_hari_2)
+    # total_kwh.append(total_kwh_minggu_1)
+    # total_kwh.append(total_kwh_minggu_2)
+    # total_kwh.append(total_kwh_bulan_1)
+    # total_kwh.append(total_kwh_bulan_2)
 
     days1 = timedelta(days=1)
     days2 = timedelta(days=2)
@@ -615,22 +680,22 @@ def algoritma4():
     month1 = timedelta(weeks=4)
     month2 = timedelta(weeks=8)
     
-    today_date = date.today() + days1
+    today_date = days1
     today = today_date.strftime("%Y-%m-%d")
 
-    yesterday_date = date.today() + days2
+    yesterday_date = days2
     yesterday = yesterday_date.strftime("%Y-%m-%d")
 
-    weekly_date = date.today() + weeks1
+    weekly_date = weeks1
     weeklyan = weekly_date.strftime("%Y-%m-%d")
 
-    yeswekkly_date = date.today() + weeks2
+    yeswekkly_date = weeks2
     yesweeklyan = yeswekkly_date.strftime("%Y-%m-%d")
 
-    monthly_date = date.today() + month1
+    monthly_date = month1
     monthlylyan = monthly_date.strftime("%Y-%m-%d")
 
-    yesmonthly_date = date.today() + month2
+    yesmonthly_date = month2
     yesmonthlyan = yesmonthly_date.strftime("%Y-%m-%d")
 
     Kwh_kemarin = TCN_data_predicted.query.filter_by(Date = yesterday ).all()
