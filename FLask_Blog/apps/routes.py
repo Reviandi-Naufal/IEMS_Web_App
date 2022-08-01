@@ -680,7 +680,7 @@ def algoritma4():
     month1 = timedelta(weeks=4)
     month2 = timedelta(weeks=8)
     
-    today_date = days1
+    today_date = date.today() + days1
     today = today_date.strftime("%Y-%m-%d")
 
     yesterday_date = days2
