@@ -606,14 +606,14 @@ def lmudata():
 @login_required
 def algoritma4():
     tcn_price_data = tcn_price.query.all()
-    df_predicted = TCN_data_predicted.query.all()
+    # df_predicted = TCN_data_predicted.query.all()
 
-    days1 = df_predicted[:24]
-    days2 = df_predicted[:48]
-    weeks1= df_predicted[:144]
-    weeks2 = df_predicted[:288]
-    month1 = df_predicted[:720]
-    month2 = df_predicted[:1440]
+    days1 = timedelta(days=1)
+    days2 = timedelta(days=2)
+    weeks1= timedelta(weeks=1)
+    weeks2 = timedelta(weeks=2)
+    month1 = timedelta(weeks=4)
+    month2 = timedelta(weeks=8)
     
     today_date = date.today() + days1
     today = today_date.strftime("%Y-%m-%d")
