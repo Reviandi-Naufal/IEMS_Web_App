@@ -107,6 +107,90 @@
       <!-- Left side columns -->
       <div class="col-lg-12">
         <div class="row">
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+              <div class="card-body">
+                <h5 class="card-title">KWH <span>| Yesterday</span></h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    {% if rata2_today > rata2_yesterday %}
+                    <img class="bi" src="{{ url_for('static', filename='assets/img/increase.png') }}" widht="50" height="50">
+                    {% elif rata2_today < rata2_yesterday %}
+                    <img class="bi" src="{{ url_for('static', filename='assets/img/decrease.png') }}" widht="50" height="50">
+                    {% else %}
+                    <span class="small"></span>
+                    {% endif %}
+                  </div>
+                  <div class="ps-3">
+                    <h6 class="h6 card-text text-black">{{ todaykwh }} kWh</h6>
+                      {% if rata2_today > rata2_yesterday %}
+                      <span style="color:red" class="small pt-1 fw-bold">{{ kwh_today }}</span> <span class="text-muted small pt-2 ps-1">Increase</span>
+                      {% elif rata2_today < rata2_yesterday %}
+                      <span style="color:green" class="small pt-1 fw-bold">{{ kwh_today }}</span> <span class="text-muted small pt-2 ps-1">Decrease</span>
+                      {% else %}
+                      <span class="small pt-1 fw-bold">{{ kwh_today }}</span> <span class="text-muted small pt-2 ps-1">Normal</span>
+                      {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card">
+              <div class="card-body">
+                <h5 class="card-title">KWH <span>| This Week</span></h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    {% if rata2_today > rata2_yesterday %}
+                    <img class="bi" src="{{ url_for('static', filename='assets/img/increase.png') }}" widht="50" height="50">
+                    {% elif rata2_today < rata2_yesterday %}
+                    <img class="bi" src="{{ url_for('static', filename='assets/img/decrease.png') }}" widht="50" height="50">
+                    {% else %}
+                    <span class="small"></span>
+                    {% endif %}
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ weekly }} Kwh</h6>
+                    {% if rata2_today > rata2_yesterday %}
+                    <span style="color:red" class="small pt-1 fw-bold">{{ weeklykwh }}</span> <span class="text-muted small pt-2 ps-1">Increase</span>
+                    {% elif rata2_today < rata2_yesterday %}
+                    <span style="color:green" class="small pt-1 fw-bold">{{ weeklykwh }}</span> <span class="text-muted small pt-2 ps-1">Decrease</span>
+                    {% else %}
+                    <span class="small pt-1 fw-bold">{{ kwh_today }}</span> <span class="text-muted small pt-2 ps-1">Normal</span>
+                    {% endif %}                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card customers-card">
+              <div class="card-body">
+                <h5 class="card-title">KWH <span>| This Month</span></h5>
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    {% if rata2_today > rata2_yesterday %}
+                    <img class="bi" src="{{ url_for('static', filename='assets/img/increase.png') }}" widht="50" height="50">
+                    {% elif rata2_today < rata2_yesterday %}
+                    <img class="bi" src="{{ url_for('static', filename='assets/img/decrease.png') }}" widht="50" height="50">
+                    {% else %}
+                    <span class="small"></span>
+                    {% endif %}
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{ monthly }} Kwh</h6>
+                    {% if rata2_today > rata2_yesterday %}
+                    <span style="color:red" class="small pt-1 fw-bold">{{ monthlykwh }}</span> <span class="text-muted small pt-2 ps-1">Increase</span>
+                    {% elif rata2_today < rata2_yesterday %}
+                    <span style="color:green" class="small pt-1 fw-bold">{{ monthlykwh }}</span> <span class="text-muted small pt-2 ps-1">Decrease</span>
+                    {% else %}
+                    <span class="small pt-1 fw-bold">{{ monthlykwh }}</span> <span class="text-muted small pt-2 ps-1">Normal</span>
+                    {% endif %}                   
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- Sales Card -->
           <div class="col-xxl-4 col-md-6">
             <div class="card info-card revenue-card">
@@ -144,7 +228,7 @@
           </div>
           <!-- End Revenue Card -->
           <!-- Customers Card -->
-          <div class="col-xxl-4 col-xl-12">
+          <div class="col-xxl-4 col-md-6">
             <div class="card info-card revenue-card">
               <div class="card-body">
                 <h5 class="card-title">Price Prediction <span>| {{ three_month_range }} (Next 3 month)</span></h5>
@@ -161,7 +245,7 @@
             </div>
           </div>
 
-          <div class="col-xxl-4 col-xl-12">
+          <div class="col-xxl-4 col-md-6">
             <div class="card info-card revenue-card">
               <div class="card-body">
                 <h5 class="card-title">Price Prediction <span>| {{ four_month_range }} (Next 4 month)</span></h5>
@@ -178,7 +262,7 @@
             </div>
           </div>
 
-          <div class="col-xxl-4 col-xl-12">
+          <div class="col-xxl-4 col-md-6">
             <div class="card info-card revenue-card">
               <div class="card-body">
                 <h5 class="card-title">Price Prediction <span>| {{ five_month_range }} (Next 5 month)</span></h5>
@@ -195,7 +279,7 @@
             </div>
           </div>
 
-          <div class="col-xxl-4 col-xl-12">
+          <div class="col-xxl-4 col-md-6">
             <div class="card info-card revenue-card">
               <div class="card-body">
                 <h5 class="card-title">Price Prediction <span>| {{ six_month_range }} (Next 6 month)</span></h5>
