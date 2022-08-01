@@ -823,7 +823,7 @@ def algoritma4():
     six_month_range = tcn_price_data[5].range_date
  
     return render_template('algoritma4.html',one_month_price=one_month_price, one_month_kwh_data=one_month_kwh_data, one_month_range=one_month_range,two_month_price=two_month_price, two_month_kwh_data=two_month_kwh_data, two_month_range=two_month_range,three_month_price=three_month_price,three_month_kwh_data=three_month_kwh_data, three_month_range=three_month_range,four_month_price=four_month_price, four_month_kwh_data=four_month_kwh_data, four_month_range=four_month_range, five_month_price=five_month_price, five_month_kwh_data=five_month_kwh_data, five_month_range=five_month_range, six_month_price=six_month_price, six_month_kwh_data=six_month_kwh_data, six_month_range=six_month_range)
-    
+    # return render_template('algoritma4.html',kwh_today=f"{selisih}", rata2_today=rata2_today, rata2_yesterday= rata2_yesterday, todaykwh=f"{todaykwh}", weeklykwh=f"{selisihw}", weekly=f"{weekly}", monthlykwh=f"{selisihm}", monthly=f"{monthly}",one_month_price=one_month_price, one_month_kwh_data=one_month_kwh_data, one_month_range=one_month_range,two_month_price=two_month_price, two_month_kwh_data=two_month_kwh_data, two_month_range=two_month_range,three_month_price=three_month_price,three_month_kwh_data=three_month_kwh_data, three_month_range=three_month_range,four_month_price=four_month_price, four_month_kwh_data=four_month_kwh_data, four_month_range=four_month_range, five_month_price=five_month_price, five_month_kwh_data=five_month_kwh_data, five_month_range=five_month_range, six_month_price=six_month_price, six_month_kwh_data=six_month_kwh_data, six_month_range=six_month_range)
 
 @app.route('/get_data_tcnlineChart')
 @login_required
