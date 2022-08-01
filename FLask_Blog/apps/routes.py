@@ -701,11 +701,11 @@ def algoritma4():
     Kwh_kemarin = TCN_data_predicted.query.filter_by(Date = yesterday ).all()
     Kwh_hariIni = TCN_data_predicted.query.filter_by(Date = today ).all()
 
-    kwh_weekly = TCN_data_predicted.query.filter(TCN_data_predicted.Date >= weeklyan).all()
-    yeskwh_weekly = TCN_data_predicted.query.filter(TCN_data_predicted.Date >= yesweeklyan).all()
+    kwh_weekly = TCN_data_predicted.query.filter(weeklyan).all()
+    yeskwh_weekly = TCN_data_predicted.query.filter(yesweeklyan).all()
 
-    kwh_monthly = TCN_data_predicted.query.filter(TCN_data_predicted.Date >= monthlylyan).all()
-    yeskwh_monthly = TCN_data_predicted.query.filter(TCN_data_predicted.Date >= yesmonthlyan).all()
+    kwh_monthly = TCN_data_predicted.query.filter(monthlylyan).all()
+    yeskwh_monthly = TCN_data_predicted.query.filter(yesmonthlyan).all()
 
     today_list = []
     yesterday_list = []
