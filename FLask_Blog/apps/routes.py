@@ -779,10 +779,6 @@ def algoritma4():
         selisihm = ((rata2_monthly - rata2_yesmonthly)/rata2_monthly)
         selisihm = round(selisihm*100)
         selisihm = print("-")
-    # selisih = 24
-    # realdata = real_data.query.all()
-    # labels = real_data.query.with_entities(real_data.Date).all()
-    # values = real_data.query.with_entities(real_data.Kwh).all()
 
     #Predict satu bulan kedepan
     one_month_price_data = tcn_price_data[0].Tarif
