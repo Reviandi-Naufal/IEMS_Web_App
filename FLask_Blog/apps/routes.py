@@ -683,19 +683,19 @@ def algoritma4():
     today_date = date.today() + days1
     today = today_date.strftime("%Y-%m-%d")
 
-    yesterday_date = days2
+    yesterday_date = date.today() + days2
     yesterday = yesterday_date.strftime("%Y-%m-%d")
 
-    weekly_date = weeks1
+    weekly_date = date.today() + weeks1
     weeklyan = weekly_date.strftime("%Y-%m-%d")
 
-    yeswekkly_date = weeks2
+    yeswekkly_date = date.today() + weeks2
     yesweeklyan = yeswekkly_date.strftime("%Y-%m-%d")
 
-    monthly_date = month1
+    monthly_date = date.today() + month1
     monthlylyan = monthly_date.strftime("%Y-%m-%d")
 
-    yesmonthly_date = month2
+    yesmonthly_date = date.today() + month2
     yesmonthlyan = yesmonthly_date.strftime("%Y-%m-%d")
 
     Kwh_kemarin = TCN_data_predicted.query.filter_by(Date = yesterday ).all()
