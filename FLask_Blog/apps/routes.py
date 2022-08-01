@@ -673,112 +673,112 @@ def algoritma4():
     # total_kwh.append(total_kwh_bulan_1)
     # total_kwh.append(total_kwh_bulan_2)
 
-    days1 = timedelta(days=1)
-    days2 = timedelta(days=2)
-    weeks1= timedelta(weeks=1)
-    weeks2 = timedelta(weeks=2)
-    month1 = timedelta(weeks=4)
-    month2 = timedelta(weeks=8)
-    
-    today_date = date.today() + days1
-    today = today_date.strftime("%Y-%m-%d")
+    # days1 = timedelta(days=1)
+    # days2 = timedelta(days=2)
+    # weeks1= timedelta(weeks=1)
+    # weeks2 = timedelta(weeks=2)
+    # month1 = timedelta(weeks=4)
+    # month2 = timedelta(weeks=8)
+    # 
+    # today_date = date.today() + days1
+    # today = today_date.strftime("%Y-%m-%d")
 
-    yesterday_date = date.today() + days2
-    yesterday = yesterday_date.strftime("%Y-%m-%d")
+    # yesterday_date = date.today() + days2
+    # yesterday = yesterday_date.strftime("%Y-%m-%d")
 
-    weekly_date = date.today() + weeks1
-    weeklyan = weekly_date.strftime("%Y-%m-%d")
+    # weekly_date = date.today() + weeks1
+    # weeklyan = weekly_date.strftime("%Y-%m-%d")
 
-    yeswekkly_date = date.today() + weeks2
-    yesweeklyan = yeswekkly_date.strftime("%Y-%m-%d")
+    # yeswekkly_date = date.today() + weeks2
+    # yesweeklyan = yeswekkly_date.strftime("%Y-%m-%d")
 
-    monthly_date = date.today() + month1
-    monthlylyan = monthly_date.strftime("%Y-%m-%d")
+    # monthly_date = date.today() + month1
+    # monthlylyan = monthly_date.strftime("%Y-%m-%d")
 
-    yesmonthly_date = date.today() + month2
-    yesmonthlyan = yesmonthly_date.strftime("%Y-%m-%d")
+    # yesmonthly_date = date.today() + month2
+    # yesmonthlyan = yesmonthly_date.strftime("%Y-%m-%d")
 
-    Kwh_kemarin = TCN_data_predicted.query.filter_by(Date = yesterday ).all()
-    Kwh_hariIni = TCN_data_predicted.query.filter_by(Date = today ).all()
+    # Kwh_kemarin = TCN_data_predicted.query.filter_by(Date = yesterday ).all()
+    # Kwh_hariIni = TCN_data_predicted.query.filter_by(Date = today ).all()
 
-    kwh_weekly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= weeklyan).all()
-    yeskwh_weekly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= yesweeklyan).all()
+    # kwh_weekly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= weeklyan).all()
+    # yeskwh_weekly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= yesweeklyan).all()
 
-    kwh_monthly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= monthlylyan).all()
-    yeskwh_monthly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= yesmonthlyan).all()
+    # kwh_monthly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= monthlylyan).all()
+    # yeskwh_monthly = TCN_data_predicted.query.filter(TCN_data_predicted.Date <= yesmonthlyan).all()
 
-    today_list = []
-    yesterday_list = []
-    weekly_list = []
-    yesweekly_list = []
-    monthly_list = []
-    yesmonthly_list = []
+    # today_list = []
+    # yesterday_list = []
+    # weekly_list = []
+    # yesweekly_list = []
+    # monthly_list = []
+    # yesmonthly_list = []
 
-    for i in range(len(Kwh_hariIni)):
-        today_list.append(Kwh_hariIni[i].Kwh)
-    for i in range(len(Kwh_kemarin)):
-        yesterday_list.append(Kwh_kemarin[i].Kwh)
-    for i in range(len(kwh_weekly)):
-        weekly_list.append(kwh_weekly[i].Kwh)
-    for i in range(len(yeskwh_weekly)):
-        yesweekly_list.append(yeskwh_weekly[i].Kwh)
-    for i in range(len(kwh_monthly)):
-        monthly_list.append(kwh_monthly[i].Kwh)
-    for i in range(len(yeskwh_monthly)):
-        yesmonthly_list.append(yeskwh_monthly[i].Kwh)
+    # for i in range(len(Kwh_hariIni)):
+        # today_list.append(Kwh_hariIni[i].Kwh)
+    # for i in range(len(Kwh_kemarin)):
+        # yesterday_list.append(Kwh_kemarin[i].Kwh)
+    # for i in range(len(kwh_weekly)):
+        # weekly_list.append(kwh_weekly[i].Kwh)
+    # for i in range(len(yeskwh_weekly)):
+        # yesweekly_list.append(yeskwh_weekly[i].Kwh)
+    # for i in range(len(kwh_monthly)):
+        # monthly_list.append(kwh_monthly[i].Kwh)
+    # for i in range(len(yeskwh_monthly)):
+        # yesmonthly_list.append(yeskwh_monthly[i].Kwh)
 
-    rata2_today = np.sum(today_list)
-    rata2_yesterday = np.sum(yesterday_list)
-    todaykwh = "{:.2f}".format(rata2_today)
+    # rata2_today = np.sum(today_list)
+    # rata2_yesterday = np.sum(yesterday_list)
+    # todaykwh = "{:.2f}".format(rata2_today)
 
-    rata2_weekly = np.sum(weekly_list)
-    rata2_yesweekly = np.sum(yesweekly_list)
-    weekly = "{:.2f}".format(rata2_weekly)
+    # rata2_weekly = np.sum(weekly_list)
+    # rata2_yesweekly = np.sum(yesweekly_list)
+    # weekly = "{:.2f}".format(rata2_weekly)
 
-    rata2_monthly = np.sum(monthly_list)
-    rata2_yesmonthly = np.sum(yesmonthly_list)
-    monthly = "{:.2f}".format(rata2_monthly)
-    
-    if (rata2_today >  rata2_yesterday):
-        selisih = ((rata2_today - rata2_yesterday)/rata2_today)
-        selisih = round(selisih*100)
-        selisih = str(selisih) + "% " 
+    # rata2_monthly = np.sum(monthly_list)
+    # rata2_yesmonthly = np.sum(yesmonthly_list)
+    # monthly = "{:.2f}".format(rata2_monthly)
+    # 
+    # if (rata2_today >  rata2_yesterday):
+        # selisih = ((rata2_today - rata2_yesterday)/rata2_today)
+        # selisih = round(selisih*100)
+        # selisih = str(selisih) + "% " 
 
-    elif (rata2_today < rata2_yesterday):
-        selisih = ((rata2_today - rata2_yesterday)/rata2_today) 
-        selisih = round(selisih*100)
-        selisih = abs(selisih)
-        selisih = str(selisih) + "% "
-    else:
-        selisih = ((rata2_today - rata2_yesterday)/rata2_today)
-        selisih = round(selisih*100)
-        selisih = print("-")
-    if (rata2_weekly >  rata2_yesweekly):
-        selisihw = ((rata2_weekly - rata2_yesweekly)/rata2_weekly)
-        selisihw = round(selisihw*100)
-        selisihw = str(selisihw) + "% " 
-    elif (rata2_weekly < rata2_yesweekly):
-        selisihw = ((rata2_weekly - rata2_yesweekly)/rata2_weekly) 
-        selisihw = round(selisihw*100)
-        selisihw = abs(selisihw)
-        selisihw = str(selisihw) + "% " 
-    else:
-        selisihw = ((rata2_weekly - rata2_yesweekly)/rata2_weekly)
-        selisihw = selisihw*100
-        selisihw = print("-")
-    if (rata2_monthly >  rata2_yesmonthly):
-        selisihm = ((rata2_monthly - rata2_yesmonthly)/rata2_monthly)
-        selisihm = round(selisihm*100)
-        selisihm = str(selisihm) + "% "
-    elif (rata2_monthly < rata2_yesmonthly):
-        selisihm = ((rata2_monthly - rata2_yesmonthly)/rata2_monthly) 
-        selisihm = round(selisihm*100)
-        selisihm = abs(selisihm)
-        selisihm = str(selisihm) + "% "
-    else:
-        selisihm = ((rata2_monthly - rata2_yesmonthly)/rata2_monthly)
-        selisihm = round(selisihm*100)
-        selisihm = print("-")
+    # elif (rata2_today < rata2_yesterday):
+        # selisih = ((rata2_today - rata2_yesterday)/rata2_today) 
+        # selisih = round(selisih*100)
+        # selisih = abs(selisih)
+        # selisih = str(selisih) + "% "
+    # else:
+        # selisih = ((rata2_today - rata2_yesterday)/rata2_today)
+        # selisih = round(selisih*100)
+        # selisih = print("-")
+    # if (rata2_weekly >  rata2_yesweekly):
+        # selisihw = ((rata2_weekly - rata2_yesweekly)/rata2_weekly)
+        # selisihw = round(selisihw*100)
+        # selisihw = str(selisihw) + "% " 
+    # elif (rata2_weekly < rata2_yesweekly):
+        # selisihw = ((rata2_weekly - rata2_yesweekly)/rata2_weekly) 
+        # selisihw = round(selisihw*100)
+        # selisihw = abs(selisihw)
+        # selisihw = str(selisihw) + "% " 
+    # else:
+        # selisihw = ((rata2_weekly - rata2_yesweekly)/rata2_weekly)
+        # selisihw = selisihw*100
+        # selisihw = print("-")
+    # if (rata2_monthly >  rata2_yesmonthly):
+        # selisihm = ((rata2_monthly - rata2_yesmonthly)/rata2_monthly)
+        # selisihm = round(selisihm*100)
+        # selisihm = str(selisihm) + "% "
+    # elif (rata2_monthly < rata2_yesmonthly):
+        # selisihm = ((rata2_monthly - rata2_yesmonthly)/rata2_monthly) 
+        # selisihm = round(selisihm*100)
+        # selisihm = abs(selisihm)
+        # selisihm = str(selisihm) + "% "
+    # else:
+        # selisihm = ((rata2_monthly - rata2_yesmonthly)/rata2_monthly)
+        # selisihm = round(selisihm*100)
+        # selisihm = print("-")
 
     #Predict satu bulan kedepan
     one_month_price_data = tcn_price_data[0].Tarif
@@ -821,8 +821,9 @@ def algoritma4():
     six_month_kwh_data = tcn_price_data[5].Total_Kwh
     six_month_kwh_data = "{:.2f}".format(six_month_kwh_data)
     six_month_range = tcn_price_data[5].range_date
-
-    return render_template('algoritma4.html', kwh_today=f"{selisih}", rata2_today=rata2_today, rata2_yesterday= rata2_yesterday, todaykwh=f"{todaykwh}", weeklykwh=f"{selisihw}", weekly=f"{weekly}", monthlykwh=f"{selisihm}", monthly=f"{monthly}" ,one_month_price=one_month_price, one_month_kwh_data=one_month_kwh_data, one_month_range=one_month_range,two_month_price=two_month_price, two_month_kwh_data=two_month_kwh_data, two_month_range=two_month_range,three_month_price=three_month_price,three_month_kwh_data=three_month_kwh_data, three_month_range=three_month_range,four_month_price=four_month_price, four_month_kwh_data=four_month_kwh_data, four_month_range=four_month_range, five_month_price=five_month_price, five_month_kwh_data=five_month_kwh_data, five_month_range=five_month_range, six_month_price=six_month_price, six_month_kwh_data=six_month_kwh_data, six_month_range=six_month_range)
+ 
+    return render_template('algoritma4.html',one_month_price=one_month_price, one_month_kwh_data=one_month_kwh_data, one_month_range=one_month_range,two_month_price=two_month_price, two_month_kwh_data=two_month_kwh_data, two_month_range=two_month_range,three_month_price=three_month_price,three_month_kwh_data=three_month_kwh_data, three_month_range=three_month_range,four_month_price=four_month_price, four_month_kwh_data=four_month_kwh_data, four_month_range=four_month_range, five_month_price=five_month_price, five_month_kwh_data=five_month_kwh_data, five_month_range=five_month_range, six_month_price=six_month_price, six_month_kwh_data=six_month_kwh_data, six_month_range=six_month_range)
+    # return render_template('algoritma4.html',kwh_today=f"{selisih}", rata2_today=rata2_today, rata2_yesterday= rata2_yesterday, todaykwh=f"{todaykwh}", weeklykwh=f"{selisihw}", weekly=f"{weekly}", monthlykwh=f"{selisihm}", monthly=f"{monthly}",one_month_price=one_month_price, one_month_kwh_data=one_month_kwh_data, one_month_range=one_month_range,two_month_price=two_month_price, two_month_kwh_data=two_month_kwh_data, two_month_range=two_month_range,three_month_price=three_month_price,three_month_kwh_data=three_month_kwh_data, three_month_range=three_month_range,four_month_price=four_month_price, four_month_kwh_data=four_month_kwh_data, four_month_range=four_month_range, five_month_price=five_month_price, five_month_kwh_data=five_month_kwh_data, five_month_range=five_month_range, six_month_price=six_month_price, six_month_kwh_data=six_month_kwh_data, six_month_range=six_month_range)
 
 @app.route('/get_data_tcnlineChart')
 @login_required
