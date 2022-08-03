@@ -100,6 +100,11 @@ class GRU_data_predictedSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = GRU_data_predicted
         created_at = auto_field(dump_only=True)
+class gru_price(db.Model):
+    Index = db.Column(db.Integer, primary_key=True)
+    range_date = db.Column(db.String)
+    Total_Kwh = db.Column(db.Float)
+    Tarif = db.Column(db.Float)
 
 class LMU_data_predicted(db.Model):
     Index = db.Column(db.Integer, primary_key=True)
