@@ -989,7 +989,7 @@ def get_data_compstacklineChart():
             # kwhtcn.append(lineChartDataTCN[i].Kwh)
     # elif datetime.append(lineChartDataLMU[i].Date + " " + lineChartDataLMU[i].Time) != True:
     for i in range(len(lineChartDataLMU)):
-        datetime.append(lineChartDataLMU[i].Date + " " + lineChartDataGRU[i].Time)
+        datetime.append(lineChartDataLMU[i].Date + " " + lineChartDataLMU[i].Time)
         kwhlmu.append(lineChartDataLMU[i].Kwh)
     for i in range(len(lineChartDataRNN)):
         kwhrnn.append(lineChartDataRNN[i].Kwh)
