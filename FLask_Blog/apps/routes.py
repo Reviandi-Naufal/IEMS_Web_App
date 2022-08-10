@@ -7,7 +7,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from apps import app, db, bcrypt
 from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema, RNN_data_predicted, RNN_data_predictedSchema, LMU_data_predicted, LMU_data_predictedSchema, lmu_price, gru_price
+from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema, RNN_data_predicted, RNN_data_predictedSchema, LMU_data_predicted, LMU_data_predictedSchema, lmu_price, gru_price, Klastering_Perbulan_DataReal, Klastering_Perbulan_DataRealSchema
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, datetime, timedelta
 # import _overlapped
@@ -947,6 +947,63 @@ def tcndata():
 @login_required
 def clustering():
     return render_template('Clustering.html')
+
+@app.route('/api/clusterdata')
+@login_required
+def tcndata():
+    query = Klastering_Perbulan_DataReal.query
+
+    # search filter
+    search = request.args.get('search[value]')
+    if search:
+        query = query.filter(db.or_(
+            Klastering_Perbulan_DataReal.DateTime.like(f'%{search}%'),
+            Klastering_Perbulan_DataReal.Date.like(f'%{search}%'),
+            Klastering_Perbulan_DataReal.kluster.like(f'%{search}%')
+        ))
+    total_filtered = query.count()
+
+    # filter by date
+    from_date = request.args.get('searchByFromdate')
+    to_date = request.args.get('searchByTodate')
+    if from_date and to_date:
+        query = query.filter(db.and_(
+            Klastering_Perbulan_DataReal.Date >= from_date,
+            Klastering_Perbulan_DataReal.Date <= to_date,
+        ))
+    total_filtered = query.count()
+
+    # sorting
+    order = []
+    i = 0
+    while True:
+        col_index = request.args.get(f'order[{i}][column]')
+        if col_index is None:
+            break
+        col_name = request.args.get(f'columns[{col_index}][data]')
+        if col_name not in ['DateTime', 'Kwh','Date', 'Time', 'old_kwh', 'delta_kwh','kluster']:
+            col_name = 'DateTime'
+        descending = request.args.get(f'order[{i}][dir]') == 'desc'
+        col = getattr(Klastering_Perbulan_DataReal, col_name)
+        if descending:
+            col = col.desc()
+        order.append(col)
+        i += 1
+    if order:
+        query = query.order_by(*order)
+
+    # pagination
+    start = request.args.get('start', type=int)
+    length = request.args.get('length', type=int)
+    query = query.offset(start).limit(length)
+
+    # response
+    return {
+        'data': [Klastering_Perbulan_DataReal.to_dict() for Klastering_Perbulan_DataReal in query],
+        'recordsFiltered': total_filtered,
+        'recordsTotal': Klastering_Perbulan_DataReal.query.count(),
+        'draw': request.args.get('draw', type=int),
+    }
 
 @app.route("/compare")
 @login_required

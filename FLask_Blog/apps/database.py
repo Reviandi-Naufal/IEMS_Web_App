@@ -179,6 +179,33 @@ class Gedung(db.Model):
     Lokasi = db.Column(db.String(45))
     Deleted = db.Column(db.String(45))
 
+class Klastering_Perbulan_DataReal(db.Model):
+    DateTime = db.Column(db.String(50), primary_key=True)
+    Kwh = db.Column(db.Float)
+    Date = db.Column(db.String(50))
+    Time = db.Column(db.String(50))
+    old_kwh = db.Column(db.Float)
+    delta_kwh = db.Column(db.Float)
+    kluster = db.Column(db.Integer)
+    Category = db.Column(db.String(255))
+
+    def to_dict(self):
+        return {
+            'DateTime' : self.DateTime,
+            'Kwh' : self.Kwh,
+            'Date' : self.Date,
+            'Time' : self.Time,
+            'old_kwh' : self.old_kwh,
+            'delta_kwh' : self.delta_kwh,
+            'kluster' : self.kluster,
+            'Category' : self.Category
+        }
+
+class Klastering_Perbulan_DataRealSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = Klastering_Perbulan_DataReal
+        created_at = auto_field(dump_only=True)
+
 #####################################################################################
 
 class billinginput(db.Model):
