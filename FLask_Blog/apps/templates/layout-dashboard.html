@@ -546,13 +546,12 @@
         // DataTable
         var dataTable = $("#cluster_table1").DataTable({
           pagingType: "numbers",
+          lengthChange: true,
           processing: true,
           serverSide: true,
-          // serverMethod: 'post',
-          // searching: true, // Set false to Remove default Search Control
+          responsive: true,
           ajax: {
             url: "/api/clusterdata",
-            // type: 'POST',
             data: function (data) {
               // Read values
               var from_date = $("#search_fromdate_cluster").val();
@@ -581,6 +580,9 @@
         $("#btn_search_cluster").click(function () {
           dataTable.draw();
         });
+        options: {
+          responsive: true;
+        }
       });
     </script>
     <!-- End Clustering Table -->
