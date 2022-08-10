@@ -981,7 +981,7 @@ def clusterdata():
         if col_index is None:
             break
         col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['DateTime', 'Kwh','Date', 'Time', 'old_kwh', 'delta_kwh','kluster']:
+        if col_name not in ['DateTime', 'Kwh','Date', 'Time', 'old_kwh', 'delta_kwh','kluster', 'Category']:
             col_name = 'DateTime'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
         col = getattr(Klastering_Perbulan_DataReal, col_name)
