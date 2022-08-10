@@ -180,6 +180,7 @@ class Gedung(db.Model):
     Deleted = db.Column(db.String(45))
 
 class Klastering_Perbulan_DataReal(db.Model):
+    __tablename__ = "Klastering_Perbulan_DataReal"
     DateTime = db.Column(db.String(50), primary_key=True)
     Kwh = db.Column(db.Float)
     Date = db.Column(db.String(50))
