@@ -950,7 +950,7 @@ def clustering():
 
 @app.route('/api/clusterdata')
 @login_required
-def tcndata():
+def clusterdata():
     query = Klastering_Perbulan_DataReal.query
 
     # search filter
