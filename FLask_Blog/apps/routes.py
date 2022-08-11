@@ -7,7 +7,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from apps import app, db, bcrypt
 from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema, RNN_data_predicted, RNN_data_predictedSchema, LMU_data_predicted, LMU_data_predictedSchema, lmu_price, gru_price, Klastering_Perbulan_DataReal, Klastering_Perbulan_DataRealSchema
+from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema, RNN_data_predicted, RNN_data_predictedSchema, rnn_price, LMU_data_predicted, LMU_data_predictedSchema, lmu_price, gru_price, Klastering_Perbulan_DataReal, Klastering_Perbulan_DataRealSchema
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, datetime, timedelta
 # import _overlapped
@@ -370,7 +370,51 @@ def data():
 @app.route("/algoritma1") #RNN
 @login_required
 def algoritma1():
-    return render_template('algoritma1.html')
+    rnn_price_data = rnn_price.query.all()
+    
+    #Predict satu bulan kedepan
+    one_month_price_data = rnn_price_data[0].Tarif
+    one_month_price = babel.numbers.format_currency(one_month_price_data, "IDR", locale='id_ID')
+    one_month_kwh_data = rnn_price_data[0].Total_Kwh
+    one_month_kwh_data = "{:.2f}".format(one_month_kwh_data)
+    one_month_range = rnn_price_data[0].range_date
+        
+    #Predict dua bulan kedepan
+    two_month_price_data = rnn_price_data[1].Tarif
+    two_month_price = babel.numbers.format_currency(two_month_price_data, "IDR", locale='id_ID')
+    two_month_kwh_data = rnn_price_data[1].Total_Kwh
+    two_month_kwh_data = "{:.2f}".format(two_month_kwh_data)
+    two_month_range = rnn_price_data[1].range_date
+        
+    #Predict tiga bulan kedepan
+    three_month_price_data = rnn_price_data[2].Tarif
+    three_month_price = babel.numbers.format_currency(three_month_price_data, "IDR", locale='id_ID')
+    three_month_kwh_data = rnn_price_data[2].Total_Kwh
+    three_month_kwh_data = "{:.2f}".format(three_month_kwh_data)
+    three_month_range = rnn_price_data[2].range_date
+        
+    #Predict empat bulan kedepan
+    four_month_price_data = rnn_price_data[3].Tarif
+    four_month_price = babel.numbers.format_currency(four_month_price_data, "IDR", locale='id_ID')
+    four_month_kwh_data = rnn_price_data[3].Total_Kwh
+    four_month_kwh_data = "{:.2f}".format(four_month_kwh_data)
+    four_month_range = rnn_price_data[3].range_date
+        
+    #Predict lima bulan kedepan
+    five_month_price_data = rnn_price_data[4].Tarif
+    five_month_price = babel.numbers.format_currency(five_month_price_data, "IDR", locale='id_ID')
+    five_month_kwh_data = rnn_price_data[4].Total_Kwh
+    five_month_kwh_data = "{:.2f}".format(five_month_kwh_data)
+    five_month_range = rnn_price_data[4].range_date
+        
+    #Predict enam bulan kedepan
+    six_month_price_data = rnn_price_data[5].Tarif
+    six_month_price = babel.numbers.format_currency(six_month_price_data, "IDR", locale='id_ID')
+    six_month_kwh_data = rnn_price_data[5].Total_Kwh
+    six_month_kwh_data = "{:.2f}".format(six_month_kwh_data)
+    six_month_range = rnn_price_data[5].range_date
+        
+    return render_template('algoritma1.html', one_month_price=one_month_price, one_month_kwh_data=one_month_kwh_data, one_month_range=one_month_range,two_month_price=two_month_price, two_month_kwh_data=two_month_kwh_data, two_month_range=two_month_range,three_month_price=three_month_price,three_month_kwh_data=three_month_kwh_data, three_month_range=three_month_range,four_month_price=four_month_price, four_month_kwh_data=four_month_kwh_data, four_month_range=four_month_range, five_month_price=five_month_price, five_month_kwh_data=five_month_kwh_data, five_month_range=five_month_range, six_month_price=six_month_price, six_month_kwh_data=six_month_kwh_data, six_month_range=six_month_range)
 
 @app.route('/get_data_rnnlineChart')
 @login_required
