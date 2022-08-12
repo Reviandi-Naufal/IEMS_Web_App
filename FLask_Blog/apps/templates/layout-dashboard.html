@@ -540,22 +540,22 @@
     </script>
     <!-- End Table TCN -->
 
-    <!-- Template for Clustering realdata Table -->
+    <!-- Template for Clustering Perhari Table -->
     <script>
       $(document).ready(function () {
         // DataTable
-        var dataTable = $("#cluster_table1").DataTable({
+        var dataTable = $("#cluster_perhari").DataTable({
           pagingType: "numbers",
           lengthChange: true,
           processing: true,
           serverSide: true,
           responsive: true,
           ajax: {
-            url: "/api/clusterdata",
+            url: "/api/clusterperhari",
             data: function (data) {
               // Read values
-              var from_date = $("#search_fromdate_cluster").val();
-              var to_date = $("#search_todate_cluster").val();
+              var from_date = $("#search_fromdate_cluster_perhari").val();
+              var to_date = $("#search_todate_cluster_perhari").val();
               console.log(from_date);
               console.log(to_date);
 
@@ -567,17 +567,14 @@
           columns: [
             { data: "DateTime" },
             { data: "Kwh" },
-            { data: "Date" },
-            { data: "Time" },
             { data: "old_kwh" },
             { data: "delta_kwh" },
             { data: "kluster" },
-            //{ data: "Category" },
           ],
         });
 
         // Search button
-        $("#btn_search_cluster").click(function () {
+        $("#btn_search_cluster_perhari").click(function () {
           dataTable.draw();
         });
         options: {

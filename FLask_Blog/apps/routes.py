@@ -7,7 +7,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from apps import app, db, bcrypt
 from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema, RNN_data_predicted, RNN_data_predictedSchema, rnn_price, LMU_data_predicted, LMU_data_predictedSchema, lmu_price, gru_price, Klastering_Perbulan_DataReal, Klastering_Perbulan_DataRealSchema
+from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema, RNN_data_predicted, RNN_data_predictedSchema, rnn_price, LMU_data_predicted, LMU_data_predictedSchema, lmu_price, gru_price, Klastering_Perbulan_DataReal, Klastering_Perbulan_DataRealSchema, KlasterPerhari, KlasterPerhariSchema
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, datetime, timedelta
 # import _overlapped
@@ -992,30 +992,29 @@ def tcndata():
 def clustering():
     return render_template('Clustering.html')
 
-@app.route('/api/clusterdata')
+@app.route('/api/clusterperhari')
 @login_required
-def clusterdata():
-    query = Klastering_Perbulan_DataReal.query
+def clusterperhari():
+    query = KlasterPerhari.query
 
     # search filter
     search = request.args.get('search[value]')
     if search:
         query = query.filter(db.or_(
-            Klastering_Perbulan_DataReal.DateTime.like(f'%{search}%'),
-            Klastering_Perbulan_DataReal.Date.like(f'%{search}%'),
-            Klastering_Perbulan_DataReal.kluster.like(f'%{search}%')
+            KlasterPerhari.DateTime.like(f'%{search}%'),
+            KlasterPerhari.kluster.like(f'%{search}%')
         ))
     total_filtered = query.count()
 
-    # filter by date
-    from_date = request.args.get('searchByFromdate')
-    to_date = request.args.get('searchByTodate')
-    if from_date and to_date:
-        query = query.filter(db.and_(
-            Klastering_Perbulan_DataReal.Date >= from_date,
-            Klastering_Perbulan_DataReal.Date <= to_date,
-        ))
-    total_filtered = query.count()
+    # # filter by date
+    # from_date = request.args.get('searchByFromdate')
+    # to_date = request.args.get('searchByTodate')
+    # if from_date and to_date:
+    #     query = query.filter(db.and_(
+    #         KlasterPerhari.Date >= from_date,
+    #         KlasterPerhari.Date <= to_date,
+    #     ))
+    # total_filtered = query.count()
 
     # sorting
     order = []
@@ -1025,10 +1024,10 @@ def clusterdata():
         if col_index is None:
             break
         col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['DateTime', 'Kwh','Date', 'Time', 'old_kwh', 'delta_kwh', 'kluster']:
+        if col_name not in ['DateTime', 'Kwh', 'old_kwh', 'delta_kwh', 'kluster']:
             col_name = 'Date'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
-        col = getattr(Klastering_Perbulan_DataReal, col_name)
+        col = getattr(KlasterPerhari, col_name)
         if descending:
             col = col.desc()
         order.append(col)
@@ -1043,9 +1042,9 @@ def clusterdata():
 
     # response
     return {
-        'data': [Klastering_Perbulan_DataReal.to_dict() for Klastering_Perbulan_DataReal in query],
+        'data': [KlasterPerhari.to_dict() for KlasterPerhari in query],
         'recordsFiltered': total_filtered,
-        'recordsTotal': Klastering_Perbulan_DataReal.query.count(),
+        'recordsTotal': KlasterPerhari.query.count(),
         'draw': request.args.get('draw', type=int),
     }
 

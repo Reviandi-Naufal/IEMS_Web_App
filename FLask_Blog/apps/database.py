@@ -168,49 +168,153 @@ class tcn_price(db.Model):
 #    Kwh = db.Column(db.Float)
 #    Date = db.Column(db.Date)
 
-class Monitoring(db.Model):
-    Gedung = db.Column(db.Integer, primary_key=True)
-    Kwh = db.Column(db.Float)
-    Date = db.Column(db.DateTime)
+# class Monitoring(db.Model):
+#     Gedung = db.Column(db.Integer, primary_key=True)
+#     Kwh = db.Column(db.Float)
+#     Date = db.Column(db.DateTime)
 
 #class pemantauan(db.Model):
 #    Tanggal = db.Column(db.DateTime)
 #    Alat = db.Column(db.Integer)
 #    Kwh = db.Column(db.Float)
 
-class Gedung(db.Model):
-    id = db.Column(db. Integer, primary_key=True)
-    pj = db.Column(db.String(45))
-    Nama = db.Column(db.String(45))
-    Lokasi = db.Column(db.String(45))
-    Deleted = db.Column(db.String(45))
+# class Gedung(db.Model):
+#     id = db.Column(db. Integer, primary_key=True)
+#     pj = db.Column(db.String(45))
+#     Nama = db.Column(db.String(45))
+#     Lokasi = db.Column(db.String(45))
+#     Deleted = db.Column(db.String(45))
 
-class Klastering_Perbulan_DataReal(db.Model):
-    __tablename__ = "Klastering_Perbulan_DataReal"
+class KlasterPerhari(db.Model):
+    __tablename__ = "KlasterPerhari"
     DateTime = db.Column(db.String(50), primary_key=True)
     Kwh = db.Column(db.Float)
-    Date = db.Column(db.String(50))
-    Time = db.Column(db.String(50))
     old_kwh = db.Column(db.Float)
     delta_kwh = db.Column(db.Float)
     kluster = db.Column(db.Integer)
-    Category = db.Column(db.String(255))
 
     def to_dict(self):
         return {
             'DateTime' : self.DateTime,
             'Kwh' : self.Kwh,
-            'Date' : self.Date,
-            'Time' : self.Time,
             'old_kwh' : self.old_kwh,
             'delta_kwh' : self.delta_kwh,
-            'kluster' : self.kluster,
-            'Category' : self.Category
+            'kluster' : self.kluster
         }
 
-class Klastering_Perbulan_DataRealSchema(ma.SQLAlchemyAutoSchema):
+class KlasterPerhariSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = Klastering_Perbulan_DataReal
+        model = KlasterPerhari
+        created_at = auto_field(dump_only=True)
+
+class KlasterPerbulan(db.Model):
+    __tablename__ = "KlasterPerbulan"
+    DateTime = db.Column(db.String(50), primary_key=True)
+    Kwh = db.Column(db.Float)
+    old_kwh = db.Column(db.Float)
+    delta_kwh = db.Column(db.Float)
+    kluster = db.Column(db.Integer)
+
+    def to_dict(self):
+        return {
+            'DateTime' : self.DateTime,
+            'Kwh' : self.Kwh,
+            'old_kwh' : self.old_kwh,
+            'delta_kwh' : self.delta_kwh,
+            'kluster' : self.kluster
+        }
+
+class KlasterPerbulanSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = KlasterPerbulan
+        created_at = auto_field(dump_only=True)
+
+class KlasterPertahun(db.Model):
+    __tablename__ = "KlasterPertahun"
+    DateTime = db.Column(db.String(50), primary_key=True)
+    Kwh = db.Column(db.Float)
+    old_kwh = db.Column(db.Float)
+    delta_kwh = db.Column(db.Float)
+    kluster = db.Column(db.Integer)
+
+    def to_dict(self):
+        return {
+            'DateTime' : self.DateTime,
+            'Kwh' : self.Kwh,
+            'old_kwh' : self.old_kwh,
+            'delta_kwh' : self.delta_kwh,
+            'kluster' : self.kluster
+        }
+
+class KlasterPertahunSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = KlasterPertahun
+        created_at = auto_field(dump_only=True)
+
+class KlasterVirtualPerhari(db.Model):
+    __tablename__ = "KlasterVirtualPerhari"
+    DateTime = db.Column(db.String(50), primary_key=True)
+    Kwh = db.Column(db.Float)
+    old_kwh = db.Column(db.Float)
+    delta_kwh = db.Column(db.Float)
+    kluster = db.Column(db.Integer)
+
+    def to_dict(self):
+        return {
+            'DateTime' : self.DateTime,
+            'Kwh' : self.Kwh,
+            'old_kwh' : self.old_kwh,
+            'delta_kwh' : self.delta_kwh,
+            'kluster' : self.kluster
+        }
+
+class KlasterVirtualPerhariSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = KlasterVirtualPerhari
+        created_at = auto_field(dump_only=True)
+
+class KlasterVirtualPerbulan(db.Model):
+    __tablename__ = "KlasterVirtualPerbulan"
+    DateTime = db.Column(db.String(50), primary_key=True)
+    Kwh = db.Column(db.Float)
+    old_kwh = db.Column(db.Float)
+    delta_kwh = db.Column(db.Float)
+    kluster = db.Column(db.Integer)
+
+    def to_dict(self):
+        return {
+            'DateTime' : self.DateTime,
+            'Kwh' : self.Kwh,
+            'old_kwh' : self.old_kwh,
+            'delta_kwh' : self.delta_kwh,
+            'kluster' : self.kluster
+        }
+
+class KlasterVirtualPerbulanSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = KlasterVirtualPerbulan
+        created_at = auto_field(dump_only=True)
+
+class KlasterVirtualPertahun(db.Model):
+    __tablename__ = "KlasterVirtualPertahun"
+    DateTime = db.Column(db.String(50), primary_key=True)
+    Kwh = db.Column(db.Float)
+    old_kwh = db.Column(db.Float)
+    delta_kwh = db.Column(db.Float)
+    kluster = db.Column(db.Integer)
+
+    def to_dict(self):
+        return {
+            'DateTime' : self.DateTime,
+            'Kwh' : self.Kwh,
+            'old_kwh' : self.old_kwh,
+            'delta_kwh' : self.delta_kwh,
+            'kluster' : self.kluster
+        }
+
+class KlasterVirtualPertahunSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = KlasterVirtualPertahun
         created_at = auto_field(dump_only=True)
 
 #####################################################################################
