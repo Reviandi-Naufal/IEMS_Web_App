@@ -7,7 +7,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from apps import app, db, bcrypt
 from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema, RNN_data_predicted, RNN_data_predictedSchema, rnn_price, LMU_data_predicted, LMU_data_predictedSchema, lmu_price, gru_price, KlasterPerhari, KlasterPerhariSchema, KlasterVirtualPerhari, KlasterVirtualPerhariSchema, KlasterPerbulan, KlasterPerbulanSchema, KlasterVirtualPerbulan, KlasterVirtualPerbulanSchema, KlasterPertahun, KlasterPertahunSchema, KlasterVirtualPertahun, KlasterVirtualPertahunSchema
+from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema, RNN_data_predicted, RNN_data_predictedSchema, rnn_price, LMU_data_predicted, LMU_data_predictedSchema, lmu_price, gru_price, KlasterPerhari, KlasterPerhariSchema, KlasterVirtualPerhari, KlasterVirtualPerhariSchema, KlasterPerbulan, KlasterPerbulanSchema, KlasterVirtualPerbulan, KlasterVirtualPerbulanSchema, KlastergdNPertahun, KlastergdNPertahunSchema, KlasterVirtualPertahun, KlasterVirtualPertahunSchema
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, datetime, timedelta
 # import _overlapped
@@ -1220,14 +1220,14 @@ def clusterVirtualperbulan():
 @app.route('/api/clusterpertahun')
 @login_required
 def clusterpertahun():
-    query = KlasterPertahun.query
+    query = KlastergdNPertahun.query
 
     # search filter
     search = request.args.get('search[value]')
     if search:
         query = query.filter(db.or_(
-            KlasterPertahun.DateTime.like(f'%{search}%'),
-            KlasterPertahun.kluster.like(f'%{search}%')
+            KlastergdNPertahun.DateTime.like(f'%{search}%'),
+            KlastergdNPertahun.kluster.like(f'%{search}%')
         ))
     total_filtered = query.count()
 
@@ -1252,7 +1252,7 @@ def clusterpertahun():
         if col_name not in ['DateTime', 'Kwh', 'old_kwh', 'delta_kwh', 'kluster']:
             col_name = 'DateTime'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
-        col = getattr(KlasterPertahun, col_name)
+        col = getattr(KlastergdNPertahun, col_name)
         if descending:
             col = col.desc()
         order.append(col)
@@ -1267,9 +1267,9 @@ def clusterpertahun():
 
     # response
     return {
-        'data': [KlasterPertahun.to_dict() for KlasterPertahun in query],
+        'data': [KlastergdNPertahun.to_dict() for KlasterPertahun in query],
         'recordsFiltered': total_filtered,
-        'recordsTotal': KlasterPertahun.query.count(),
+        'recordsTotal': KlastergdNPertahun.query.count(),
         'draw': request.args.get('draw', type=int),
     }
 
@@ -1328,6 +1328,43 @@ def clustervirtualpertahun():
         'recordsTotal': KlasterVirtualPertahun.query.count(),
         'draw': request.args.get('draw', type=int),
     }
+
+@app.route('/get_data_clustering')
+@login_required
+def get_data_clustering():
+    clusday     = KlasterPerhari.query
+    vclusday    = KlasterVirtualPerhari.query
+    clusmonth   = KlasterPerbulan.query
+    vclusmonth  = KlasterVirtualPerbulan.query
+    clusyear    = KlastergdNPertahun.query
+    vclusyear   = KlasterVirtualPertahun.query
+
+    datetime    = []
+    kwhdclus    = []
+    kwhvdclus   = []
+    kwhmclus    = []
+    kwhvmclus   = []
+    kwhyclus    = []
+    kwhvyclus   = []
+
+    for i in range(len(clusday)):
+        kwhdclus.append(clusday[i].kluster)
+    for i in range(len(vclusday)):
+        kwhvdclus.append(vclusday[i].kluster)
+    for i in range(len(clusmonth)):
+        kwhmclus.append(clusmonth[i].kluster)
+    for i in range(len(vclusmonth)):
+        kwhvmclus.append(vclusmonth[i].kluster)
+    for i in range(len(clusyear)):
+        kwhyclus.append(clusyear[i].kluster)
+    for i in range(len(vclusyear)):
+        kwhvyclus.append(vclusyear[i].kluster)
+
+    output_dought_com = {"datetime": datetime, "kwhdclus": kwhdclus, "kwhvdclus": kwhvdclus, "kwhmclus": kwhmclus, "kwhvmclus": kwhvmclus, "kwhyclus": kwhyclus, "kwhvyclus": kwhvyclus}
+
+    return jsonify(output_dought_com)
+
+
 
 @app.route("/compare")
 @login_required

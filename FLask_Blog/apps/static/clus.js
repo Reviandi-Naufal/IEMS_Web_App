@@ -1,3 +1,22 @@
+$.ajax({
+  type: 'GET',
+  url: 'http://127.0.0.1:5000/get_data_compstacklineChart',
+  success: function (response) {
+    var objectData = response;
+    console.log(objectData, typeof objectData);
+
+    var dataSumbuX = objectData.datetime;
+    var dataSumbuYday = objectData.kwhdclus;
+    var dataSumbuYvday = objectData.kwhvdclus;
+    var dataSumbuYmonth = objectData.kwhmclus;
+    var dataSumbuYvmonth = objectData.kwhvmclus;
+    var dataSumbuYyear = objectData.kwhyclus;
+    var dataSumbuYvyear = objectData.kwhvyclus;
+
+    buatCompLineChart(dataSumbuX, dataSumbuYday, dataSumbuYvday, dataSumbuYmonth, dataSumbuYvmonth, dataSumbuYyear, dataSumbuYvyear);
+  },
+});
+
 var dougnutChart = echarts.init(document.getElementById("pieDoughnutChart"));
 
 var option = {
