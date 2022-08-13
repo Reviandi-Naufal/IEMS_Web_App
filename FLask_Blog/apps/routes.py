@@ -1249,7 +1249,7 @@ def clusterpertahun():
         if col_index is None:
             break
         col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['DateTime', 'Kwh', 'old_kwh', 'delta_kwh', 'kluster']:
+        if col_name not in ['DateTime', 'Kwh', 'kluster']:
             col_name = 'DateTime'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
         col = getattr(KlastergdNPertahun, col_name)

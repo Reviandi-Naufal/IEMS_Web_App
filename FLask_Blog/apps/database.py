@@ -231,12 +231,14 @@ class KlasterPerbulanSchema(ma.SQLAlchemyAutoSchema):
 
 class KlastergdNPertahun(db.Model):
     __tablename__ = "KlastergdNPertahun"
+    MyUnknownColumn = db.Column(db.Integer)
     DateTime = db.Column(db.String(50), primary_key=True)
     Kwh = db.Column(db.Float)
     kluster = db.Column(db.Integer)
 
     def to_dict(self):
         return {
+            'MyUnknownColumn' : self.MyUnknownColumn,
             'DateTime' : self.DateTime,
             'Kwh' : self.Kwh,
             'kluster' : self.kluster
