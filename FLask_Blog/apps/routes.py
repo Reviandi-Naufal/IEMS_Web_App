@@ -1137,7 +1137,7 @@ def clusterperbulan():
         if col_index is None:
             break
         col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['DateTime', 'Kwh', 'kluster']:
+        if col_name not in ['Date', 'Kwh', 'kluster']:
             col_name = 'DateTime'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
         col = getattr(KlasterGdNPerbulan, col_name)
@@ -1227,7 +1227,7 @@ def clusterpertahun():
     search = request.args.get('search[value]')
     if search:
         query = query.filter(db.or_(
-            KlastergdNPertahun.DateTime.like(f'%{search}%'),
+            KlastergdNPertahun.Date.like(f'%{search}%'),
             KlastergdNPertahun.kluster.like(f'%{search}%')
         ))
     total_filtered = query.count()
@@ -1250,7 +1250,7 @@ def clusterpertahun():
         if col_index is None:
             break
         col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['DateTime', 'Kwh', 'kluster']:
+        if col_name not in ['Date', 'Kwh', 'kluster']:
             col_name = 'DateTime'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
         col = getattr(KlastergdNPertahun, col_name)
