@@ -582,7 +582,7 @@
         }
       });
     </script>
-    <!-- End Clustering Table -->
+    <!-- End Clustering Perhari Table -->
 
     <!-- Template for Clustering Virtual Perhari Table -->
     <script>
@@ -628,7 +628,99 @@
         }
       });
     </script>
-    <!-- End Clustering Table -->
+    <!-- End Clustering Virtual Perhari Table -->
+
+    <!-- Template for Clustering Perbulan Table -->
+    <script>
+      $(document).ready(function () {
+        // DataTable
+        var dataTable = $("#cluster_perbulan").DataTable({
+          pagingType: "numbers",
+          lengthChange: true,
+          processing: true,
+          serverSide: true,
+          responsive: true,
+          ajax: {
+            url: "/api/clusterperbulan",
+            data: function (data) {
+              // Read values
+              var from_date = $(
+                "#search_fromdate_cluster_perbulan"
+              ).val();
+              var to_date = $("#search_todate_cluster_perbulan").val();
+              console.log(from_date);
+              console.log(to_date);
+
+              // Append to data
+              data.searchByFromdate = from_date;
+              data.searchByTodate = to_date;
+            },
+          },
+          columns: [
+            { data: "DateTime" },
+            { data: "Kwh" },
+            { data: "old_kwh" },
+            { data: "delta_kwh" },
+            { data: "kluster" },
+          ],
+        });
+
+        // Search button
+        $("#btn_search_cluster_perbulan").click(function () {
+          dataTable.draw();
+        });
+        options: {
+          responsive: true;
+        }
+      });
+    </script>
+    <!-- End Clustering Perbulan Table -->
+
+    <!-- Template for Clustering Virtual Perhari Table -->
+    <script>
+      $(document).ready(function () {
+        // DataTable
+        var dataTable = $("#cluster_virtual_perbulan").DataTable({
+          pagingType: "numbers",
+          lengthChange: true,
+          processing: true,
+          serverSide: true,
+          responsive: true,
+          ajax: {
+            url: "/api/clusterperhari",
+            data: function (data) {
+              // Read values
+              var from_date = $(
+                "#search_fromdate_cluster_virtual_perbulan"
+              ).val();
+              var to_date = $("#search_todate_cluster_virtual_perbulan").val();
+              console.log(from_date);
+              console.log(to_date);
+
+              // Append to data
+              data.searchByFromdate = from_date;
+              data.searchByTodate = to_date;
+            },
+          },
+          columns: [
+            { data: "DateTime" },
+            { data: "Kwh" },
+            { data: "old_kwh" },
+            { data: "delta_kwh" },
+            { data: "kluster" },
+          ],
+        });
+
+        // Search button
+        $("#btn_search_cluster_virtual_perbulan").click(function () {
+          dataTable.draw();
+        });
+        options: {
+          responsive: true;
+        }
+      });
+    </script>
+    <!-- End Clustering Virtual Perhari Table -->
 
     <!-- Template for Scheduling table Billing -->
     <script>

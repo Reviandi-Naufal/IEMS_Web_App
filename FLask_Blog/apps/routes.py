@@ -7,7 +7,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from apps import app, db, bcrypt
 from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema, RNN_data_predicted, RNN_data_predictedSchema, rnn_price, LMU_data_predicted, LMU_data_predictedSchema, lmu_price, gru_price, KlasterPerhari, KlasterPerhariSchema, KlasterVirtualPerhari, KlasterVirtualPerhariSchema
+from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema, RNN_data_predicted, RNN_data_predictedSchema, rnn_price, LMU_data_predicted, LMU_data_predictedSchema, lmu_price, gru_price, KlasterPerhari, KlasterPerhariSchema, KlasterVirtualPerhari, KlasterVirtualPerhariSchema, KlasterPerbulan, KlasterPerbulanSchema, KlasterPertahun, KlasterPertahunSchema
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, datetime, timedelta
 # import _overlapped
@@ -1101,6 +1101,118 @@ def clusterVirtualperhari():
         'data': [KlasterVirtualPerhari.to_dict() for KlasterVirtualPerhari in query],
         'recordsFiltered': total_filtered,
         'recordsTotal': KlasterVirtualPerhari.query.count(),
+        'draw': request.args.get('draw', type=int),
+    }
+
+@app.route('/api/clusterperbulan')
+@login_required
+def clusterperbulan():
+    query = KlasterPerbulan.query
+
+    # search filter
+    search = request.args.get('search[value]')
+    if search:
+        query = query.filter(db.or_(
+            KlasterPerbulan.DateTime.like(f'%{search}%'),
+            KlasterPerbulan.kluster.like(f'%{search}%')
+        ))
+    total_filtered = query.count()
+
+    # # filter by date
+    # from_date = request.args.get('searchByFromdate')
+    # to_date = request.args.get('searchByTodate')
+    # if from_date and to_date:
+    #     query = query.filter(db.and_(
+    #         KlasterPerhari.Date >= from_date,
+    #         KlasterPerhari.Date <= to_date,
+    #     ))
+    # total_filtered = query.count()
+
+    # sorting
+    order = []
+    i = 0
+    while True:
+        col_index = request.args.get(f'order[{i}][column]')
+        if col_index is None:
+            break
+        col_name = request.args.get(f'columns[{col_index}][data]')
+        if col_name not in ['DateTime', 'Kwh', 'old_kwh', 'delta_kwh', 'kluster']:
+            col_name = 'DateTime'
+        descending = request.args.get(f'order[{i}][dir]') == 'desc'
+        col = getattr(KlasterPerbulan, col_name)
+        if descending:
+            col = col.desc()
+        order.append(col)
+        i += 1
+    if order:
+        query = query.order_by(*order)
+
+    # pagination
+    start = request.args.get('start', type=int)
+    length = request.args.get('length', type=int)
+    query = query.offset(start).limit(length)
+
+    # response
+    return {
+        'data': [KlasterPerbulan.to_dict() for KlasterPerbulan in query],
+        'recordsFiltered': total_filtered,
+        'recordsTotal': KlasterPerbulan.query.count(),
+        'draw': request.args.get('draw', type=int),
+    }
+
+@app.route('/api/clusterVirtualperbulan')
+@login_required
+def clusterVirtualperbulan():
+    query = KlasterVirtualPerbulan.query
+
+    # search filter
+    search = request.args.get('search[value]')
+    if search:
+        query = query.filter(db.or_(
+            KlasterVirtualPerbulan.DateTime.like(f'%{search}%'),
+            KlasterVirtualPerbulan.kluster.like(f'%{search}%')
+        ))
+    total_filtered = query.count()
+
+    # # filter by date
+    # from_date = request.args.get('searchByFromdate')
+    # to_date = request.args.get('searchByTodate')
+    # if from_date and to_date:
+    #     query = query.filter(db.and_(
+    #         KlasterPerhari.Date >= from_date,
+    #         KlasterPerhari.Date <= to_date,
+    #     ))
+    # total_filtered = query.count()
+
+    # sorting
+    order = []
+    i = 0
+    while True:
+        col_index = request.args.get(f'order[{i}][column]')
+        if col_index is None:
+            break
+        col_name = request.args.get(f'columns[{col_index}][data]')
+        if col_name not in ['DateTime', 'Kwh', 'old_kwh', 'delta_kwh', 'kluster']:
+            col_name = 'DateTime'
+        descending = request.args.get(f'order[{i}][dir]') == 'desc'
+        col = getattr(KlasterVirtualPerbulan, col_name)
+        if descending:
+            col = col.desc()
+        order.append(col)
+        i += 1
+    if order:
+        query = query.order_by(*order)
+
+    # pagination
+    start = request.args.get('start', type=int)
+    length = request.args.get('length', type=int)
+    query = query.offset(start).limit(length)
+
+    # response
+    return {
+        'data': [KlasterVirtualPerbulan.to_dict() for KlasterVirtualPerbulan in query],
+        'recordsFiltered': total_filtered,
+        'recordsTotal': KlasterVirtualPerbulan.query.count(),
         'draw': request.args.get('draw', type=int),
     }
 

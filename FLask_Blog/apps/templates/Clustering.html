@@ -246,7 +246,7 @@
           <!-- End Reports -->
 
           <!-- Tabel klaster perhari -->
-          <div class="col-xxl-6 col-md-6">
+          <div class="col-xxl-6 col-md-6 col-sm-12">
             <div class="card info-card sales-card">
               <div class="filter">
                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -304,7 +304,7 @@
           <!-- End Tabel klaster perhari -->
 
           <!-- Tabel klaster viritual perhari -->
-          <div class="col-xxl-6 col-md-6">
+          <div class="col-xxl-6 col-md-6 col-sm-12">
             <div class="card info-card sales-card">
               <div class="filter">
                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -360,6 +360,122 @@
             </div>
           </div>
           <!-- End Tabel klaster viritual perhari -->
+
+          <!-- Tabel klaster perbulan -->
+          <div class="col-xxl-6 col-md-6 col-sm-12">
+            <div class="card info-card sales-card">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <div class="advanced-search-body" style="padding-top: 0px !important;">
+                    <form id = "joiningDateSearchClusterPebulan">
+                      <div class="form-row">
+                      <li>
+                        <div class="form-group col-md-12 datepicker" style="margin-bottom: 0px !important;">
+                          <label for="Doctor-name">From</label>
+                          <input type="date" id="search_fromdate_cluster_perbulan"
+                            class="form-control" >
+                        </div>
+                      </li>
+                      <li>
+                        <div class="form-group col-md-12 datepicker" style="margin-bottom: 0px !important;">
+                          <label for="dob">To</label>
+                          <input type="date" id="search_todate_cluster_perbulan"
+                            class="form-control" >
+                        </div>
+                      </li>
+                      <li>
+                      </div>
+                      <button id="btn_search_cluster_perbulan" type="button">Go</button>
+                      </li>
+                    </form>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <h5 class="card-title-table">
+                    Klaster Perbulan
+                    <!-- <button type="button" class="btn btn-primary rounded-pill float-right" data-bs-target="#modalAddbuild" data-bs-toggle="modal">Add Gedung</button> -->
+                  </h5>
+                  <table id="cluster_perbulan" class="table table-striped table-borderless dataTable">
+                    <thead>
+                      <tr>
+                        <th scope="col">DateTime</th>
+                        <th scope="col">Kwh</th>
+                        <th scope="col">Old Kwh</th>
+                        <th scope="col">Delta Kwh</th>
+                        <th scope="col">Cluster</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <nav></nav>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Tabel klaster perbulan -->
+
+          <!-- Tabel klaster viritual perbulan -->
+          <div class="col-xxl-6 col-md-6 col-sm-12">
+            <div class="card info-card sales-card">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+                  <div class="advanced-search-body" style="padding-top: 0px !important;">
+                    <form id = "joiningDateSearchClusterVirtualPerbulan">
+                      <div class="form-row">
+                      <li>
+                        <div class="form-group col-md-12 datepicker" style="margin-bottom: 0px !important;">
+                          <label for="Doctor-name">From</label>
+                          <input type="date" id="search_fromdate_cluster_virtual_perbulan"
+                            class="form-control" >
+                        </div>
+                      </li>
+                      <li>
+                        <div class="form-group col-md-12 datepicker" style="margin-bottom: 0px !important;">
+                          <label for="dob">To</label>
+                          <input type="date" id="search_todate_cluster_virtual_perbulan"
+                            class="form-control" >
+                        </div>
+                      </li>
+                      <li>
+                      </div>
+                      <button id="btn_search_cluster_virtual_perbulan" type="button">Go</button>
+                      </li>
+                    </form>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <h5 class="card-title-table">
+                    Klaster Virtual Perhari
+                    <!-- <button type="button" class="btn btn-primary rounded-pill float-right" data-bs-target="#modalAddbuild" data-bs-toggle="modal">Add Gedung</button> -->
+                  </h5>
+                  <table id="cluster_virtual_perbulan" class="table table-striped table-borderless dataTable">
+                    <thead>
+                      <tr>
+                        <th scope="col">DateTime</th>
+                        <th scope="col">Kwh</th>
+                        <th scope="col">Old Kwh</th>
+                        <th scope="col">Delta Kwh</th>
+                        <th scope="col">Cluster</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <nav></nav>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End Tabel klaster viritual perharbulan -->
 
           <!-- Gedung Deli Timur Card -->
           <!-- <div class="col-xxl-3 col-md-6">
