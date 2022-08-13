@@ -676,7 +676,7 @@
     </script>
     <!-- End Clustering Perbulan Table -->
 
-    <!-- Template for Clustering Virtual Perhari Table -->
+    <!-- Template for Clustering Virtual Perbulan Table -->
     <script>
       $(document).ready(function () {
         // DataTable
@@ -687,7 +687,7 @@
           serverSide: true,
           responsive: true,
           ajax: {
-            url: "/api/clusterperhari",
+            url: "/api/clusterVirtualperbulan",
             data: function (data) {
               // Read values
               var from_date = $(
@@ -720,7 +720,53 @@
         }
       });
     </script>
-    <!-- End Clustering Virtual Perhari Table -->
+    <!-- End Clustering Virtual Perbulan Table -->
+
+    <!-- Template for Clustering Pertahun Table -->
+    <script>
+      $(document).ready(function () {
+        // DataTable
+        var dataTable = $("#cluster_pertahun").DataTable({
+          pagingType: "numbers",
+          lengthChange: true,
+          processing: true,
+          serverSide: true,
+          responsive: true,
+          ajax: {
+            url: "/api/clusterpertahun",
+            data: function (data) {
+              // Read values
+              var from_date = $(
+                "#search_fromdate_cluster_pertahun"
+              ).val();
+              var to_date = $("#search_todate_cluster_pertahun").val();
+              console.log(from_date);
+              console.log(to_date);
+
+              // Append to data
+              data.searchByFromdate = from_date;
+              data.searchByTodate = to_date;
+            },
+          },
+          columns: [
+            { data: "DateTime" },
+            { data: "Kwh" },
+            { data: "old_kwh" },
+            { data: "delta_kwh" },
+            { data: "kluster" },
+          ],
+        });
+
+        // Search button
+        $("#btn_search_cluster_pertahun").click(function () {
+          dataTable.draw();
+        });
+        options: {
+          responsive: true;
+        }
+      });
+    </script>
+    <!-- End Clustering Pertahun Table -->
 
     <!-- Template for Scheduling table Billing -->
     <script>
