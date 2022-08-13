@@ -185,48 +185,46 @@ class tcn_price(db.Model):
 #     Lokasi = db.Column(db.String(45))
 #     Deleted = db.Column(db.String(45))
 
-class KlasterPerhari(db.Model):
-    __tablename__ = "KlasterPerhari"
-    DateTime = db.Column(db.String(50), primary_key=True)
+class KlasterGdNPerhari(db.Model):
+    __tablename__ = "KlasterGdNPerhari"
+    MyUnknownColumn = db.Column(db.Integer, primary_key=True)
+    Date = db.Column(db.String(50))
+    Time = db.Column(db.String(50))
     Kwh = db.Column(db.Float)
-    old_kwh = db.Column(db.Float)
-    delta_kwh = db.Column(db.Float)
     kluster = db.Column(db.Integer)
 
     def to_dict(self):
         return {
-            'DateTime' : self.DateTime,
+            'MyUnknownColumn' : self.MyUnknownColumn,
+            'Date' : self.Date,
+            'Time' : self.Time,
             'Kwh' : self.Kwh,
-            'old_kwh' : self.old_kwh,
-            'delta_kwh' : self.delta_kwh,
             'kluster' : self.kluster
         }
 
-class KlasterPerhariSchema(ma.SQLAlchemyAutoSchema):
+class KlasterGdNPerhariSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = KlasterPerhari
+        model = KlasterGdNPerhari
         created_at = auto_field(dump_only=True)
 
-class KlasterPerbulan(db.Model):
+class KlasterGdNPerbulan(db.Model):
     __tablename__ = "KlasterPerbulan"
-    DateTime = db.Column(db.String(50), primary_key=True)
+    MyUnknownColumn = db.Column(db.Integer, primary_key=True)
+    Date = db.Column(db.String(50))
     Kwh = db.Column(db.Float)
-    old_kwh = db.Column(db.Float)
-    delta_kwh = db.Column(db.Float)
     kluster = db.Column(db.Integer)
 
     def to_dict(self):
         return {
-            'DateTime' : self.DateTime,
+            'MyUnknownColumn' : self.MyUnknownColumn,
+            'Date' : self.Date,
             'Kwh' : self.Kwh,
-            'old_kwh' : self.old_kwh,
-            'delta_kwh' : self.delta_kwh,
             'kluster' : self.kluster
         }
 
-class KlasterPerbulanSchema(ma.SQLAlchemyAutoSchema):
+class KlasterGdNPerbulanSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
-        model = KlasterPerbulan
+        model = KlasterGdNPerbulan
         created_at = auto_field(dump_only=True)
 
 class KlastergdNPertahun(db.Model):
@@ -275,8 +273,8 @@ class KlasterVirtualPerhariSchema(ma.SQLAlchemyAutoSchema):
 
 class KlasterVirtualPerbulan(db.Model):
     __tablename__ = "KlasterVirtualPerbulan"
-    MyUnknownColumn = db.Column(db.Integer)
-    DateTime = db.Column(db.String(50), primary_key=True)
+    MyUnknownColumn = db.Column(db.Integer, primary_key=True)
+    Date = db.Column(db.String(50))
     Kwh = db.Column(db.Float)
     old_kwh = db.Column(db.Float)
     delta_kwh = db.Column(db.Float)
@@ -285,7 +283,7 @@ class KlasterVirtualPerbulan(db.Model):
     def to_dict(self):
         return {
             'MyUnknownColumn' : self.MyUnknownColumn,
-            'DateTime' : self.DateTime,
+            'Date' : self.Date,
             'Kwh' : self.Kwh,
             'old_kwh' : self.old_kwh,
             'delta_kwh' : self.delta_kwh,
@@ -309,7 +307,7 @@ class KlasterVirtualPertahun(db.Model):
     def to_dict(self):
         return {
             'MyUnknownColumn' : self.MyUnknownColumn,
-            'DateTime' : self.Date,
+            'Date' : self.Date,
             'Kwh' : self.Kwh,
             'old_kwh' : self.old_kwh,
             'delta_kwh' : self.delta_kwh,

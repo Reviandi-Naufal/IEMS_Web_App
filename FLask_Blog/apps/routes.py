@@ -7,7 +7,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, jsonify
 from apps import app, db, bcrypt
 from apps.forms import RegistrationForm, LoginForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
-from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema, RNN_data_predicted, RNN_data_predictedSchema, rnn_price, LMU_data_predicted, LMU_data_predictedSchema, lmu_price, gru_price, KlasterPerhari, KlasterPerhariSchema, KlasterVirtualPerhari, KlasterVirtualPerhariSchema, KlasterPerbulan, KlasterPerbulanSchema, KlasterVirtualPerbulan, KlasterVirtualPerbulanSchema, KlastergdNPertahun, KlastergdNPertahunSchema, KlasterVirtualPertahun, KlasterVirtualPertahunSchema
+from apps.database import User, billinginput, deviceinput, real_data, real_dataSchema, TCN_data_predicted, TCN_data_predictedSchema,device_usage_duration, tcn_price, GRU_data_predicted, GRU_data_predictedSchema, RNN_data_predicted, RNN_data_predictedSchema, rnn_price, LMU_data_predicted, LMU_data_predictedSchema, lmu_price, gru_price, KlasterGdNPerhari, KlasterGdNPerhariSchema, KlasterVirtualPerhari, KlasterVirtualPerhariSchema, KlasterGdNPerbulan, KlasterGdNPerbulanSchema, KlasterVirtualPerbulan, KlasterVirtualPerbulanSchema, KlastergdNPertahun, KlastergdNPertahunSchema, KlasterVirtualPertahun, KlasterVirtualPertahunSchema
 from flask_login import login_user, current_user, logout_user, login_required
 from datetime import date, datetime, timedelta
 # import _overlapped
@@ -995,14 +995,15 @@ def clustering():
 @app.route('/api/clusterperhari')
 @login_required
 def clusterperhari():
-    query = KlasterPerhari.query
+    query = KlasterGdNPerhari.query
 
     # search filter
     search = request.args.get('search[value]')
     if search:
         query = query.filter(db.or_(
-            KlasterPerhari.DateTime.like(f'%{search}%'),
-            KlasterPerhari.kluster.like(f'%{search}%')
+            KlasterGdNPerhari.Date.like(f'%{search}%'),
+            KlasterGdNPerhari.Time.like(f'%{search}%'),
+            KlasterGdNPerhari.kluster.like(f'%{search}%')
         ))
     total_filtered = query.count()
 
@@ -1024,10 +1025,10 @@ def clusterperhari():
         if col_index is None:
             break
         col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['DateTime', 'Kwh', 'old_kwh', 'delta_kwh', 'kluster']:
+        if col_name not in ['Date', 'Time', 'Kwh', 'kluster']:
             col_name = 'DateTime'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
-        col = getattr(KlasterPerhari, col_name)
+        col = getattr(KlasterGdNPerhari, col_name)
         if descending:
             col = col.desc()
         order.append(col)
@@ -1042,9 +1043,9 @@ def clusterperhari():
 
     # response
     return {
-        'data': [KlasterPerhari.to_dict() for KlasterPerhari in query],
+        'data': [KlasterGdNPerhari.to_dict() for KlasterGdNPerhari in query],
         'recordsFiltered': total_filtered,
-        'recordsTotal': KlasterPerhari.query.count(),
+        'recordsTotal': KlasterGdNPerhari.query.count(),
         'draw': request.args.get('draw', type=int),
     }
 
@@ -1107,14 +1108,14 @@ def clusterVirtualperhari():
 @app.route('/api/clusterperbulan')
 @login_required
 def clusterperbulan():
-    query = KlasterPerbulan.query
+    query = KlasterGdNPerbulan.query
 
     # search filter
     search = request.args.get('search[value]')
     if search:
         query = query.filter(db.or_(
-            KlasterPerbulan.DateTime.like(f'%{search}%'),
-            KlasterPerbulan.kluster.like(f'%{search}%')
+            KlasterGdNPerbulan.Date.like(f'%{search}%'),
+            KlasterGdNPerbulan.kluster.like(f'%{search}%')
         ))
     total_filtered = query.count()
 
@@ -1136,10 +1137,10 @@ def clusterperbulan():
         if col_index is None:
             break
         col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['DateTime', 'Kwh', 'old_kwh', 'delta_kwh', 'kluster']:
+        if col_name not in ['DateTime', 'Kwh', 'kluster']:
             col_name = 'DateTime'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
-        col = getattr(KlasterPerbulan, col_name)
+        col = getattr(KlasterGdNPerbulan, col_name)
         if descending:
             col = col.desc()
         order.append(col)
@@ -1154,9 +1155,9 @@ def clusterperbulan():
 
     # response
     return {
-        'data': [KlasterPerbulan.to_dict() for KlasterPerbulan in query],
+        'data': [KlasterGdNPerbulan.to_dict() for KlasterGdNPerbulan in query],
         'recordsFiltered': total_filtered,
-        'recordsTotal': KlasterPerbulan.query.count(),
+        'recordsTotal': KlasterGdNPerbulan.query.count(),
         'draw': request.args.get('draw', type=int),
     }
 
@@ -1169,7 +1170,7 @@ def clusterVirtualperbulan():
     search = request.args.get('search[value]')
     if search:
         query = query.filter(db.or_(
-            KlasterVirtualPerbulan.DateTime.like(f'%{search}%'),
+            KlasterVirtualPerbulan.Date.like(f'%{search}%'),
             KlasterVirtualPerbulan.kluster.like(f'%{search}%')
         ))
     total_filtered = query.count()
@@ -1192,7 +1193,7 @@ def clusterVirtualperbulan():
         if col_index is None:
             break
         col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['DateTime', 'Kwh', 'old_kwh', 'delta_kwh', 'kluster']:
+        if col_name not in ['Date', 'Kwh', 'old_kwh', 'delta_kwh', 'kluster']:
             col_name = 'DateTime'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
         col = getattr(KlasterVirtualPerbulan, col_name)
@@ -1282,7 +1283,7 @@ def clustervirtualpertahun():
     search = request.args.get('search[value]')
     if search:
         query = query.filter(db.or_(
-            KlasterVirtualPertahun.DateTime.like(f'%{search}%'),
+            KlasterVirtualPertahun.Date.like(f'%{search}%'),
             KlasterVirtualPertahun.kluster.like(f'%{search}%')
         ))
     total_filtered = query.count()
@@ -1305,8 +1306,8 @@ def clustervirtualpertahun():
         if col_index is None:
             break
         col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['DateTime', 'Kwh', 'old_kwh', 'delta_kwh', 'kluster']:
-            col_name = 'DateTime'
+        if col_name not in ['Date', 'Kwh', 'old_kwh', 'delta_kwh', 'kluster']:
+            col_name = 'Date'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
         col = getattr(KlasterVirtualPertahun, col_name)
         if descending:
