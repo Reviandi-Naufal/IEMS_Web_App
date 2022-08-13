@@ -1267,7 +1267,7 @@ def clusterpertahun():
 
     # response
     return {
-        'data': [KlastergdNPertahun.to_dict() for KlasterPertahun in query],
+        'data': [KlastergdNPertahun.to_dict() for KlastergdNPertahun in query],
         'recordsFiltered': total_filtered,
         'recordsTotal': KlastergdNPertahun.query.count(),
         'draw': request.args.get('draw', type=int),
