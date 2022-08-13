@@ -251,7 +251,7 @@ class KlasterVirtualPerhari(db.Model):
     __tablename__ = "KlasterVirtualPerhari"
     MyUnknownColumn = db.Column(db.Integer, primary_key=True)
     DateTime = db.Column(db.Text)
-    Kwh = db.Column(db.Float)
+    Kwh = db.Column(db.Integer)
     old_kwh = db.Column(db.Integer)
     delta_kwh = db.Column(db.Integer)
     kluster = db.Column(db.Integer)
