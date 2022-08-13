@@ -1273,6 +1273,62 @@ def clusterpertahun():
         'draw': request.args.get('draw', type=int),
     }
 
+@app.route('/api/clustervirtualpertahun')
+@login_required
+def clustervirtualpertahun():
+    query = KlasterVirtualPertahun.query
+
+    # search filter
+    search = request.args.get('search[value]')
+    if search:
+        query = query.filter(db.or_(
+            KlasterVirtualPertahun.DateTime.like(f'%{search}%'),
+            KlasterVirtualPertahun.kluster.like(f'%{search}%')
+        ))
+    total_filtered = query.count()
+
+    # # filter by date
+    # from_date = request.args.get('searchByFromdate')
+    # to_date = request.args.get('searchByTodate')
+    # if from_date and to_date:
+    #     query = query.filter(db.and_(
+    #         KlasterPerhari.Date >= from_date,
+    #         KlasterPerhari.Date <= to_date,
+    #     ))
+    # total_filtered = query.count()
+
+    # sorting
+    order = []
+    i = 0
+    while True:
+        col_index = request.args.get(f'order[{i}][column]')
+        if col_index is None:
+            break
+        col_name = request.args.get(f'columns[{col_index}][data]')
+        if col_name not in ['DateTime', 'Kwh', 'old_kwh', 'delta_kwh', 'kluster']:
+            col_name = 'DateTime'
+        descending = request.args.get(f'order[{i}][dir]') == 'desc'
+        col = getattr(KlasterVirtualPertahun, col_name)
+        if descending:
+            col = col.desc()
+        order.append(col)
+        i += 1
+    if order:
+        query = query.order_by(*order)
+
+    # pagination
+    start = request.args.get('start', type=int)
+    length = request.args.get('length', type=int)
+    query = query.offset(start).limit(length)
+
+    # response
+    return {
+        'data': [KlasterVirtualPertahun.to_dict() for KlasterVirtualPertahun in query],
+        'recordsFiltered': total_filtered,
+        'recordsTotal': KlasterVirtualPertahun.query.count(),
+        'draw': request.args.get('draw', type=int),
+    }
+
 @app.route("/compare")
 @login_required
 def compare():

@@ -768,6 +768,52 @@
     </script>
     <!-- End Clustering Pertahun Table -->
 
+    <!-- Template for Clustering Virtual Pertahun Table -->
+    <script>
+      $(document).ready(function () {
+        // DataTable
+        var dataTable = $("#cluster_virtual_pertahun").DataTable({
+          pagingType: "numbers",
+          lengthChange: true,
+          processing: true,
+          serverSide: true,
+          responsive: true,
+          ajax: {
+            url: "/api/clustervirtualpertahun",
+            data: function (data) {
+              // Read values
+              var from_date = $(
+                "#search_fromdate_cluster_virtual_pertahun"
+              ).val();
+              var to_date = $("#search_todate_cluster_virtual_pertahun").val();
+              console.log(from_date);
+              console.log(to_date);
+
+              // Append to data
+              data.searchByFromdate = from_date;
+              data.searchByTodate = to_date;
+            },
+          },
+          columns: [
+            { data: "DateTime" },
+            { data: "Kwh" },
+            { data: "old_kwh" },
+            { data: "delta_kwh" },
+            { data: "kluster" },
+          ],
+        });
+
+        // Search button
+        $("#btn_search_cluster_virtual_pertahun").click(function () {
+          dataTable.draw();
+        });
+        options: {
+          responsive: true;
+        }
+      });
+    </script>
+    <!-- End Clustering Virtual Pertahun Table -->
+
     <!-- Template for Scheduling table Billing -->
     <script>
       $(document).ready(function () {

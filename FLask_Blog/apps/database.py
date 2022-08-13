@@ -253,6 +253,7 @@ class KlasterPertahunSchema(ma.SQLAlchemyAutoSchema):
 
 class KlasterVirtualPerhari(db.Model):
     __tablename__ = "KlasterVirtualPerhari"
+    MyUnknownColumn = db.Column(db.Integer)
     DateTime = db.Column(db.String(50), primary_key=True)
     Kwh = db.Column(db.Float)
     old_kwh = db.Column(db.Float)
@@ -261,6 +262,7 @@ class KlasterVirtualPerhari(db.Model):
 
     def to_dict(self):
         return {
+            'MyUnknownColumn' : self.MyUnknownColumn,
             'DateTime' : self.DateTime,
             'Kwh' : self.Kwh,
             'old_kwh' : self.old_kwh,
@@ -299,6 +301,7 @@ class KlasterVirtualPerbulanSchema(ma.SQLAlchemyAutoSchema):
 
 class KlasterVirtualPertahun(db.Model):
     __tablename__ = "KlasterVirtualPertahun"
+    MyUnknownColumn = db.Column(db.Integer)
     DateTime = db.Column(db.String(50), primary_key=True)
     Kwh = db.Column(db.Float)
     old_kwh = db.Column(db.Float)
@@ -307,6 +310,7 @@ class KlasterVirtualPertahun(db.Model):
 
     def to_dict(self):
         return {
+            'MyUnknownColumn' : self.MyUnknownColumn,
             'DateTime' : self.DateTime,
             'Kwh' : self.Kwh,
             'old_kwh' : self.old_kwh,
