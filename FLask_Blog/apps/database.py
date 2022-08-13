@@ -275,6 +275,7 @@ class KlasterVirtualPerhariSchema(ma.SQLAlchemyAutoSchema):
 
 class KlasterVirtualPerbulan(db.Model):
     __tablename__ = "KlasterVirtualPerbulan"
+    MyUnknownColumn = db.Column(db.Integer)
     DateTime = db.Column(db.String(50), primary_key=True)
     Kwh = db.Column(db.Float)
     old_kwh = db.Column(db.Float)
@@ -283,6 +284,7 @@ class KlasterVirtualPerbulan(db.Model):
 
     def to_dict(self):
         return {
+            'MyUnknownColumn' : self.MyUnknownColumn,
             'DateTime' : self.DateTime,
             'Kwh' : self.Kwh,
             'old_kwh' : self.old_kwh,
