@@ -210,11 +210,7 @@ class KlasterGdNPerhariSchema(ma.SQLAlchemyAutoSchema):
 class KlasterGdNPerbulan(db.Model):
     __tablename__ = "KlasterGdNPerbulan"
     MyUnknownColumn = db.Column(db.Integer, primary_key=True)
-<<<<<<< HEAD
     Date = db.Column(db.String(50))
-=======
-    Date = db.Column(db.Text)
->>>>>>> 19352a33ccde0f98cc9f73ab30296106c8163956
     Kwh = db.Column(db.Float)
     kluster = db.Column(db.Integer)
 
