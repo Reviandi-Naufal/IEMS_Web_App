@@ -19,7 +19,7 @@ function buatvgdNpertahun(Normal, Rendah, Tinggi) {
   var option = {
     title: {
       text: 'Klaster Pertahun',
-      subtext: 'Gedung O & P',
+      subtext: 'Silhouette Score: 0,72',
       left: 'center',
     },
     tooltip: {

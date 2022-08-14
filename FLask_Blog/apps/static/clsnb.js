@@ -1,6 +1,6 @@
 $.ajax({
   type: 'GET',
-  url: 'https://iems-telu.ismailab.xyz/get_data_clusteringVGdNPerbulan',
+  url: 'https://iems-telu.ismailab.xyz/get_data_clusteringGdNPerbulan',
   success: function (response) {
     var objectData = response;
     console.log(objectData, typeof objectData);
@@ -9,17 +9,17 @@ $.ajax({
     var Rendah = objectData.Rendah;
     var Tinggi = objectData.Tinggi;
 
-    buatvgdNperbulan(Normal, Rendah, Tinggi);
+    buatgdNperbulan(Normal, Rendah, Tinggi);
   },
 });
 
-function buatvgdNperbulan(Normal, Rendah, Tinggi) {
-  var dougnutChart = echarts.init(document.getElementById('pieDoughnutChartVB'));
+function buatgdNperbulan(Normal, Rendah, Tinggi) {
+  var dougnutChart = echarts.init(document.getElementById('pieDoughnutChartB'));
 
   var option = {
     title: {
       text: 'Klaster Perbulan',
-      subtext: 'Gedung O & P',
+      subtext: 'Silhouette Score: 0.57',
       left: 'center',
     },
     tooltip: {

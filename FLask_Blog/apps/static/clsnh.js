@@ -19,7 +19,7 @@ function buatgdNperhari(Normal, Rendah, Tinggi) {
   var option = {
     title: {
       text: 'Klaster Perhari',
-      subtext: 'Gedung N',
+      subtext: 'Silhouette Score: 0.62',
       left: 'center',
     },
     tooltip: {

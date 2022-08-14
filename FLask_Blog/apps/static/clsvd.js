@@ -1,25 +1,24 @@
 $.ajax({
   type: 'GET',
-  url: 'https://iems-telu.ismailab.xyz/get_data_clusteringGdNPerbulan',
+  url: 'https://iems-telu.ismailab.xyz/get_data_clusteringVGdNPerhari',
   success: function (response) {
     var objectData = response;
     console.log(objectData, typeof objectData);
-
     var Normal = objectData.Normal;
     var Rendah = objectData.Rendah;
     var Tinggi = objectData.Tinggi;
 
-    buatgdNperbulan(Normal, Rendah, Tinggi);
+    buatvgdNperhari(Normal, Rendah, Tinggi);
   },
 });
 
-function buatgdNperbulan(Normal, Rendah, Tinggi) {
-  var dougnutChart = echarts.init(document.getElementById('pieDoughnutChartB'));
+function buatvgdNperhari(Normal, Rendah, Tinggi) {
+  var dougnutChart = echarts.init(document.getElementById('pieDoughnutChartVH'));
 
   var option = {
     title: {
-      text: 'Klaster Perbulan',
-      subtext: 'Gedung N',
+      text: 'Klaster Perhari',
+      subtext: 'Silhouette Score: 0,55',
       left: 'center',
     },
     tooltip: {
@@ -51,7 +50,7 @@ function buatgdNperbulan(Normal, Rendah, Tinggi) {
           show: false,
         },
         data: [
-          { value: Tinggi, name: 'Tinggi' },
+          { value: Tinggi, name: 'Tinggi', color: '#FFF' },
           { value: Normal, name: 'Normal' },
           { value: Rendah, name: 'Rendah' },
         ],
