@@ -1348,6 +1348,34 @@ def get_data_clusteringGdNperhari():
 
     return render_template('clusteringn.html',Normal=Normal, Rendah=Rendah, Tinggi=Tinggi)
 
+@app.route('/get_data_clusteringGdNPerbulan')
+@login_required
+def get_data_clusteringGdNPerbulan():
+    clusday= KlasterGdNPerbulan.query.all()
+
+    df_day_0 = clusday.loc[clusday['kluster']==0]
+    df_day_1 = clusday.loc[clusday['kluster']==1]
+    df_day_2 = clusday.loc[clusday['kluster']==2]
+    Normal = len(df_day_0)
+    Rendah = len(df_day_1)
+    Tinggi = len(df_day_2)
+
+    return render_template('clusteringn.html',Normal=Normal, Rendah=Rendah, Tinggi=Tinggi)
+
+@app.route('/get_data_clusteringGdNPertahun')
+@login_required
+def get_data_clusteringgdNPertahun():
+    clusday= KlastergdNPertahun.query.all()
+
+    df_day_0 = clusday.loc[clusday['kluster']==0]
+    df_day_1 = clusday.loc[clusday['kluster']==1]
+    df_day_2 = clusday.loc[clusday['kluster']==2]
+    Normal = len(df_day_0)
+    Rendah = len(df_day_1)
+    Tinggi = len(df_day_2)
+
+    return render_template('clusteringn.html',Normal=Normal, Rendah=Rendah, Tinggi=Tinggi)
+
 @app.route('/get_data_comclustering')
 @login_required
 def get_data_comclustering():
