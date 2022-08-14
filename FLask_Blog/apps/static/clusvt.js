@@ -1,6 +1,6 @@
 $.ajax({
   type: 'GET',
-  url: 'https://iems-telu.ismailab.xyz/get_data_clusteringgdNPertahun',
+  url: 'https://iems-telu.ismailab.xyz/get_data_clusteringvgdNPertahun',
   success: function (response) {
     var objectData = response;
     console.log(objectData, typeof objectData);
@@ -9,12 +9,12 @@ $.ajax({
     var Rendah = objectData.Rendah;
     var Tinggi = objectData.Tinggi;
 
-    buatgdNpertahun(Normal, Rendah, Tinggi);
+    buatvgdNpertahun(Normal, Rendah, Tinggi);
   },
 });
 
-function buatgdNpertahun(Normal, Rendah, Tinggi) {
-  var dougnutChart = echarts.init(document.getElementById('pieDoughnutChartT'));
+function buatvgdNpertahun(Normal, Rendah, Tinggi) {
+  var dougnutChart = echarts.init(document.getElementById('pieDoughnutChartVT'));
 
   var option = {
     title: {
