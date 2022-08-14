@@ -210,7 +210,7 @@ class KlasterGdNPerhariSchema(ma.SQLAlchemyAutoSchema):
 class KlasterGdNPerbulan(db.Model):
     __tablename__ = "KlasterGdNPerbulan"
     MyUnknownColumn = db.Column(db.Integer, primary_key=True)
-    Date = db.Column(db.Text)
+    Date = db.Column(db.String(50))
     Kwh = db.Column(db.Float)
     kluster = db.Column(db.Integer)
 
@@ -230,7 +230,7 @@ class KlasterGdNPerbulanSchema(ma.SQLAlchemyAutoSchema):
 class KlastergdNPertahun(db.Model):
     __tablename__ = "KlastergdNPertahun"
     MyUnknownColumn = db.Column(db.Integer, primary_key=True)
-    Date = db.Column(db.Text)
+    Date = db.Column(db.String(50))
     Kwh = db.Column(db.Float)
     kluster = db.Column(db.Integer)
 
