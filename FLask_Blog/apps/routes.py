@@ -988,7 +988,7 @@ def tcndata():
         'draw': request.args.get('draw', type=int),
     }
 
-@app.route("/clustering")
+@app.route("/gedungN")
 @login_required
 def clusteringn():
     # clusday= KlasterGdNPerhari.query.all()
@@ -1094,8 +1094,8 @@ def clusterVirtualperhari():
     to_date = request.args.get('searchByTodate')
     if from_date and to_date:
         query = query.filter(db.and_(
-            KlasterPerhari.Date >= from_date,
-            KlasterPerhari.Date <= to_date,
+            KlasterVirtualPerhari.Date >= from_date,
+            KlasterVirtualPerhari.Date <= to_date,
         ))
     total_filtered = query.count()
 
@@ -1263,8 +1263,8 @@ def clusterpertahun():
     to_date = request.args.get('searchByTodate')
     if from_date and to_date:
         query = query.filter(db.and_(
-            KlasterGdNPertahun.Date >= from_date,
-            KlasterGdNPertahun.Date <= to_date,
+            KlastergdNPertahun.Date >= from_date,
+            KlastergdNPertahun.Date <= to_date,
         ))
     total_filtered = query.count()
 
