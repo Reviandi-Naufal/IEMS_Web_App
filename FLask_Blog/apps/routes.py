@@ -987,10 +987,15 @@ def tcndata():
         'draw': request.args.get('draw', type=int),
     }
 
-@app.route("/clustering")
+@app.route("/gedungN")
 @login_required
-def clustering():
-    return render_template('Clustering.html')
+def clusteringn():
+    return render_template('clusteringn.html')
+
+@app.route("/gedungOdanP")
+@login_required
+def clusteringop():
+    return render_template('clusteringop.html')
 
 @app.route('/api/clusterperhari')
 @login_required
@@ -1236,8 +1241,8 @@ def clusterpertahun():
     to_date = request.args.get('searchByTodate')
     if from_date and to_date:
         query = query.filter(db.and_(
-            KlasterGdNPertahun.Date >= from_date,
-            KlasterGdNPertahun.Date <= to_date,
+            KlastergdNPertahun.Date >= from_date,
+            KlastergdNPertahun.Date <= to_date,
         ))
     total_filtered = query.count()
 
@@ -1329,12 +1334,26 @@ def clustervirtualpertahun():
         'draw': request.args.get('draw', type=int),
     }
 
-@app.route('/get_data_clustering')
+@app.route('/get_data_clusteringGdNperhari')
 @login_required
-def get_data_clustering():
-    clusday     = KlasterPerhari.query
+def get_data_clusteringGdNperhari():
+    clusday= KlasterGdNPerhari.query.all()
+
+    df_day_0 = clusday.loc[clusday['kluster']==0]
+    df_day_1 = clusday.loc[clusday['kluster']==1]
+    df_day_2 = clusday.loc[clusday['kluster']==2]
+    Normal = len(df_day_0)
+    Rendah = len(df_day_1)
+    Tinggi = len(df_day_2)
+
+    return render_template('clusteringn.html',Normal=Normal, Rendah=Rendah, Tinggi=Tinggi)
+
+@app.route('/get_data_comclustering')
+@login_required
+def get_data_comclustering():
+    clusday     = KlasterGdNPerhari.query
     vclusday    = KlasterVirtualPerhari.query
-    clusmonth   = KlasterPerbulan.query
+    clusmonth   = KlasterGdNPerbulan.query
     vclusmonth  = KlasterVirtualPerbulan.query
     clusyear    = KlastergdNPertahun.query
     vclusyear   = KlasterVirtualPertahun.query
@@ -1363,7 +1382,6 @@ def get_data_clustering():
     output_dought_com = {"datetime": datetime, "kwhdclus": kwhdclus, "kwhvdclus": kwhvdclus, "kwhmclus": kwhmclus, "kwhvmclus": kwhvmclus, "kwhyclus": kwhyclus, "kwhvyclus": kwhvyclus}
 
     return jsonify(output_dought_com)
-
 
 
 @app.route("/compare")

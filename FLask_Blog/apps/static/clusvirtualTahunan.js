@@ -1,19 +1,23 @@
 $.ajax({
   type: 'GET',
-  url: 'http://127.0.0.1:5000/get_data_clusteringGdNperhari',
+  url: 'http://127.0.0.1:5000/get_data_compstacklineChart',
   success: function (response) {
     var objectData = response;
     console.log(objectData, typeof objectData);
 
-    var Normal = objectData.Normal;
-    var Rendah = objectData.Rendah;
-    var Tinggi = objectData.Tinggi;
+    var dataSumbuX = objectData.datetime;
+    var dataSumbuYday = objectData.kwhdclus;
+    var dataSumbuYvday = objectData.kwhvdclus;
+    var dataSumbuYmonth = objectData.kwhmclus;
+    var dataSumbuYvmonth = objectData.kwhvmclus;
+    var dataSumbuYyear = objectData.kwhyclus;
+    var dataSumbuYvyear = objectData.kwhvyclus;
 
-    buatCompLineChart(Normal, Rendah, Tinggi);
+    buatCompLineChart(dataSumbuX, dataSumbuYday, dataSumbuYvday, dataSumbuYmonth, dataSumbuYvmonth, dataSumbuYyear, dataSumbuYvyear);
   },
 });
 
-var dougnutChart = echarts.init(document.getElementById('pieDoughnutChartVH'));
+var dougnutChart = echarts.init(document.getElementById('pieDoughnutChartVT'));
 
 var option = {
   tooltip: {
@@ -44,9 +48,9 @@ var option = {
         show: false,
       },
       data: [
-        { value: Tinggi, name: 'Tinggi' },
-        { value: Normal, name: 'Normal' },
-        { value: Rendah, name: 'Rendah' },
+        { value: 735, name: 'Tinggi' },
+        { value: 580, name: 'Normal' },
+        { value: 300, name: 'Rendah' },
       ],
     },
   ],
