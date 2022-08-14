@@ -1,6 +1,6 @@
 $.ajax({
   type: 'GET',
-  url: 'http://127.0.0.1:5000/get_data_clusteringGdNPerbulan',
+  url: 'http://127.0.0.1:5000/get_data_clusteringgdNPerbulan',
   success: function (response) {
     var objectData = response;
     console.log(objectData, typeof objectData);
@@ -44,9 +44,9 @@ function buatgdNperbulan(Normal, Rendah, Tinggi) {
           show: false,
         },
         data: [
-          { value: 735, name: 'Tinggi' },
-          { value: 580, name: 'Normal' },
-          { value: 300, name: 'Rendah' },
+          { value: Tinggi, name: 'Tinggi' },
+          { value: Normal, name: 'Normal' },
+          { value: Rendah, name: 'Rendah' },
         ],
       },
     ],

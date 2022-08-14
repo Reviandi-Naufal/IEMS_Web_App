@@ -1362,7 +1362,7 @@ def get_data_clusteringGdNPerbulan():
 
     return render_template('clusteringn.html',Normal=Normal, Rendah=Rendah, Tinggi=Tinggi)
 
-@app.route('/get_data_clusteringGdNPertahun')
+@app.route('/get_data_clusteringgdNPertahun')
 @login_required
 def get_data_clusteringgdNPertahun():
     clusday= KlastergdNPertahun.query.all()
