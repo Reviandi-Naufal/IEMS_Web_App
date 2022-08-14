@@ -987,15 +987,10 @@ def tcndata():
         'draw': request.args.get('draw', type=int),
     }
 
-@app.route("/gedungN")
+@app.route("/clustering")
 @login_required
-def clusteringn():
-    return render_template('clusteringn.html')
-
-@app.route("/gedungOdanP")
-@login_required
-def clusteringop():
-    return render_template('clusteringop.html')
+def clustering():
+    return render_template('Clustering.html')
 
 @app.route('/api/clusterperhari')
 @login_required
@@ -1241,8 +1236,8 @@ def clusterpertahun():
     to_date = request.args.get('searchByTodate')
     if from_date and to_date:
         query = query.filter(db.and_(
-            KlastergdNPertahun.Date >= from_date,
-            KlastergdNPertahun.Date <= to_date,
+            KlasterGdNPertahun.Date >= from_date,
+            KlasterGdNPertahun.Date <= to_date,
         ))
     total_filtered = query.count()
 
@@ -1334,87 +1329,12 @@ def clustervirtualpertahun():
         'draw': request.args.get('draw', type=int),
     }
 
-@app.route('/get_data_clusteringGdNperhari')
+@app.route('/get_data_clustering')
 @login_required
-def get_data_clusteringGdNperhari():
-
-    df_day_0 = KlasterGdNPerhari.query.filter_by(KlasterGdNPerhari.kluster == 0).all()
-    df_day_1 = KlasterGdNPerhari.query.filter_by(KlasterGdNPerhari.kluster == 1).all()
-    df_day_2 = KlasterGdNPerhari.query.filter_by(KlasterGdNPerhari.kluster == 2).all()
-
-    Normallist = []
-    Rendahlist = []
-    Tinggilist = []
-
-    for i in range(len(df_day_0)):
-        Normallist.append(df_day_0[i].kluster)
-    for i in range(len(df_day_1)):
-        Rendahlist.append(df_day_1[i].kluster)
-    for i in range(len(df_day_2)):
-        Tinggilist.append(df_day_2[i].kluster)
-
-    Normal = np.sum(Normallist)
-    Rendah = np.sum(Rendahlist)
-    Tinggi = np.sum(Tinggilist)
-
-    return render_template('clusteringn.html',Normal=Normal, Rendah=Rendah, Tinggi=Tinggi)
-
-@app.route('/get_data_clusteringGdNPerbulan')
-@login_required
-def get_data_clusteringGdNPerbulan():
-
-    df_day_0 = KlasterGdNPerbulan.query.filter_by(KlasterGdNPerbulan.kluster == 0).all()
-    df_day_1 = KlasterGdNPerbulan.query.filter_by(KlasterGdNPerbulan.kluster == 1).all()
-    df_day_2 = KlasterGdNPerbulan.query.filter_by(KlasterGdNPerbulan.kluster == 2).all()
-
-    Normallist = []
-    Rendahlist = []
-    Tinggilist = []
-
-    for i in range(len(df_day_0)):
-        Normallist.append(df_day_0[i].kluster)
-    for i in range(len(df_day_1)):
-        Rendahlist.append(df_day_1[i].kluster)
-    for i in range(len(df_day_2)):
-        Tinggilist.append(df_day_2[i].kluster)
-
-    Normal = np.sum(Normallist)
-    Rendah = np.sum(Rendahlist)
-    Tinggi = np.sum(Tinggilist)
-
-    return render_template('clusteringn.html',Normal=Normal, Rendah=Rendah, Tinggi=Tinggi)
-
-@app.route('/get_data_clusteringgdNPertahun')
-@login_required
-def get_data_clusteringgdNPertahun():
-
-    df_day_0 = KlastergdNPertahun.query.filter_by(KlastergdNPertahun.kluster == 0).all()
-    df_day_1 = KlastergdNPertahun.query.filter_by(KlastergdNPertahun.kluster == 1).all()
-    df_day_2 = KlastergdNPertahun.query.filter_by(KlastergdNPertahun.kluster == 2).all()
-
-    Normallist = []
-    Rendahlist = []
-    Tinggilist = []
-
-    for i in range(len(df_day_0)):
-        Normallist.append(df_day_0[i].kluster)
-    for i in range(len(df_day_1)):
-        Rendahlist.append(df_day_1[i].kluster)
-    for i in range(len(df_day_2)):
-        Tinggilist.append(df_day_2[i].kluster)
-
-    Normal = np.sum(Normallist)
-    Rendah = np.sum(Rendahlist)
-    Tinggi = np.sum(Tinggilist)
-
-    return render_template('clusteringn.html',Normal=Normal, Rendah=Rendah, Tinggi=Tinggi)
-
-@app.route('/get_data_comclustering')
-@login_required
-def get_data_comclustering():
-    clusday     = KlasterGdNPerhari.query
+def get_data_clustering():
+    clusday     = KlasterPerhari.query
     vclusday    = KlasterVirtualPerhari.query
-    clusmonth   = KlasterGdNPerbulan.query
+    clusmonth   = KlasterPerbulan.query
     vclusmonth  = KlasterVirtualPerbulan.query
     clusyear    = KlastergdNPertahun.query
     vclusyear   = KlasterVirtualPertahun.query
@@ -1443,6 +1363,7 @@ def get_data_comclustering():
     output_dought_com = {"datetime": datetime, "kwhdclus": kwhdclus, "kwhvdclus": kwhvdclus, "kwhmclus": kwhmclus, "kwhvmclus": kwhvmclus, "kwhyclus": kwhyclus, "kwhvyclus": kwhvyclus}
 
     return jsonify(output_dought_com)
+
 
 
 @app.route("/compare")
