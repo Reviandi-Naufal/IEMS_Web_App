@@ -1,6 +1,6 @@
 $.ajax({
   type: 'GET',
-  url: 'http://127.0.0.1:5000/get_data_clusteringgdNPerbulan',
+  url: 'http://127.0.0.1:5000/get_data_clusteringGdNPerbulan',
   success: function (response) {
     var objectData = response;
     console.log(objectData, typeof objectData);
