@@ -9,48 +9,50 @@ $.ajax({
     var Rendah = objectData.Rendah;
     var Tinggi = objectData.Tinggi;
 
-    buatCompLineChart(Normal, Rendah, Tinggi);
+    buatgdNperhari(Normal, Rendah, Tinggi);
   },
 });
 
-var dougnutChart = echarts.init(document.getElementById('pieDoughnutChartVH'));
+function buatgdNperhari(Normal, Rendah, Tinggi) {
+  var dougnutChart = echarts.init(document.getElementById('pieDoughnutChartVH'));
 
-var option = {
-  tooltip: {
-    trigger: 'item',
-  },
-  legend: {
-    top: '5%',
-    left: 'center',
-  },
-  series: [
-    {
-      name: 'Access From',
-      type: 'pie',
-      radius: ['40%', '70%'],
-      avoidLabelOverlap: false,
-      label: {
-        show: false,
-        position: 'center',
-      },
-      emphasis: {
-        label: {
-          show: true,
-          fontSize: '40',
-          fontWeight: 'bold',
-        },
-      },
-      labelLine: {
-        show: false,
-      },
-      data: [
-        { value: Tinggi, name: 'Tinggi' },
-        { value: Normal, name: 'Normal' },
-        { value: Rendah, name: 'Rendah' },
-      ],
+  var option = {
+    tooltip: {
+      trigger: 'item',
     },
-  ],
-  responsive: true,
-};
+    legend: {
+      top: '5%',
+      left: 'center',
+    },
+    series: [
+      {
+        name: 'Access From',
+        type: 'pie',
+        radius: ['40%', '70%'],
+        avoidLabelOverlap: false,
+        label: {
+          show: false,
+          position: 'center',
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: '40',
+            fontWeight: 'bold',
+          },
+        },
+        labelLine: {
+          show: false,
+        },
+        data: [
+          { value: Tinggi, name: 'Tinggi' },
+          { value: Normal, name: 'Normal' },
+          { value: Rendah, name: 'Rendah' },
+        ],
+      },
+    ],
+    responsive: true,
+  };
 
-dougnutChart.setOption(option);
+  dougnutChart.setOption(option);
+}
