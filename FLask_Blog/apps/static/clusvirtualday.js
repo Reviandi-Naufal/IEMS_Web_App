@@ -18,7 +18,7 @@ function buatvgdNperhari(Normal, Rendah, Tinggi) {
   var option = {
     title: {
       text: 'Klaster Perhari',
-      subtext: 'Gedung N',
+      subtext: 'Gedung O & P',
       left: 'center',
     },
     tooltip: {

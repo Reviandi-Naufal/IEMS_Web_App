@@ -19,7 +19,7 @@ function buatvgdNperbulan(Normal, Rendah, Tinggi) {
   var option = {
     title: {
       text: 'Klaster Perbulan',
-      subtext: 'Gedung N',
+      subtext: 'Gedung O & P',
       left: 'center',
     },
     tooltip: {
