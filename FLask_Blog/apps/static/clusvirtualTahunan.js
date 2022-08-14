@@ -1,6 +1,6 @@
 $.ajax({
   type: 'GET',
-  url: 'http://127.0.0.1:5000/get_data_clusteringGdNPertahun',
+  url: 'https://iems-telu.ismailab.xyz/get_data_clusteringvgdNPertahun',
   success: function (response) {
     var objectData = response;
     console.log(objectData, typeof objectData);
@@ -8,24 +8,30 @@ $.ajax({
     var Rendah = objectData.Rendah;
     var Tinggi = objectData.Tinggi;
 
-    buatgdNpertahun(Normal, Rendah, Tinggi);
+    buatvgdNpertahun(Normal, Rendah, Tinggi);
   },
 });
 
-function buatgdNpertahun(Normal, Rendah, Tinggi) {
+function buatvgdNpertahun(Normal, Rendah, Tinggi) {
   var dougnutChart = echarts.init(document.getElementById('pieDoughnutChartVT'));
 
   var option = {
+    title: {
+      text: 'Klaster Pertahun',
+      subtext: 'Gedung N',
+      left: 'center',
+    },
     tooltip: {
       trigger: 'item',
+      formatter: '{a} <br/>{b} : {c} ({d}%)',
     },
     legend: {
-      top: '5%',
+      bottom: '5%',
       left: 'center',
     },
     series: [
       {
-        name: 'Access From',
+        name: 'Cluster',
         type: 'pie',
         radius: ['40%', '70%'],
         avoidLabelOverlap: false,

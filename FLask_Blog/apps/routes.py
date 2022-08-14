@@ -1,4 +1,5 @@
 # from asyncio.windows_events import NULL
+import json
 import os
 import re
 import secrets
@@ -989,8 +990,34 @@ def tcndata():
 
 @app.route("/clustering")
 @login_required
-def clustering():
-    return render_template('Clustering.html')
+def clusteringn():
+    # clusday= KlasterGdNPerhari.query.all()
+
+    # normal0 = KlasterGdNPerhari.query.filter(KlasterGdNPerhari.kluster == 0).all()
+    # rendah1 = KlasterGdNPerhari.query.filter(KlasterGdNPerhari.kluster == 1).all()
+    # tinggi2 = KlasterGdNPerhari.query.filter(KlasterGdNPerhari.kluster == 2).all()
+
+    # normallist = []
+    # rendahlist = []
+    # tinggilist = []
+
+    # for i in range(len(normal0)):
+        # normallist.append(normal0[i].kluster)
+    # for i in range(len(rendah1)):
+        # rendahlist.append(rendah1[i].kluster)
+    # for i in range(len(tinggi2)):
+        # tinggilist.append(tinggi2[i].kluster)
+
+    # Normal = len(normallist)
+    # Rendah = len(rendahlist)
+    # Tinggi = len(tinggilist)
+
+    return render_template('clusteringn.html')
+
+@app.route("/gedungOdanP")
+@login_required
+def clusteringop():
+    return render_template('clusteringop.html')
 
 @app.route('/api/clusterperhari')
 @login_required
@@ -1329,10 +1356,160 @@ def clustervirtualpertahun():
         'draw': request.args.get('draw', type=int),
     }
 
-@app.route('/get_data_clustering')
+@app.route('/get_data_clusteringGdNPerhari')
 @login_required
-def get_data_clustering():
-    clusday     = KlasterPerhari.query
+def get_data_clusteringGdNperhari():
+    normal0 = KlasterGdNPerhari.query.filter(KlasterGdNPerhari.kluster == 0).all()
+    rendah1 = KlasterGdNPerhari.query.filter(KlasterGdNPerhari.kluster == 1).all()
+    tinggi2 = KlasterGdNPerhari.query.filter(KlasterGdNPerhari.kluster == 2).all()
+    
+    normallist = []
+    rendahlist = []
+    tinggilist = []
+    
+    for i in range(len(normal0)):
+        normallist.append(normal0[i].kluster)
+    for i in range(len(rendah1)):
+        rendahlist.append(rendah1[i].kluster)
+    for i in range(len(tinggi2)):
+        tinggilist.append(tinggi2[i].kluster)
+    
+    Normal = len(normallist)
+    Rendah = len(rendahlist)
+    Tinggi = len(tinggilist)
+
+    output_clus_day = {"Normal":Normal, "Rendah":Rendah, "Tinggi":Tinggi}
+    return jsonify(output_clus_day)
+
+@app.route('/get_data_clusteringGdNPerbulan')
+@login_required
+def get_data_clusteringGdNPerbulan():
+    normal0 = KlasterGdNPerbulan.query.filter(KlasterGdNPerbulan.kluster == 0).all()
+    rendah1 = KlasterGdNPerbulan.query.filter(KlasterGdNPerbulan.kluster == 1).all()
+    tinggi2 = KlasterGdNPerbulan.query.filter(KlasterGdNPerbulan.kluster == 2).all()
+
+    normallist = []
+    rendahlist = []
+    tinggilist = []
+
+    for i in range(len(normal0)):
+        normallist.append(normal0[i].kluster)
+    for i in range(len(rendah1)):
+        rendahlist.append(rendah1[i].kluster)
+    for i in range(len(tinggi2)):
+        tinggilist.append(tinggi2[i].kluster)
+
+    Normal = len(normallist)
+    Rendah = len(rendahlist)
+    Tinggi = len(tinggilist)
+
+    output_clus_month = {"Normal":Normal, "Rendah":Rendah, "Tinggi":Tinggi}
+    return jsonify(output_clus_month)
+
+@app.route('/get_data_clusteringgdNPertahun')
+@login_required
+def get_data_clusteringgdNPertahun():
+    normal0 = KlastergdNPertahun.query.filter(KlastergdNPertahun.kluster == 0).all()
+    rendah1 = KlastergdNPertahun.query.filter(KlastergdNPertahun.kluster == 1).all()
+    tinggi2 = KlastergdNPertahun.query.filter(KlastergdNPertahun.kluster == 2).all()
+
+    normallist = []
+    rendahlist = []
+    tinggilist = []
+
+    for i in range(len(normal0)):
+        normallist.append(normal0[i].kluster)
+    for i in range(len(rendah1)):
+        rendahlist.append(rendah1[i].kluster)
+    for i in range(len(tinggi2)):
+        tinggilist.append(tinggi2[i].kluster)
+
+    Normal = len(normallist)
+    Rendah = len(rendahlist)
+    Tinggi = len(tinggilist)
+
+    output_clus_year = {"Normal":Normal, "Rendah":Rendah, "Tinggi":Tinggi}
+    return jsonify(output_clus_year)
+
+@app.route('/get_data_clusteringVGdNPerhari')
+@login_required
+def get_data_clusteringVGdNperhari():
+    normal0 = KlasterVirtualPerhari.query.filter(KlasterVirtualPerhari.kluster == 0).all()
+    rendah1 = KlasterVirtualPerhari.query.filter(KlasterVirtualPerhari.kluster == 1).all()
+    tinggi2 = KlasterVirtualPerhari.query.filter(KlasterVirtualPerhari.kluster == 2).all()
+    
+    normallist = []
+    rendahlist = []
+    tinggilist = []
+    
+    for i in range(len(normal0)):
+        normallist.append(normal0[i].kluster)
+    for i in range(len(rendah1)):
+        rendahlist.append(rendah1[i].kluster)
+    for i in range(len(tinggi2)):
+        tinggilist.append(tinggi2[i].kluster)
+    
+    Normal = len(normallist)
+    Rendah = len(rendahlist)
+    Tinggi = len(tinggilist)
+
+    output_vclus_day = {"Normal":Normal, "Rendah":Rendah, "Tinggi":Tinggi}
+    return jsonify(output_vclus_day)
+
+@app.route('/get_data_clusteringVGdNPerbulan')
+@login_required
+def get_data_clusteringVGdNPerbulan():
+    normal0 = KlasterVirtualPerbulan.query.filter(KlasterVirtualPerbulan.kluster == 0).all()
+    rendah1 = KlasterVirtualPerbulan.query.filter(KlasterVirtualPerbulan.kluster == 1).all()
+    tinggi2 = KlasterVirtualPerbulan.query.filter(KlasterVirtualPerbulan.kluster == 2).all()
+
+    normallist = []
+    rendahlist = []
+    tinggilist = []
+
+    for i in range(len(normal0)):
+        normallist.append(normal0[i].kluster)
+    for i in range(len(rendah1)):
+        rendahlist.append(rendah1[i].kluster)
+    for i in range(len(tinggi2)):
+        tinggilist.append(tinggi2[i].kluster)
+
+    Normal = len(normallist)
+    Rendah = len(rendahlist)
+    Tinggi = len(tinggilist)
+
+    output_vclus_month = {"Normal":Normal, "Rendah":Rendah, "Tinggi":Tinggi}
+    return jsonify(output_vclus_month)
+
+@app.route('/get_data_clusteringvgdNPertahun')
+@login_required
+def get_data_clusteringvgdNPertahun():
+    normal0 = KlasterVirtualPertahun.query.filter(KlasterVirtualPertahun.kluster == 0).all()
+    rendah1 = KlasterVirtualPertahun.query.filter(KlasterVirtualPertahun.kluster == 1).all()
+    tinggi2 = KlasterVirtualPertahun.query.filter(KlasterVirtualPertahun.kluster == 2).all()
+
+    normallist = []
+    rendahlist = []
+    tinggilist = []
+
+    for i in range(len(normal0)):
+        normallist.append(normal0[i].kluster)
+    for i in range(len(rendah1)):
+        rendahlist.append(rendah1[i].kluster)
+    for i in range(len(tinggi2)):
+        tinggilist.append(tinggi2[i].kluster)
+
+    Normal = len(normallist)
+    Rendah = len(rendahlist)
+    Tinggi = len(tinggilist)
+
+    output_vclus_year = {"Normal":Normal, "Rendah":Rendah, "Tinggi":Tinggi}
+    return jsonify(output_vclus_year)
+
+@app.route('/get_data_comclustering')
+@login_required
+def get_data_comclustering():
+    clusday     = KlasterGdNPerhari.query
     vclusday    = KlasterVirtualPerhari.query
     clusmonth   = KlasterPerbulan.query
     vclusmonth  = KlasterVirtualPerbulan.query
