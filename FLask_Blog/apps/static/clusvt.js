@@ -19,7 +19,7 @@ function buatvgdNpertahun(Normal, Rendah, Tinggi) {
   var option = {
     title: {
       text: 'Klaster Pertahun',
-      subtext: 'Gedung N',
+      subtext: 'Gedung O & P',
       left: 'center',
     },
     tooltip: {
