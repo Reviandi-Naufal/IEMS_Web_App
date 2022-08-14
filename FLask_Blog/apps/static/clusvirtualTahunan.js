@@ -4,6 +4,7 @@ $.ajax({
   success: function (response) {
     var objectData = response;
     console.log(objectData, typeof objectData);
+    
     var Normal = objectData.Normal;
     var Rendah = objectData.Rendah;
     var Tinggi = objectData.Tinggi;

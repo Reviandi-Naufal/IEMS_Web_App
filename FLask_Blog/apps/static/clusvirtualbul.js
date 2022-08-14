@@ -8,6 +8,7 @@ $.ajax({
     var Normal = objectData.Normal;
     var Rendah = objectData.Rendah;
     var Tinggi = objectData.Tinggi;
+    
     buatvgdNperbulan(Normal, Rendah, Tinggi);
   },
 });
