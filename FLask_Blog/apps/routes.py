@@ -1337,42 +1337,75 @@ def clustervirtualpertahun():
 @app.route('/get_data_clusteringGdNperhari')
 @login_required
 def get_data_clusteringGdNperhari():
-    clusday= KlasterGdNPerhari.query.all()
 
-    df_day_0 = clusday.loc[clusday['kluster']==0]
-    df_day_1 = clusday.loc[clusday['kluster']==1]
-    df_day_2 = clusday.loc[clusday['kluster']==2]
-    Normal = len(df_day_0)
-    Rendah = len(df_day_1)
-    Tinggi = len(df_day_2)
+    df_day_0 = KlasterGdNPerhari.query.filter_by(KlasterGdNPerhari.kluster == 0).all()
+    df_day_1 = KlasterGdNPerhari.query.filter_by(KlasterGdNPerhari.kluster == 1).all()
+    df_day_2 = KlasterGdNPerhari.query.filter_by(KlasterGdNPerhari.kluster == 2).all()
+
+    Normallist = []
+    Rendahlist = []
+    Tinggilist = []
+
+    for i in range(len(df_day_0)):
+        Normallist.append(df_day_0[i].kluster)
+    for i in range(len(df_day_1)):
+        Rendahlist.append(df_day_1[i].kluster)
+    for i in range(len(df_day_2)):
+        Tinggilist.append(df_day_2[i].kluster)
+
+    Normal = np.sum(Normallist)
+    Rendah = np.sum(Rendahlist)
+    Tinggi = np.sum(Tinggilist)
 
     return render_template('clusteringn.html',Normal=Normal, Rendah=Rendah, Tinggi=Tinggi)
 
 @app.route('/get_data_clusteringGdNPerbulan')
 @login_required
 def get_data_clusteringGdNPerbulan():
-    clusday= KlasterGdNPerbulan.query.all()
 
-    df_day_0 = clusday.loc[clusday['kluster']==0]
-    df_day_1 = clusday.loc[clusday['kluster']==1]
-    df_day_2 = clusday.loc[clusday['kluster']==2]
-    Normal = len(df_day_0)
-    Rendah = len(df_day_1)
-    Tinggi = len(df_day_2)
+    df_day_0 = KlasterGdNPerbulan.query.filter_by(KlasterGdNPerbulan.kluster == 0).all()
+    df_day_1 = KlasterGdNPerbulan.query.filter_by(KlasterGdNPerbulan.kluster == 1).all()
+    df_day_2 = KlasterGdNPerbulan.query.filter_by(KlasterGdNPerbulan.kluster == 2).all()
+
+    Normallist = []
+    Rendahlist = []
+    Tinggilist = []
+
+    for i in range(len(df_day_0)):
+        Normallist.append(df_day_0[i].kluster)
+    for i in range(len(df_day_1)):
+        Rendahlist.append(df_day_1[i].kluster)
+    for i in range(len(df_day_2)):
+        Tinggilist.append(df_day_2[i].kluster)
+
+    Normal = np.sum(Normallist)
+    Rendah = np.sum(Rendahlist)
+    Tinggi = np.sum(Tinggilist)
 
     return render_template('clusteringn.html',Normal=Normal, Rendah=Rendah, Tinggi=Tinggi)
 
 @app.route('/get_data_clusteringgdNPertahun')
 @login_required
 def get_data_clusteringgdNPertahun():
-    clusday= KlastergdNPertahun.query.all()
 
-    df_day_0 = clusday.loc[clusday['kluster']==0]
-    df_day_1 = clusday.loc[clusday['kluster']==1]
-    df_day_2 = clusday.loc[clusday['kluster']==2]
-    Normal = len(df_day_0)
-    Rendah = len(df_day_1)
-    Tinggi = len(df_day_2)
+    df_day_0 = KlastergdNPertahun.query.filter_by(KlastergdNPertahun.kluster == 0).all()
+    df_day_1 = KlastergdNPertahun.query.filter_by(KlastergdNPertahun.kluster == 1).all()
+    df_day_2 = KlastergdNPertahun.query.filter_by(KlastergdNPertahun.kluster == 2).all()
+
+    Normallist = []
+    Rendahlist = []
+    Tinggilist = []
+
+    for i in range(len(df_day_0)):
+        Normallist.append(df_day_0[i].kluster)
+    for i in range(len(df_day_1)):
+        Rendahlist.append(df_day_1[i].kluster)
+    for i in range(len(df_day_2)):
+        Tinggilist.append(df_day_2[i].kluster)
+
+    Normal = np.sum(Normallist)
+    Rendah = np.sum(Rendahlist)
+    Tinggi = np.sum(Tinggilist)
 
     return render_template('clusteringn.html',Normal=Normal, Rendah=Rendah, Tinggi=Tinggi)
 
