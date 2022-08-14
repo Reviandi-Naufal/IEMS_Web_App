@@ -1,6 +1,6 @@
 $.ajax({
   type: 'GET',
-  url: 'https://iems-telu.ismailab.xyz/get_data_clusteringGdNPerhari',
+  url: 'https://iems-telu.ismailab.xyz/get_data_clusteringVGdNPerhari',
   success: function (response) {
     var objectData = response;
     console.log(objectData, typeof objectData);
@@ -9,12 +9,12 @@ $.ajax({
     var Rendah = objectData.Rendah;
     var Tinggi = objectData.Tinggi;
 
-    buatgdNperhari(Normal, Rendah, Tinggi);
+    buatvgdNperhari(Normal, Rendah, Tinggi);
   },
 });
 
-function buatgdNperhari(Normal, Rendah, Tinggi) {
-  var dougnutChart = echarts.init(document.getElementById('pieDoughnutChartH'));
+function buatvgdNperhari(Normal, Rendah, Tinggi) {
+  var dougnutChart = echarts.init(document.getElementById('pieDoughnutChartVH'));
 
   var option = {
     title: {
@@ -51,7 +51,7 @@ function buatgdNperhari(Normal, Rendah, Tinggi) {
           show: false,
         },
         data: [
-          { value: Tinggi, name: 'Tinggi' , color:'#FFF'},
+          { value: Tinggi, name: 'Tinggi', color: '#FFF' },
           { value: Normal, name: 'Normal' },
           { value: Rendah, name: 'Rendah' },
         ],
