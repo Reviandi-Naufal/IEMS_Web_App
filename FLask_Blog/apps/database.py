@@ -210,7 +210,11 @@ class KlasterGdNPerhariSchema(ma.SQLAlchemyAutoSchema):
 class KlasterGdNPerbulan(db.Model):
     __tablename__ = "KlasterGdNPerbulan"
     MyUnknownColumn = db.Column(db.Integer, primary_key=True)
+<<<<<<< HEAD
     Date = db.Column(db.String(50))
+=======
+    Date = db.Column(db.Text)
+>>>>>>> 19352a33ccde0f98cc9f73ab30296106c8163956
     Kwh = db.Column(db.Float)
     kluster = db.Column(db.Integer)
 
@@ -249,11 +253,11 @@ class KlasterGdNPertahunSchema(ma.SQLAlchemyAutoSchema):
 
 class KlasterVirtualPerhari(db.Model):
     __tablename__ = "KlasterVirtualPerhari"
-    MyUnknownColumn = db.Column(db.Integer)
-    DateTime = db.Column(db.String(50), primary_key=True)
-    Kwh = db.Column(db.Float)
-    old_kwh = db.Column(db.Float)
-    delta_kwh = db.Column(db.Float)
+    MyUnknownColumn = db.Column(db.Integer, primary_key=True)
+    DateTime = db.Column(db.Text)
+    Kwh = db.Column(db.Integer)
+    old_kwh = db.Column(db.Integer)
+    delta_kwh = db.Column(db.Integer)
     kluster = db.Column(db.Integer)
 
     def to_dict(self):
@@ -273,8 +277,8 @@ class KlasterVirtualPerhariSchema(ma.SQLAlchemyAutoSchema):
 
 class KlasterVirtualPerbulan(db.Model):
     __tablename__ = "KlasterVirtualPerbulan"
-    MyUnknownColumn = db.Column(db.Integer)
-    DateTime = db.Column(db.String(50), primary_key=True)
+    MyUnknownColumn = db.Column(db.Integer, primary_key=True)
+    Date = db.Column(db.String(50))
     Kwh = db.Column(db.Float)
     old_kwh = db.Column(db.Float)
     delta_kwh = db.Column(db.Float)
@@ -283,7 +287,7 @@ class KlasterVirtualPerbulan(db.Model):
     def to_dict(self):
         return {
             'MyUnknownColumn' : self.MyUnknownColumn,
-            'DateTime' : self.DateTime,
+            'Date' : self.Date,
             'Kwh' : self.Kwh,
             'old_kwh' : self.old_kwh,
             'delta_kwh' : self.delta_kwh,
@@ -297,8 +301,8 @@ class KlasterVirtualPerbulanSchema(ma.SQLAlchemyAutoSchema):
 
 class KlasterVirtualPertahun(db.Model):
     __tablename__ = "KlasterVirtualPertahun"
-    MyUnknownColumn = db.Column(db.Integer)
-    DateTime = db.Column(db.String(50), primary_key=True)
+    MyUnknownColumn = db.Column(db.Integer, primary_key=True)
+    Date = db.Column(db.String(50))
     Kwh = db.Column(db.Float)
     old_kwh = db.Column(db.Float)
     delta_kwh = db.Column(db.Float)
@@ -307,7 +311,7 @@ class KlasterVirtualPertahun(db.Model):
     def to_dict(self):
         return {
             'MyUnknownColumn' : self.MyUnknownColumn,
-            'DateTime' : self.DateTime,
+            'Date' : self.Date,
             'Kwh' : self.Kwh,
             'old_kwh' : self.old_kwh,
             'delta_kwh' : self.delta_kwh,
