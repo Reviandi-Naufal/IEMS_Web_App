@@ -1084,20 +1084,20 @@ def clusterVirtualperhari():
     search = request.args.get('search[value]')
     if search:
         query = query.filter(db.or_(
-            KlasterVirtualPerhari.DateTime.like(f'%{search}%'),
+            KlasterVirtualPerhari.Date.like(f'%{search}%'),
             KlasterVirtualPerhari.kluster.like(f'%{search}%')
         ))
     total_filtered = query.count()
 
-    # # filter by date
-    # from_date = request.args.get('searchByFromdate')
-    # to_date = request.args.get('searchByTodate')
-    # if from_date and to_date:
-    #     query = query.filter(db.and_(
-    #         KlasterPerhari.Date >= from_date,
-    #         KlasterPerhari.Date <= to_date,
-    #     ))
-    # total_filtered = query.count()
+    # filter by date
+    from_date = request.args.get('searchByFromdate')
+    to_date = request.args.get('searchByTodate')
+    if from_date and to_date:
+        query = query.filter(db.and_(
+            KlasterPerhari.Date >= from_date,
+            KlasterPerhari.Date <= to_date,
+        ))
+    total_filtered = query.count()
 
     # sorting
     order = []
@@ -1107,8 +1107,8 @@ def clusterVirtualperhari():
         if col_index is None:
             break
         col_name = request.args.get(f'columns[{col_index}][data]')
-        if col_name not in ['DateTime', 'Kwh', 'old_kwh', 'delta_kwh', 'kluster']:
-            col_name = 'DateTime'
+        if col_name not in ['Date', 'Time', 'Kwh', 'old_kwh', 'delta_kwh', 'kluster']:
+            col_name = 'Date'
         descending = request.args.get(f'order[{i}][dir]') == 'desc'
         col = getattr(KlasterVirtualPerhari, col_name)
         if descending:

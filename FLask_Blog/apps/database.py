@@ -250,7 +250,8 @@ class KlastergdNPertahunSchema(ma.SQLAlchemyAutoSchema):
 class KlasterVirtualPerhari(db.Model):
     __tablename__ = "KlasterVirtualPerhari"
     MyUnknownColumn = db.Column(db.Integer, primary_key=True)
-    DateTime = db.Column(db.Text)
+    Date = db.Column(db.Text)
+    Time = db.Column(db.Text)
     Kwh = db.Column(db.Integer)
     old_kwh = db.Column(db.Integer)
     delta_kwh = db.Column(db.Integer)
@@ -259,7 +260,8 @@ class KlasterVirtualPerhari(db.Model):
     def to_dict(self):
         return {
             'MyUnknownColumn' : self.MyUnknownColumn,
-            'DateTime' : self.DateTime,
+            'Date' : self.Date,
+            'Time' : self.Time,
             'Kwh' : self.Kwh,
             'old_kwh' : self.old_kwh,
             'delta_kwh' : self.delta_kwh,
