@@ -4,7 +4,7 @@ Folder FLask_Blog merupakan folder tempat file flask dan semua kerangkanya<br>
 
 Langkah Membuka IEMS Web App:
 - Install git windows atau github dekstop(preferable karena lebih mudah digunakan)
-- fork project ini ke device local kalian
+- fork project ini ke github pribadi lalu clone ke device local kalian
 - install anaconda jika belum terinstall
 - Buka anaconda prompt
 - masuk Ke folder tempat save repository ini menggunakan command ```cd```
